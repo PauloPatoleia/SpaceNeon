@@ -1,33 +1,92 @@
+import org.academiadecodigo.simplegraphics.graphics.Color;
+import org.academiadecodigo.simplegraphics.graphics.Rectangle;
+import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
+
 public class Game {
 
+    Player playerOne;
+    Player playerTwo;
     private boolean playing = true;
-    private boolean paused;
-    private Player antonio;
+    private boolean paused = false;
+
+    SpaceShip ship1 = new SpaceShip(400, 380,"/Users/codecadet/Desktop/TheGame/src/Resources/rsz_arrow.png");
+    SpaceShip ship2 = new SpaceShip(200, 380,"/Users/codecadet/Desktop/TheGame/src/Resources/rsz_arrow.png");
 
     public Game() {
 
+        PlayerControls playerOneControls = new PlayerControls(KeyboardEvent.KEY_UP, KeyboardEvent.KEY_DOWN, KeyboardEvent.KEY_LEFT, KeyboardEvent.KEY_RIGHT, KeyboardEvent.KEY_SPACE, ship1);
+        PlayerControls playerTwoControls = new PlayerControls(KeyboardEvent.KEY_W, KeyboardEvent.KEY_S, KeyboardEvent.KEY_A, KeyboardEvent.KEY_D, KeyboardEvent.KEY_C, ship2);
+
+        playerOne = new Player(playerOneControls, ship1);
+        playerTwo = new Player(playerTwoControls, ship2);
 
     }
 
+    /**
+     * Initializes the game
+     */
     public void init() {
 
 
-    }
+        Rectangle rect = new Rectangle(10, 10, 800, 800);
+        rect.setColor(Color.BLACK);
+        rect.fill();
 
-    public void menu() {
-
+        playerOne.ship.getImg().draw();
+        playerTwo.ship.getImg().draw();
 
     }
 
     public void start() {
 
+        init();
+
+        long initialTime = System.nanoTime();
+        final double amountOfTicks = 60.0;
+        double numberOfSeconds = 1000000000 / amountOfTicks;
+        double delta = 0;
+
+        // Check FPS
+        int updates = 0;
+        int frames = 0;
+        long timer = System.currentTimeMillis();
+
+        while(playing) {
+
+            if(!paused) {
+
+                long now = System.nanoTime();
+                delta += (now - initialTime) / numberOfSeconds;
+                initialTime = now;
+
+                if(delta >= 1) {
+                    tick();
+                    updates++;
+                    delta --;
+                }
+
+                render();
+
+                frames++;
+
+                if (System.currentTimeMillis() - timer > 1000) {
+                    timer += 1000;
+                    System.out.println(updates + " Ticks, " + frames + " FPS");
+                    updates = 0;
+                    frames = 0;
+                }
+            }
+        }
     }
 
     private void tick() {
-        
+        ship1.tick();
+        ship2.tick();
     }
 
     private void render() {
-        
+        ship1.getImg().draw();
+        ship1.getImg().draw();
+
     }
 }
