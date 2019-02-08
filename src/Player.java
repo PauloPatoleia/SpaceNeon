@@ -95,84 +95,42 @@ public class Player implements KeyboardHandler {
 
         if (keyboardEvent.getKey() == this.KEY_UP) {
 
-            if (RIGHT) {
-                this.ship.setVelocityX(ship.getSpeed());
-            }
-
-            if (LEFT) {
-
-                this.ship.setVelocityX(-ship.getSpeed());
-            }
-
             if (SHOOT) {
                 System.out.println("shoot");
             }
-
             this.ship.setVelocityY(-ship.getSpeed());
-
             UP = true;
         }
 
-
         if (keyboardEvent.getKey() == this.KEY_DOWN) {
-
-            if (RIGHT) {
-                this.ship.setVelocityX(ship.getSpeed());
-            }
-
-            if (LEFT) {
-
-                this.ship.setVelocityX(-ship.getSpeed());
-            }
 
             if (SHOOT) {
                 System.out.println("shoot");
             }
-
             this.ship.setVelocityY(ship.getSpeed());
             DOWN = true;
         }
 
-
         if (keyboardEvent.getKey() == this.KEY_LEFT) {
-            this.ship.setVelocityX(-ship.getSpeed());
 
             if (SHOOT) {
                 System.out.println("shoot");
             }
+            this.ship.setVelocityX(-ship.getSpeed());
             LEFT = true;
         }
 
-
         if (keyboardEvent.getKey() == this.KEY_RIGHT) {
-            this.ship.setVelocityX(ship.getSpeed());
 
             if (SHOOT) {
                 System.out.println("shoot");
             }
+            this.ship.setVelocityX(ship.getSpeed());
             RIGHT = true;
         }
+
         if (keyboardEvent.getKey() == this.KEY_SHOOT) {
 
-            if (UP) {
-
-                this.ship.setVelocityY(-ship.getSpeed());
-            }
-
-            if (DOWN) {
-
-                this.ship.setVelocityY(ship.getSpeed());
-            }
-
-            if (RIGHT) {
-
-                this.ship.setVelocityX(ship.getSpeed());
-            }
-
-            if (LEFT) {
-
-                this.ship.setVelocityX(-ship.getSpeed());
-            }
             System.out.println("shoot");
             SHOOT = true;
         }
@@ -187,20 +145,40 @@ public class Player implements KeyboardHandler {
 
         if(keyboardEvent.getKey() == this.KEY_UP) {
             UP = false;
+            if (DOWN) {
+                ship.setVelocityY(ship.getSpeed());
+                return;
+            }
             ship.setVelocityY(0);
         }
+
         if(keyboardEvent.getKey() == this.KEY_DOWN) {
             DOWN = false;
+            if (UP) {
+                ship.setVelocityY(-ship.getSpeed());
+                return;
+            }
             ship.setVelocityY(0);
         }
+
         if(keyboardEvent.getKey() == this.KEY_LEFT) {
             LEFT = false;
+            if (RIGHT) {
+                ship.setVelocityX(ship.getSpeed());
+                return;
+            }
             ship.setVelocityX(0);
         }
+
         if(keyboardEvent.getKey() == this.KEY_RIGHT) {
             RIGHT = false;
+            if (LEFT) {
+                ship.setVelocityX(-ship.getSpeed());
+                return;
+            }
             ship.setVelocityX(0);
         }
+
         if(keyboardEvent.getKey() == this.KEY_SHOOT) {
             SHOOT = false;
         }

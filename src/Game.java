@@ -9,8 +9,8 @@ public class Game {
     private boolean playing = true;
     private boolean paused = false;
 
-    SpaceShip ship1 = new SpaceShip(400, 380,"/Users/codecadet/Desktop/TheGame/src/Resources/rsz_arrow.png");
-    SpaceShip ship2 = new SpaceShip(200, 380,"/Users/codecadet/Desktop/TheGame/src/Resources/rsz_arrow.png");
+    SpaceShip ship1 = new SpaceShip(400, 380,"./Resources/rsz_arrow.png");
+    SpaceShip ship2 = new SpaceShip(200, 380,"./Resources/rsz_arrow.png");
 
     public Game() {
 
@@ -84,7 +84,7 @@ public class Game {
 
     private void render() {
         ship1.getImg().draw();
-        ship1.getImg().draw();
+        ship2.getImg().draw();
 
     }
 }
