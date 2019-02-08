@@ -14,11 +14,8 @@ public class Game {
 
     public Game() {
 
-        PlayerControls playerOneControls = new PlayerControls(KeyboardEvent.KEY_UP, KeyboardEvent.KEY_DOWN, KeyboardEvent.KEY_LEFT, KeyboardEvent.KEY_RIGHT, KeyboardEvent.KEY_SPACE, ship1);
-        PlayerControls playerTwoControls = new PlayerControls(KeyboardEvent.KEY_W, KeyboardEvent.KEY_S, KeyboardEvent.KEY_A, KeyboardEvent.KEY_D, KeyboardEvent.KEY_C, ship2);
-
-        playerOne = new Player(playerOneControls, ship1);
-        playerTwo = new Player(playerTwoControls, ship2);
+        Player playerOne = new Player(KeyboardEvent.KEY_UP, KeyboardEvent.KEY_DOWN, KeyboardEvent.KEY_LEFT, KeyboardEvent.KEY_RIGHT, KeyboardEvent.KEY_SPACE, ship1);
+        Player playerTwo = new Player(KeyboardEvent.KEY_W, KeyboardEvent.KEY_S, KeyboardEvent.KEY_A, KeyboardEvent.KEY_D, KeyboardEvent.KEY_C, ship2);
 
     }
 
@@ -32,8 +29,8 @@ public class Game {
         rect.setColor(Color.BLACK);
         rect.fill();
 
-        playerOne.ship.getImg().draw();
-        playerTwo.ship.getImg().draw();
+        ship1.getImg().draw();
+        ship2.getImg().draw();
 
     }
 
@@ -48,7 +45,7 @@ public class Game {
 
         // Check FPS
         int updates = 0;
-        int frames = 0;
+        //int frames = 0;
         long timer = System.currentTimeMillis();
 
         while(playing) {
@@ -61,19 +58,20 @@ public class Game {
 
                 if(delta >= 1) {
                     tick();
+                    render();
                     updates++;
                     delta --;
                 }
 
-                render();
 
-                frames++;
+
+                //frames++;
 
                 if (System.currentTimeMillis() - timer > 1000) {
                     timer += 1000;
-                    System.out.println(updates + " Ticks, " + frames + " FPS");
+                    System.out.println(updates + " FPS");
                     updates = 0;
-                    frames = 0;
+                   // frames = 0;
                 }
             }
         }
