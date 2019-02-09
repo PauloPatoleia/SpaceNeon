@@ -1,3 +1,6 @@
+import GameObjects.Bullets;
+import GameObjects.Enemies.Enemy;
+import GameObjects.SpaceShip;
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
@@ -21,7 +24,7 @@ public class Game {
 
 
        // for (int i = 0; i < 5; i++) {
-       //     enemies.add(EnemyFactory.getNewEnemy());
+       //     enemies.add(GameObjects.Enemies.EnemyFactory.getNewEnemy());
         // }
 
         playerOne = new Player(KeyboardEvent.KEY_UP, KeyboardEvent.KEY_DOWN, KeyboardEvent.KEY_LEFT, KeyboardEvent.KEY_RIGHT, KeyboardEvent.KEY_SPACE, ship1);
@@ -93,7 +96,7 @@ public class Game {
 
 
     /**
-     * Responsable for calling every GameObject to action
+     * Responsable for calling every GameObjects.GameObject to action
      */
     private void tick() {
         ship1.tick();

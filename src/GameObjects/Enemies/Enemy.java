@@ -1,3 +1,4 @@
+package GameObjects.Enemies;
 
 public abstract class Enemy {
 

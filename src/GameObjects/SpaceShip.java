@@ -1,3 +1,5 @@
+package GameObjects;
+
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 import java.util.LinkedList;
@@ -17,11 +19,11 @@ public class SpaceShip {
 
     /**
      * constructor
-     * Initializes a new Player SpaceShip
+     * Initializes a new Player GameObjects.SpaceShip
      *
      * @param x           - Initial X position
      * @param y           - Initial Y position
-     * @param imageSource - SpaceShip image source
+     * @param imageSource - GameObjects.SpaceShip image source
      */
     public SpaceShip(int x, int y, LinkedList<Bullets> friendlyBullets, String imageSource) {
         this.img = new Picture(x, y, imageSource);
@@ -31,14 +33,14 @@ public class SpaceShip {
     }
 
     /**
-     * @return Picture - The SpaceShip image
+     * @return Picture - The GameObjects.SpaceShip image
      */
     public Picture getImg() {
         return img;
     }
 
     /**
-     * @return int - The SpaceShip current speed status
+     * @return int - The GameObjects.SpaceShip current speed status
      */
     public int getSpeed() {
         return speed;

@@ -1,3 +1,5 @@
+package GameObjects.Enemies;
+
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 public class Obstacle extends Enemy {

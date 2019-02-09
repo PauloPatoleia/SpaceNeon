@@ -1,3 +1,5 @@
+package GameObjects.Enemies;
+
 public class EnemyFactory {
 
     public static Enemy getNewEnemy() {
