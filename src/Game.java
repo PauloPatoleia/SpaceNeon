@@ -2,20 +2,23 @@ import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 
+import java.util.LinkedList;
+
 public class Game {
 
-    Player playerOne;
-    Player playerTwo;
+    private Player playerOne;
+    private Player playerTwo;
     private boolean playing = true;
     private boolean paused = false;
+    private LinkedList<Bullets> friendlyBullets = new LinkedList<>();
+    private SpaceShip ship1 = new SpaceShip(400, 380, friendlyBullets, "./Resources/rsz_arrow.png");
+    private SpaceShip ship2 = new SpaceShip(200, 380, friendlyBullets, "./Resources/rsz_arrow.png");
 
-    SpaceShip ship1 = new SpaceShip(400, 380,"./Resources/rsz_arrow.png");
-    SpaceShip ship2 = new SpaceShip(200, 380,"./Resources/rsz_arrow.png");
 
     public Game() {
 
-        Player playerOne = new Player(KeyboardEvent.KEY_UP, KeyboardEvent.KEY_DOWN, KeyboardEvent.KEY_LEFT, KeyboardEvent.KEY_RIGHT, KeyboardEvent.KEY_SPACE, ship1);
-        Player playerTwo = new Player(KeyboardEvent.KEY_W, KeyboardEvent.KEY_S, KeyboardEvent.KEY_A, KeyboardEvent.KEY_D, KeyboardEvent.KEY_C, ship2);
+        playerOne = new Player(KeyboardEvent.KEY_UP, KeyboardEvent.KEY_DOWN, KeyboardEvent.KEY_LEFT, KeyboardEvent.KEY_RIGHT, KeyboardEvent.KEY_SPACE, ship1);
+        playerTwo = new Player(KeyboardEvent.KEY_W, KeyboardEvent.KEY_S, KeyboardEvent.KEY_A, KeyboardEvent.KEY_D, KeyboardEvent.KEY_T, ship2);
 
     }
 
@@ -48,21 +51,20 @@ public class Game {
         //int frames = 0;
         long timer = System.currentTimeMillis();
 
-        while(playing) {
+        while (playing) {
 
-            if(!paused) {
+            if (!paused) {
 
                 long now = System.nanoTime();
                 delta += (now - initialTime) / numberOfSeconds;
                 initialTime = now;
 
-                if(delta >= 1) {
+                if (delta >= 1) {
                     tick();
                     render();
                     updates++;
-                    delta --;
+                    delta--;
                 }
-
 
 
                 //frames++;
@@ -71,7 +73,7 @@ public class Game {
                     timer += 1000;
                     System.out.println(updates + " FPS");
                     updates = 0;
-                   // frames = 0;
+                    // frames = 0;
                 }
             }
         }
@@ -80,11 +82,31 @@ public class Game {
     private void tick() {
         ship1.tick();
         ship2.tick();
+
+       /* for (Bullets bullet : friendlyBullets) {
+
+            bullet.tick();
+
+            if (bullet.getImgY() <= 10) {
+                friendlyBullets.remove();
+            }
+        }*/
+        for (int i = 0; i < friendlyBullets.size(); i++) {
+
+            if (friendlyBullets.get(i).getImgY() <= 0) {
+                friendlyBullets.remove(friendlyBullets.get(i));
+                continue;
+            }
+            friendlyBullets.get(i).tick();
+        }
     }
 
     private void render() {
         ship1.getImg().draw();
         ship2.getImg().draw();
+        for (int i = 0; i < friendlyBullets.size(); i++) {
 
+            friendlyBullets.get(i).render();
+        }
     }
 }
