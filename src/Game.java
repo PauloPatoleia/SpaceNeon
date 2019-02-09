@@ -13,9 +13,6 @@ public class Game {
     private LinkedList<Bullets> friendlyBullets = new LinkedList<>();
     private SpaceShip ship1 = new SpaceShip(400, 380, friendlyBullets, "./Resources/rsz_arrow.png");
     private SpaceShip ship2 = new SpaceShip(200, 380, friendlyBullets, "./Resources/rsz_arrow.png");
-
-
-
     private LinkedList<Enemy> enemies = new LinkedList<>();
 
 
@@ -23,9 +20,9 @@ public class Game {
     public Game() {
 
 
-        for (int i = 0; i < 5; i++) {
-            enemies.add(EnemyFactory.getNewEnemy());
-        }
+       // for (int i = 0; i < 5; i++) {
+       //     enemies.add(EnemyFactory.getNewEnemy());
+        // }
 
         playerOne = new Player(KeyboardEvent.KEY_UP, KeyboardEvent.KEY_DOWN, KeyboardEvent.KEY_LEFT, KeyboardEvent.KEY_RIGHT, KeyboardEvent.KEY_SPACE, ship1);
         playerTwo = new Player(KeyboardEvent.KEY_W, KeyboardEvent.KEY_S, KeyboardEvent.KEY_A, KeyboardEvent.KEY_D, KeyboardEvent.KEY_T, ship2);
@@ -34,7 +31,7 @@ public class Game {
     }
 
     /**
-     * Initializes the game
+     * Initializes window
      */
     public void init() {
 
@@ -46,9 +43,12 @@ public class Game {
         ship1.getImg().draw();
         ship2.getImg().draw();
 
-
     }
 
+
+    /**
+     * Starts the game
+     */
     public void start() {
 
         init();
@@ -91,6 +91,10 @@ public class Game {
         }
     }
 
+
+    /**
+     * Responsable for calling every GameObject to action
+     */
     private void tick() {
         ship1.tick();
         ship2.tick();
@@ -110,6 +114,9 @@ public class Game {
         }
     }
 
+    /**
+     * Responsable for rendering everything to the screen
+     */
     private void render() {
         ship1.getImg().draw();
         ship2.getImg().draw();

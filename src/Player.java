@@ -3,7 +3,6 @@ import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardHandler;
 
-import java.util.LinkedList;
 
 public class Player implements KeyboardHandler {
 
@@ -22,7 +21,6 @@ public class Player implements KeyboardHandler {
 
     public Player(final int KEY_UP, final int KEY_DOWN, final int KEY_LEFT, final int KEY_RIGHT, final int KEY_SHOOT, SpaceShip ship) {
 
-        // The spaceShip that will be controlled
         this.ship = ship;
 
         this.KEY_UP = KEY_UP;

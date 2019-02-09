@@ -44,7 +44,9 @@ public class SpaceShip {
         return speed;
     }
 
-
+    /**
+     * Ship action
+     */
     public void tick() {
         img.setX(img.getX() + velocityX);
         img.setY(img.getY() + velocityY);
