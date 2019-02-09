@@ -22,7 +22,7 @@ public class Game {
     public Game() {
 
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 5; i++) {
             enemies.add(EnemyFactory.getNewEnemy());
         }
 
