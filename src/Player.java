@@ -5,11 +5,11 @@ import org.academiadecodigo.simplegraphics.keyboard.KeyboardHandler;
 
 public class Player implements KeyboardHandler {
 
-    private boolean UP = false;
-    private boolean DOWN = false;
-    private boolean LEFT = false;
-    private boolean RIGHT = false;
-    private boolean SHOOT = false;
+    private boolean isUpKeyPressed = false;
+    private boolean isDownKeyPressed = false;
+    private boolean isLeftKeyPressed = false;
+    private boolean isRightKeyPressed = false;
+    private boolean isShootKeyPressed = false;
     private final int KEY_UP;
     private final int KEY_DOWN;
     private final int KEY_LEFT;
@@ -95,44 +95,44 @@ public class Player implements KeyboardHandler {
 
         if (keyboardEvent.getKey() == this.KEY_UP) {
 
-            if (SHOOT) {
+            if (isShootKeyPressed) {
                 System.out.println("shoot");
             }
             this.ship.setVelocityY(-ship.getSpeed());
-            UP = true;
+            isUpKeyPressed = true;
         }
 
         if (keyboardEvent.getKey() == this.KEY_DOWN) {
 
-            if (SHOOT) {
+            if (isShootKeyPressed) {
                 System.out.println("shoot");
             }
             this.ship.setVelocityY(ship.getSpeed());
-            DOWN = true;
+            isDownKeyPressed = true;
         }
 
         if (keyboardEvent.getKey() == this.KEY_LEFT) {
 
-            if (SHOOT) {
+            if (isShootKeyPressed) {
                 System.out.println("shoot");
             }
             this.ship.setVelocityX(-ship.getSpeed());
-            LEFT = true;
+            isLeftKeyPressed = true;
         }
 
         if (keyboardEvent.getKey() == this.KEY_RIGHT) {
 
-            if (SHOOT) {
+            if (isShootKeyPressed) {
                 System.out.println("shoot");
             }
             this.ship.setVelocityX(ship.getSpeed());
-            RIGHT = true;
+            isRightKeyPressed = true;
         }
 
         if (keyboardEvent.getKey() == this.KEY_SHOOT) {
 
             System.out.println("shoot");
-            SHOOT = true;
+            isShootKeyPressed = true;
         }
 
 
@@ -144,8 +144,8 @@ public class Player implements KeyboardHandler {
     public void keyReleased(KeyboardEvent keyboardEvent) {
 
         if(keyboardEvent.getKey() == this.KEY_UP) {
-            UP = false;
-            if (DOWN) {
+            isUpKeyPressed = false;
+            if (isDownKeyPressed) {
                 ship.setVelocityY(ship.getSpeed());
                 return;
             }
@@ -153,8 +153,8 @@ public class Player implements KeyboardHandler {
         }
 
         if(keyboardEvent.getKey() == this.KEY_DOWN) {
-            DOWN = false;
-            if (UP) {
+            isDownKeyPressed = false;
+            if (isUpKeyPressed) {
                 ship.setVelocityY(-ship.getSpeed());
                 return;
             }
@@ -162,8 +162,8 @@ public class Player implements KeyboardHandler {
         }
 
         if(keyboardEvent.getKey() == this.KEY_LEFT) {
-            LEFT = false;
-            if (RIGHT) {
+            isLeftKeyPressed = false;
+            if (isRightKeyPressed) {
                 ship.setVelocityX(ship.getSpeed());
                 return;
             }
@@ -171,8 +171,8 @@ public class Player implements KeyboardHandler {
         }
 
         if(keyboardEvent.getKey() == this.KEY_RIGHT) {
-            RIGHT = false;
-            if (LEFT) {
+            isRightKeyPressed = false;
+            if (isLeftKeyPressed) {
                 ship.setVelocityX(-ship.getSpeed());
                 return;
             }
@@ -180,7 +180,7 @@ public class Player implements KeyboardHandler {
         }
 
         if(keyboardEvent.getKey() == this.KEY_SHOOT) {
-            SHOOT = false;
+            isShootKeyPressed = false;
         }
 
 
