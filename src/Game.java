@@ -2,6 +2,8 @@ import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 
+import java.util.LinkedList;
+
 public class Game {
 
     Player playerOne;
@@ -12,7 +14,18 @@ public class Game {
     SpaceShip ship1 = new SpaceShip(400, 380,"./Resources/rsz_arrow.png");
     SpaceShip ship2 = new SpaceShip(200, 380,"./Resources/rsz_arrow.png");
 
+
+    private LinkedList<Enemy> enemies = new LinkedList<>();
+
+
+
     public Game() {
+
+
+        for (int i = 0; i < 10; i++) {
+            enemies.add(EnemyFactory.getNewEnemy());
+        }
+
 
         Player playerOne = new Player(KeyboardEvent.KEY_UP, KeyboardEvent.KEY_DOWN, KeyboardEvent.KEY_LEFT, KeyboardEvent.KEY_RIGHT, KeyboardEvent.KEY_SPACE, ship1);
         Player playerTwo = new Player(KeyboardEvent.KEY_W, KeyboardEvent.KEY_S, KeyboardEvent.KEY_A, KeyboardEvent.KEY_D, KeyboardEvent.KEY_C, ship2);
@@ -31,6 +44,7 @@ public class Game {
 
         ship1.getImg().draw();
         ship2.getImg().draw();
+
 
     }
 
@@ -80,11 +94,20 @@ public class Game {
     private void tick() {
         ship1.tick();
         ship2.tick();
+
+        for (Enemy enemy: enemies){
+            enemy.tick();
+        }
+
     }
 
     private void render() {
         ship1.getImg().draw();
         ship2.getImg().draw();
+
+        for (Enemy enemy: enemies){
+            enemy.render();
+        }
 
     }
 }
