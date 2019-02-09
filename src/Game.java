@@ -83,18 +83,11 @@ public class Game {
         ship1.tick();
         ship2.tick();
 
-       /* for (Bullets bullet : friendlyBullets) {
-
-            bullet.tick();
-
-            if (bullet.getImgY() <= 10) {
-                friendlyBullets.remove();
-            }
-        }*/
         for (int i = 0; i < friendlyBullets.size(); i++) {
 
             if (friendlyBullets.get(i).getImgY() <= 0) {
                 friendlyBullets.remove(friendlyBullets.get(i));
+                i--;
                 continue;
             }
             friendlyBullets.get(i).tick();
@@ -104,6 +97,7 @@ public class Game {
     private void render() {
         ship1.getImg().draw();
         ship2.getImg().draw();
+
         for (int i = 0; i < friendlyBullets.size(); i++) {
 
             friendlyBullets.get(i).render();

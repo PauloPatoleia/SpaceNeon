@@ -1,4 +1,3 @@
-import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 
@@ -7,11 +6,10 @@ public class Bullets {
     private Picture imgBullet;
     private int speed;
 
+    public Bullets(int x, int y, BulletType bulletType) {
 
-    public Bullets(int x, int y, int speed) {
-
-        imgBullet = new Picture(x, y, "./Resources/rsz_bullet.jpg");
-        this.speed = speed;
+        imgBullet = new Picture(x, y, bulletType.pic);
+        this.speed = bulletType.speed;
     }
 
     public int getImgX() {
@@ -36,7 +34,23 @@ public class Bullets {
 
     public enum BulletType {
 
-        NORMAL,
-        FAST,
+        NORMAL(15, 5, "./Resources/rsz_bullet.jpg"),
+        FAST(10, 8, "./Resources/rsz_bullet.jpg"),
+        DOUBLE(15, 5, "./Resources/rsz_bullet.jpg");
+
+
+        BulletType(int cooldown, int speed, String pic) {
+           this.speed = speed;
+           this.pic = pic;
+           this.cooldown = cooldown;
+        }
+
+        private int cooldown;
+        private int speed;
+        private String pic;
+
+        public int getCooldown() {
+            return cooldown;
+        }
     }
 }
