@@ -59,6 +59,11 @@ public class SpaceShip {
      */
     public void tick() {
 
+        if(hp <= 0) {
+            img.delete();
+            return;
+        }
+
         img.setX(img.getX() + velocityX);
         img.setY(img.getY() + velocityY);
         hitbox.setLocation(img.getX(), img.getY());
@@ -104,6 +109,9 @@ public class SpaceShip {
 
     public void hit() {
 
+        if(invincible)
+            return;
+
         hp--;
         invincible = true;
         invincibilityCooldown = 120;
@@ -127,6 +135,10 @@ public class SpaceShip {
     }
 
     public void render() {
+
+        if(hp <= 0) {
+            return;
+        }
 
          if (invincible) {
 
@@ -157,6 +169,7 @@ public class SpaceShip {
 
              if(invincibilityCooldown >= 0) {
                  img.draw();
+                 invincible = false;
                  return;
              }
          }
