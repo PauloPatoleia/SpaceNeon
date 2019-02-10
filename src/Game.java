@@ -5,12 +5,15 @@ import GameObjects.Enemies.EnemyShooter;
 import GameObjects.SpaceShip;
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
+import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
+import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
+import org.academiadecodigo.simplegraphics.keyboard.KeyboardHandler;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 import java.util.LinkedList;
 
-public class Game {
+public class Game implements KeyboardHandler {
 
 
     private Player playerOne;
@@ -24,6 +27,12 @@ public class Game {
     private LinkedList<Enemy> enemies = new LinkedList<>();
     private Picture topBar = new Picture(10, 10, "./Resources/upbar.png");
     private Picture bottomBar = new Picture(10, 770, "./Resources/bottombar.png");
+    private STATE state = STATE.MENU;
+
+    enum STATE {
+        MENU,
+        GAME
+    }
 
 
     public Game() {
@@ -47,6 +56,14 @@ public class Game {
         ship1.render();
         ship2.render();
 
+        // Keyboard
+        Keyboard k = new Keyboard(this);
+
+        // Keyboard events
+        KeyboardEvent PAUSE = new KeyboardEvent();
+        PAUSE.setKey(KeyboardEvent.KEY_P);
+        PAUSE.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
+        k.addEventListener(PAUSE);
     }
 
 
@@ -69,7 +86,7 @@ public class Game {
 
         while (playing) {
 
-            if (!paused) {
+
 
                 long now = System.nanoTime();
                 delta += (now - initialTime) / numberOfSeconds;
@@ -77,19 +94,19 @@ public class Game {
 
                 if (delta >= 1) {
 
-                    int chance = (int) Math.floor(Math.random() * 100);
+                    if (!paused) {
+                        int chance = (int) Math.floor(Math.random() * 100);
 
-                    if (chance == 1) {
-                        EnemyFactory.getNewEnemy(enemyBullets, "./Resources/bulletred.png", enemies);
+                        if (chance == 1) {
+                            EnemyFactory.getNewEnemy(enemyBullets, "./Resources/bulletred.png", enemies);
+                        }
+
+                        tick();
+                        render();
                     }
-
-
-                    tick();
-                    render();
                     updates++;
                     delta--;
                 }
-
 
                 //frames++;
 
@@ -101,7 +118,7 @@ public class Game {
                 }
             }
         }
-    }
+
 
 
     /**
@@ -241,5 +258,19 @@ public class Game {
         topBar.draw();
         bottomBar.delete();
         bottomBar.draw();
+    }
+
+    @Override
+    public void keyPressed(KeyboardEvent keyboardEvent) {
+
+        if(keyboardEvent.getKey() == 80) {
+            System.out.println(paused);
+            paused = !paused;
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyboardEvent keyboardEvent) {
+
     }
 }
