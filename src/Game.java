@@ -3,7 +3,6 @@ import GameObjects.Enemies.Enemy;
 import GameObjects.SpaceShip;
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
-import org.academiadecodigo.simplegraphics.graphics.Text;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
@@ -11,9 +10,7 @@ import java.util.LinkedList;
 
 public class Game {
 
-    private Picture topBar = new Picture(10, 10, "./Resources/upbar.png");
-    private Picture bottomBar = new Picture(10, 770, "./Resources/bottombar.png");
-    private java.awt.Rectangle javaRect = new java.awt.Rectangle(10, 760, 800, 50);
+
     private Player playerOne;
     private Player playerTwo;
     private boolean playing = true;
@@ -23,15 +20,14 @@ public class Game {
     private SpaceShip ship1 = new SpaceShip(400, 380, friendlyBullets, "./Resources/spaceshipblue.png", "./Resources/bulletblue.png");
     private SpaceShip ship2 = new SpaceShip(200, 380, friendlyBullets, "./Resources/spaceshipgreen.png", "./Resources/bulletgreen.png");
     private LinkedList<Enemy> enemies = new LinkedList<>();
+    private Picture topBar = new Picture(10, 10, "./Resources/upbar.png");
+    private Picture bottomBar = new Picture(10, 770, "./Resources/bottombar.png");
 
 
     public Game() {
 
 
-       for (int i = 0; i < 5; i++) {
 
-            enemies.add(GameObjects.Enemies.EnemyFactory.getNewEnemy(enemyBullets, "./Resources/bulletred.png"));
-       }
 
         playerOne = new Player(KeyboardEvent.KEY_UP, KeyboardEvent.KEY_DOWN, KeyboardEvent.KEY_LEFT, KeyboardEvent.KEY_RIGHT, KeyboardEvent.KEY_SPACE, ship1);
         playerTwo = new Player(KeyboardEvent.KEY_W, KeyboardEvent.KEY_S, KeyboardEvent.KEY_A, KeyboardEvent.KEY_D, KeyboardEvent.KEY_T, ship2);
@@ -44,6 +40,11 @@ public class Game {
      */
     public void init() {
 
+
+        for (int i = 0; i < 5; i++) {
+
+            enemies.add(GameObjects.Enemies.EnemyFactory.getNewEnemy(enemyBullets, "./Resources/bulletred.png"));
+        }
 
         Rectangle rect = new Rectangle(10, 10, 800, 800);
         rect.setColor(Color.BLACK);
@@ -105,6 +106,7 @@ public class Game {
      * Responsable for calling every GameObjects.GameObject to action
      */
     private void tick() {
+
         ship1.tick();
         ship2.tick();
 
@@ -121,7 +123,7 @@ public class Game {
 
         for (int i = 0; i < friendlyBullets.size(); i++) {
 
-            if (friendlyBullets.get(i).getImgY() <= 5) {
+            if (friendlyBullets.get(i).getImgY() <= 40) {
                 friendlyBullets.get(i).imgBullet.delete();
                 friendlyBullets.remove(friendlyBullets.get(i));
                 i--;
@@ -132,7 +134,7 @@ public class Game {
 
         for (int i = 0; i < enemyBullets.size(); i++) {
 
-            if (enemyBullets.get(i).getImgY() >= 775) {
+            if (enemyBullets.get(i).getImgY() >= 745) {
                 enemyBullets.get(i).imgBullet.delete();
                 enemyBullets.remove(enemyBullets.get(i));
                 i--;
