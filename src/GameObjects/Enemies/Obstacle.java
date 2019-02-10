@@ -4,20 +4,17 @@ import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 public class Obstacle extends Enemy {
 
-    private int velocity;
     private int hp;
 
     public Obstacle(int x, int y, ObstacleType obstacleType) {
 
-        super(x, y, obstacleType.getImage());
-        //this.getEnemyImage = new Picture(x, y, obstacleType.getImage());
+        super(x, y, obstacleType.getImage(), obstacleType.getVelocityY());
         this.hp = obstacleType.getHp();
-        this.velocity = obstacleType.getVelocityY();
     }
 
     @Override
     public void tick() {
-        getEnemyImage().setY(getEnemyImage().getY() + velocity);
+       super.tick();
     }
 
     @Override

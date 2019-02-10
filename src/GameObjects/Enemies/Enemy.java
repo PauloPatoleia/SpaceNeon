@@ -4,25 +4,22 @@ import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 public abstract class Enemy {
 
-    private Picture EnemyImage;
+    private Picture enemyImage;
+    private int velocity;
 
-    public Enemy(int x, int y, String enemyImage) {
-        this.EnemyImage = new Picture(x, y, enemyImage);
+    public Enemy(int x, int y, String enemyImage, int velocity) {
+        this.enemyImage = new Picture(x, y, enemyImage);
+        this.velocity = velocity;
     }
 
-    public abstract void tick();
+    public void tick() {
+        enemyImage.setY(enemyImage.getY() + velocity);
+    }
 
     public abstract void render();
 
-    public int getY() {
-        return EnemyImage.getY();
-    }
-
-    public int getX() {
-        return EnemyImage.getX();
-    }
 
     public Picture getEnemyImage() {
-        return EnemyImage;
+        return enemyImage;
     }
 }
