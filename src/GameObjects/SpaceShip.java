@@ -14,6 +14,7 @@ public class SpaceShip {
     private int velocityY = 0;
     private boolean isShooting = false;
     private LinkedList<Bullets> friendlyBullets;
+    private String bulletImage;
     private Bullets.BulletType bulletType = Bullets.BulletType.DOUBLE;
     private int cooldown = bulletType.getCooldown();
 
@@ -25,11 +26,11 @@ public class SpaceShip {
      * @param y           - Initial Y position
      * @param imageSource - GameObjects.SpaceShip image source
      */
-    public SpaceShip(int x, int y, LinkedList<Bullets> friendlyBullets, String imageSource) {
+    public SpaceShip(int x, int y, LinkedList<Bullets> friendlyBullets, String imageSource, String bulletImage) {
         this.img = new Picture(x, y, imageSource);
         this.speed = 5;
         this.friendlyBullets = friendlyBullets;
-
+        this.bulletImage = bulletImage;
     }
 
     /**
@@ -66,12 +67,12 @@ public class SpaceShip {
 
         if (img.getX() <= 10)
             img.setX(10);
-        if (img.getX() >= 760)
-            img.setX(760);
+        if (img.getX() >= 770)
+            img.setX(770);
         if (img.getY() <= 10)
             img.setY(10);
-        if (img.getY() >= 760)
-            img.setY(760);
+        if (img.getY() >= 780)
+            img.setY(780);
 
     }
 
@@ -91,14 +92,14 @@ public class SpaceShip {
 
         switch (bulletType) {
             case NORMAL:
-                friendlyBullets.add(new Bullets(img.getX() + 20, img.getY(), bulletType));
+                friendlyBullets.add(new Bullets(img.getX() + 5, img.getY() - 15, bulletType, bulletImage));
                 break;
             case FAST:
-                friendlyBullets.add(new Bullets(img.getX() + 20, img.getY(), bulletType));
+                friendlyBullets.add(new Bullets(img.getX() + 5, img.getY() - 15, bulletType, bulletImage));
                 break;
             case DOUBLE:
-                friendlyBullets.add(new Bullets(img.getX(), img.getY(), bulletType));
-                friendlyBullets.add(new Bullets(img.getX() + 40, img.getY(), bulletType));
+                friendlyBullets.add(new Bullets(img.getX() - 4, img.getY() - 15, bulletType, bulletImage));
+                friendlyBullets.add(new Bullets(img.getX() + 15, img.getY() - 15, bulletType ,bulletImage));
                 break;
         }
     }

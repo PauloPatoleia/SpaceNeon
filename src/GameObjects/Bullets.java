@@ -8,9 +8,9 @@ public class Bullets {
     private Picture imgBullet;
     private int speed;
 
-    public Bullets(int x, int y, BulletType bulletType) {
+    public Bullets(int x, int y, BulletType bulletType, String bulletImage) {
 
-        imgBullet = new Picture(x, y, bulletType.pic);
+        imgBullet = new Picture(x, y, bulletImage);
         this.speed = bulletType.speed;
     }
 
@@ -36,20 +36,19 @@ public class Bullets {
 
     public enum BulletType {
 
-        NORMAL(15, 5, "./Resources/rsz_bullet.jpg"),
-        FAST(10, 8, "./Resources/rsz_bullet.jpg"),
-        DOUBLE(15, 5, "./Resources/rsz_bullet.jpg");
+        NORMAL(15, 5),
+        FAST(10, 8),
+        DOUBLE(15, 5),
+        ENEMYBULLET(40, -5);
 
 
-        BulletType(int cooldown, int speed, String pic) {
+        BulletType(int cooldown, int speed) {
            this.speed = speed;
-           this.pic = pic;
            this.cooldown = cooldown;
         }
 
         private int cooldown;
         private int speed;
-        private String pic;
 
         public int getCooldown() {
             return cooldown;

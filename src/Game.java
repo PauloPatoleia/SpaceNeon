@@ -14,8 +14,9 @@ public class Game {
     private boolean playing = true;
     private boolean paused = false;
     private LinkedList<Bullets> friendlyBullets = new LinkedList<>();
-    private SpaceShip ship1 = new SpaceShip(400, 380, friendlyBullets, "./Resources/rsz_arrow.png");
-    private SpaceShip ship2 = new SpaceShip(200, 380, friendlyBullets, "./Resources/rsz_arrow.png");
+    private LinkedList<Bullets> enemyBullets = new LinkedList<>();
+    private SpaceShip ship1 = new SpaceShip(400, 380, friendlyBullets, "./Resources/spaceshipblue.png", "./Resources/bulletblue.png");
+    private SpaceShip ship2 = new SpaceShip(200, 380, friendlyBullets, "./Resources/spaceshipgreen.png", "./Resources/bulletgreen.png");
     private LinkedList<Enemy> enemies = new LinkedList<>();
 
 
@@ -24,7 +25,8 @@ public class Game {
 
 
        for (int i = 0; i < 5; i++) {
-            enemies.add(GameObjects.Enemies.EnemyFactory.getNewEnemy());
+
+            enemies.add(GameObjects.Enemies.EnemyFactory.getNewEnemy(enemyBullets, "./Resources/bulletred.png"));
        }
 
         playerOne = new Player(KeyboardEvent.KEY_UP, KeyboardEvent.KEY_DOWN, KeyboardEvent.KEY_LEFT, KeyboardEvent.KEY_RIGHT, KeyboardEvent.KEY_SPACE, ship1);
@@ -108,12 +110,22 @@ public class Game {
 
         for (int i = 0; i < friendlyBullets.size(); i++) {
 
-            if (friendlyBullets.get(i).getImgY() <= 0) {
+            if (friendlyBullets.get(i).getImgY() <= 5) {
                 friendlyBullets.remove(friendlyBullets.get(i));
                 i--;
                 continue;
             }
             friendlyBullets.get(i).tick();
+        }
+
+        for (int i = 0; i < enemyBullets.size(); i++) {
+
+            if (enemyBullets.get(i).getImgY() >= 775) {
+                enemyBullets.remove(enemyBullets.get(i));
+                i--;
+                continue;
+            }
+            enemyBullets.get(i).tick();
         }
     }
 
@@ -129,6 +141,10 @@ public class Game {
             enemy.render();
         }
 
+        for (int i = 0; i < enemyBullets.size(); i++) {
+
+            enemyBullets.get(i).render();
+        }
         for (int i = 0; i < friendlyBullets.size(); i++) {
 
             friendlyBullets.get(i).render();

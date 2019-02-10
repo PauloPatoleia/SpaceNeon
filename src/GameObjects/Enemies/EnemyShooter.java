@@ -1,23 +1,45 @@
 package GameObjects.Enemies;
 
+import GameObjects.Bullets;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
+
+import java.util.LinkedList;
 
 public class EnemyShooter extends Enemy {
 
     private Picture enemy;
     private int velocity;
     private int hp;
+    private LinkedList<Bullets> enemyBullets;
+    private String bulletImage;
+    private Bullets.BulletType bulletType = Bullets.BulletType.ENEMYBULLET;
+    private int cooldown;
 
-    public EnemyShooter(int x, int y, EnemyType enemyType) {
+
+
+    public EnemyShooter(int x, int y, EnemyType enemyType, LinkedList<Bullets> enemyBullets, String bulletImage) {
+
         this.enemy = new Picture(x, y, enemyType.getImage());
         this.hp = enemyType.getHp();
         this.velocity = enemyType.getVelocityY();
+        this.enemyBullets = enemyBullets;
+        this.bulletImage = bulletImage;
     }
 
     @Override
-    public void tick(){
+    public void tick() {
+
         enemy.setY(enemy.getY() + velocity);
-        //add shoot
+        if (cooldown == 0) {
+
+            enemyBullets.add(new Bullets(enemy.getX() + 3, enemy.getY() + 8, Bullets.BulletType.ENEMYBULLET,bulletImage));
+             cooldown = bulletType.getCooldown();
+        }
+
+        if (cooldown > 0) {
+            cooldown--;
+        }
+
     }
 
     @Override

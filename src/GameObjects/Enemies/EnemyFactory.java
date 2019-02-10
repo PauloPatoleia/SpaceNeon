@@ -1,8 +1,11 @@
 package GameObjects.Enemies;
 
+import GameObjects.Bullets;
+import java.util.LinkedList;
+
 public class EnemyFactory {
 
-    public static Enemy getNewEnemy() {
+    public static Enemy getNewEnemy(LinkedList<Bullets> enemyBullets, String bulletImage) {
 
         int randomEnemy = (int) (Math.random() * 2);
 
@@ -15,10 +18,10 @@ public class EnemyFactory {
             switch (EnemyShooter.EnemyType.values()[randomEnemyNumber]) {
                 case ENEMY_ONE:
                     int randomOne = (int) (Math.random() * upperBoundary);
-                    return new EnemyShooter(randomOne, 0, EnemyShooter.EnemyType.ENEMY_ONE);
+                    return new EnemyShooter(randomOne, 0, EnemyShooter.EnemyType.ENEMY_ONE, enemyBullets, bulletImage);
                 case ENEMY_TWO:
                     int randomTwo = (int) (Math.random() * upperBoundary);
-                    return new EnemyShooter(randomTwo, 0, EnemyShooter.EnemyType.ENEMY_TWO);
+                    return new EnemyShooter(randomTwo, 0, EnemyShooter.EnemyType.ENEMY_TWO, enemyBullets, bulletImage);
 
             }
         }
