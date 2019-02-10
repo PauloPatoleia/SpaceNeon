@@ -51,8 +51,18 @@ public class SpaceShip {
      * Ship action
      */
     public void tick() {
+
         img.setX(img.getX() + velocityX);
         img.setY(img.getY() + velocityY);
+
+        if (img.getX() <= 10)
+            img.setX(10);
+        if (img.getX() >= 775)
+            img.setX(775);
+        if (img.getY() <= 10)
+            img.setY(10);
+        if (img.getY() >= 780)
+            img.setY(780);
 
         if (isShooting && cooldown == 0) {
 
@@ -63,17 +73,6 @@ public class SpaceShip {
         if (cooldown > 0) {
             cooldown--;
         }
-
-
-        if (img.getX() <= 10)
-            img.setX(10);
-        if (img.getX() >= 770)
-            img.setX(770);
-        if (img.getY() <= 10)
-            img.setY(10);
-        if (img.getY() >= 780)
-            img.setY(780);
-
     }
 
     public void setVelocityX(int velocityX) {

@@ -7,11 +7,13 @@ import org.academiadecodigo.simplegraphics.graphics.Text;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
-
 import java.util.LinkedList;
 
 public class Game {
 
+    private Picture topBar = new Picture(10, 10, "./Resources/upbar.png");
+    private Picture bottomBar = new Picture(10, 770, "./Resources/bottombar.png");
+    private java.awt.Rectangle javaRect = new java.awt.Rectangle(10, 760, 800, 50);
     private Player playerOne;
     private Player playerTwo;
     private boolean playing = true;
@@ -21,6 +23,7 @@ public class Game {
     private SpaceShip ship1 = new SpaceShip(400, 380, friendlyBullets, "./Resources/spaceshipblue.png", "./Resources/bulletblue.png");
     private SpaceShip ship2 = new SpaceShip(200, 380, friendlyBullets, "./Resources/spaceshipgreen.png", "./Resources/bulletgreen.png");
     private LinkedList<Enemy> enemies = new LinkedList<>();
+
 
     public Game() {
 
@@ -161,5 +164,8 @@ public class Game {
 
             friendlyBullets.get(i).render();
         }
+
+        topBar.draw();
+        bottomBar.draw();
     }
 }
