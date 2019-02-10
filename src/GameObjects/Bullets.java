@@ -2,36 +2,41 @@ package GameObjects;
 
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
+import java.awt.*;
+
 
 public class Bullets {
 
-    public Picture imgBullet;
+    public Picture bulletImage;
     private int speed;
+    private Rectangle hitbox;
 
-    public Bullets(int x, int y, BulletType bulletType, String bulletImage) {
+    public Bullets(int initialXPosition, int initialYPosition, BulletType bulletType, String bulletImage) {
 
-        imgBullet = new Picture(x, y, bulletImage);
+        this.bulletImage = new Picture(initialXPosition, initialYPosition, bulletImage);
+        this.hitbox = new Rectangle(initialXPosition, initialYPosition, this.bulletImage.getWidth(), this.bulletImage.getHeight());
         this.speed = bulletType.speed;
     }
 
     public int getImgX() {
 
-        return imgBullet.getX();
+        return bulletImage.getX();
     }
 
     public int getImgY() {
 
-        return imgBullet.getY();
+        return bulletImage.getY();
     }
 
     public void tick() {
 
-        imgBullet.setY(imgBullet.getY() - speed);
+        bulletImage.setY(bulletImage.getY() - speed);
+        hitbox.setLocation(bulletImage.getX(), bulletImage.getY());
     }
 
     public void render() {
 
-        imgBullet.draw();
+        bulletImage.draw();
     }
 
     public enum BulletType {
@@ -53,5 +58,9 @@ public class Bullets {
         public int getCooldown() {
             return cooldown;
         }
+    }
+
+    public Rectangle getHitbox() {
+        return hitbox;
     }
 }

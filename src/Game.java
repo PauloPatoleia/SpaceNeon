@@ -112,19 +112,36 @@ public class Game {
 
 
         for (int i = 0; i < enemies.size(); i++) {
+
             enemies.get(i).tick();
 
             if (enemies.get(i).getEnemyImage().getY() >= 780) {
                 enemies.get(i).getEnemyImage().delete();
                 enemies.remove(enemies.get(i));
                 i--;
+                continue;
+            }
+
+            for (int j = 0; j < friendlyBullets.size(); j++) {
+
+                if (enemies.get(i).getHitbox().intersects(friendlyBullets.get(j).getHitbox())) {
+                    enemies.get(i).getEnemyImage().delete();
+                    enemies.remove(enemies.get(i));
+                    i--;
+
+                    friendlyBullets.get(j).bulletImage.delete();
+                    friendlyBullets.remove(friendlyBullets.get(j));
+                    j = friendlyBullets.size();
+                }
             }
         }
+
+
 
         for (int i = 0; i < friendlyBullets.size(); i++) {
 
             if (friendlyBullets.get(i).getImgY() <= 40) {
-                friendlyBullets.get(i).imgBullet.delete();
+                friendlyBullets.get(i).bulletImage.delete();
                 friendlyBullets.remove(friendlyBullets.get(i));
                 i--;
                 continue;
@@ -135,7 +152,7 @@ public class Game {
         for (int i = 0; i < enemyBullets.size(); i++) {
 
             if (enemyBullets.get(i).getImgY() >= 745) {
-                enemyBullets.get(i).imgBullet.delete();
+                enemyBullets.get(i).bulletImage.delete();
                 enemyBullets.remove(enemyBullets.get(i));
                 i--;
                 continue;
