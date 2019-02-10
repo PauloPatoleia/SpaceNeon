@@ -21,6 +21,8 @@ public class SpaceShip {
     private String bulletImage;
     private Bullets.BulletType bulletType = Bullets.BulletType.DOUBLE;
     private int cooldown = bulletType.getCooldown();
+    private boolean invincible = true;
+    private int invincibilityCooldown = 0;
 
     /**
      * constructor
@@ -79,6 +81,10 @@ public class SpaceShip {
         if (cooldown > 0) {
             cooldown--;
         }
+
+        if(invincibilityCooldown > 0) {
+            invincibilityCooldown--;
+        }
     }
     public Rectangle getHitbox() {
         return hitbox;
@@ -94,6 +100,14 @@ public class SpaceShip {
 
     public void setShooting(boolean shooting) {
         isShooting = shooting;
+    }
+
+    public void hit() {
+
+        hp--;
+        invincible = true;
+        invincibilityCooldown = 120;
+        //
     }
 
     public void shoot() {
@@ -114,8 +128,42 @@ public class SpaceShip {
 
     public void render() {
 
+         if (invincible) {
+
+             if(invincibilityCooldown >= 100) {
+                 img.delete();
+                 return;
+             }
+
+             if(invincibilityCooldown >= 80) {
+                 img.draw();
+                 return;
+             }
+
+             if(invincibilityCooldown >= 60) {
+                 img.delete();
+                 return;
+             }
+
+             if(invincibilityCooldown >= 40) {
+                 img.draw();
+                 return;
+             }
+
+             if(invincibilityCooldown >= 20) {
+                 img.delete();
+                 return;
+             }
+
+             if(invincibilityCooldown >= 0) {
+                 img.draw();
+                 return;
+             }
+         }
+
 
         img.draw();
+
     }
 }
 

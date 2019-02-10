@@ -138,6 +138,7 @@ public class Game {
                     enemies.get(i).getEnemyImage().delete();
                     enemies.remove(enemies.get(i));
                     i = enemies.size();
+                    ship1.hit();
                     continue;
                 }
             }
