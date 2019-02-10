@@ -61,6 +61,7 @@ public class SpaceShip {
 
         if(hp <= 0) {
             img.delete();
+            hitbox = null;
             return;
         }
 
@@ -177,6 +178,10 @@ public class SpaceShip {
 
         img.draw();
 
+    }
+
+    public int getHp() {
+        return hp;
     }
 }
 

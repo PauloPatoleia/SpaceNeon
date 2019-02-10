@@ -28,6 +28,9 @@ public class Game implements KeyboardHandler {
     private Picture topBar = new Picture(10, 10, "./Resources/upbar.png");
     private Picture bottomBar = new Picture(10, 770, "./Resources/bottombar.png");
     private STATE state = STATE.MENU;
+    private Rectangle rect = new Rectangle(10, 10, 800, 800);
+    private Picture menu = new Picture(10,10, "./Resources/menu_spaceneon.png");
+
 
     enum STATE {
         MENU,
@@ -49,12 +52,7 @@ public class Game implements KeyboardHandler {
      */
     public void init() {
 
-        Rectangle rect = new Rectangle(10, 10, 800, 800);
-        rect.setColor(Color.BLACK);
-        rect.fill();
 
-        ship1.render();
-        ship2.render();
 
         // Keyboard
         Keyboard k = new Keyboard(this);
@@ -64,6 +62,11 @@ public class Game implements KeyboardHandler {
         PAUSE.setKey(KeyboardEvent.KEY_P);
         PAUSE.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
         k.addEventListener(PAUSE);
+
+        KeyboardEvent START = new KeyboardEvent();
+        START.setKey(KeyboardEvent.KEY_L);
+        START.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
+        k.addEventListener(START);
     }
 
 
@@ -87,7 +90,6 @@ public class Game implements KeyboardHandler {
         while (playing) {
 
 
-
                 long now = System.nanoTime();
                 delta += (now - initialTime) / numberOfSeconds;
                 initialTime = now;
@@ -95,11 +97,6 @@ public class Game implements KeyboardHandler {
                 if (delta >= 1) {
 
                     if (!paused) {
-                        int chance = (int) Math.floor(Math.random() * 100);
-
-                        if (chance == 1) {
-                            EnemyFactory.getNewEnemy(enemyBullets, "./Resources/bulletred.png", enemies);
-                        }
 
                         tick();
                         render();
@@ -126,6 +123,18 @@ public class Game implements KeyboardHandler {
      */
     private void tick() {
 
+        if(state == STATE.MENU) {
+            return;
+        }
+
+
+        int chance = (int) Math.floor(Math.random() * 100);
+
+        if (chance == 1) {
+            EnemyFactory.getNewEnemy(enemyBullets, "./Resources/bulletred.png", enemies);
+        }
+
+
         ship1.tick();
         ship2.tick();
 
@@ -143,27 +152,31 @@ public class Game implements KeyboardHandler {
             }
 
             // Collision with ships
-            if (ship1.getHitbox().intersects(enemies.get(i).getHitbox())) {
+            if(ship1.getHp() > 0) {
+                if (ship1.getHitbox().intersects(enemies.get(i).getHitbox())) {
 
-                ship1.hit();
-                if (enemies.get(i) instanceof EnemyShooter) {
+                    ship1.hit();
+                    if (enemies.get(i) instanceof EnemyShooter) {
 
-                    enemies.get(i).getEnemyImage().delete();
-                    enemies.remove(enemies.get(i));
-                    i = enemies.size();
-                    continue;
+                        enemies.get(i).getEnemyImage().delete();
+                        enemies.remove(enemies.get(i));
+                        i = enemies.size();
+                        continue;
+                    }
                 }
             }
 
-            if (ship2.getHitbox().intersects(enemies.get(i).getHitbox())) {
+            if(ship2.getHp() > 0) {
+                if (ship2.getHitbox().intersects(enemies.get(i).getHitbox())) {
 
-                ship2.hit();
-                if (enemies.get(i) instanceof EnemyShooter) {
+                    ship2.hit();
+                    if (enemies.get(i) instanceof EnemyShooter) {
 
-                    enemies.get(i).getEnemyImage().delete();
-                    enemies.remove(enemies.get(i));
-                    i = enemies.size();
-                    continue;
+                        enemies.get(i).getEnemyImage().delete();
+                        enemies.remove(enemies.get(i));
+                        i = enemies.size();
+                        continue;
+                    }
                 }
             }
 
@@ -212,21 +225,25 @@ public class Game implements KeyboardHandler {
                 continue;
             }
 
-            if (enemyBullets.get(i).getHitbox().intersects(ship1.getHitbox())) {
+            if (ship1.getHp() > 0) {
+                if (enemyBullets.get(i).getHitbox().intersects(ship1.getHitbox())) {
 
-                enemyBullets.get(i).bulletImage.delete();
-                enemyBullets.remove(enemyBullets.get(i));
-                i = enemyBullets.size();
-                ship1.hit();
-                continue;
+                    enemyBullets.get(i).bulletImage.delete();
+                    enemyBullets.remove(enemyBullets.get(i));
+                    i = enemyBullets.size();
+                    ship1.hit();
+                    continue;
+                }
             }
 
-            if (enemyBullets.get(i).getHitbox().intersects(ship2.getHitbox())) {
+            if (ship2.getHp() > 0) {
+                if (enemyBullets.get(i).getHitbox().intersects(ship2.getHitbox())) {
 
-                enemyBullets.get(i).bulletImage.delete();
-                enemyBullets.remove(enemyBullets.get(i));
-                i = enemyBullets.size();
-                ship2.hit();
+                    enemyBullets.get(i).bulletImage.delete();
+                    enemyBullets.remove(enemyBullets.get(i));
+                    i = enemyBullets.size();
+                    ship2.hit();
+                }
             }
         }
     }
@@ -236,6 +253,14 @@ public class Game implements KeyboardHandler {
      * Responsable for rendering everything to the screen
      */
     private void render() {
+
+        if(state == STATE.MENU) {
+
+
+            menu.draw();
+            return;
+
+        }
 
         ship1.render();
         ship2.render();
@@ -263,11 +288,20 @@ public class Game implements KeyboardHandler {
     @Override
     public void keyPressed(KeyboardEvent keyboardEvent) {
 
+        System.out.println(keyboardEvent.getKey());
+
         if(keyboardEvent.getKey() == 80) {
             System.out.println(paused);
             paused = !paused;
         }
+
+        if(keyboardEvent.getKey() == 76)
+            state = STATE.GAME;
+            menu.delete();
+            rect.setColor(Color.BLACK);
+            rect.fill();
     }
+
 
     @Override
     public void keyReleased(KeyboardEvent keyboardEvent) {
