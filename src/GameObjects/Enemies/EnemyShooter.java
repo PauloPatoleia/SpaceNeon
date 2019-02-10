@@ -28,8 +28,8 @@ public class EnemyShooter extends Enemy {
 
     public enum EnemyType {
 
-        ENEMY_ONE( 3,4, "./Resources/enemy50.jpg"),
-        ENEMY_TWO( 3,6, "./Resources/enemyTwo70.jpg");
+        ENEMY_ONE( 1,4, "./Resources/enemy25.png"),
+        ENEMY_TWO( 2,6, "./Resources/enemy25.png");
 
         private int velocity;
         private String image;

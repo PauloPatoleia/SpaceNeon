@@ -26,8 +26,8 @@ public class Obstacle extends Enemy {
 
     public enum ObstacleType {
 
-        OBSTACLE_ONE(1,2, "./Resources/obstacle100.jpg"),
-        OBSTACLE_TWO(2,2, "./Resources/obstacle120.jpg");
+        OBSTACLE_ONE(1,2, "./Resources/obstacle120.png"),
+        OBSTACLE_TWO(1,2, "./Resources/obstacle140.png");
 
         private int velocity;
         private String image;

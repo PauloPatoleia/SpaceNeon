@@ -23,9 +23,9 @@ public class Game {
     public Game() {
 
 
-       // for (int i = 0; i < 5; i++) {
-       //     enemies.add(GameObjects.Enemies.EnemyFactory.getNewEnemy());
-        // }
+       for (int i = 0; i < 5; i++) {
+            enemies.add(GameObjects.Enemies.EnemyFactory.getNewEnemy());
+       }
 
         playerOne = new Player(KeyboardEvent.KEY_UP, KeyboardEvent.KEY_DOWN, KeyboardEvent.KEY_LEFT, KeyboardEvent.KEY_RIGHT, KeyboardEvent.KEY_SPACE, ship1);
         playerTwo = new Player(KeyboardEvent.KEY_W, KeyboardEvent.KEY_S, KeyboardEvent.KEY_A, KeyboardEvent.KEY_D, KeyboardEvent.KEY_T, ship2);
