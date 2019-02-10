@@ -2,12 +2,16 @@ package GameObjects;
 
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
+import java.awt.*;
 import java.util.LinkedList;
 
 public class SpaceShip {
 
     private Picture img;
     private int speed;
+    private Rectangle hitbox;
+    private int hp = 3;
+
 
 
     private int velocityX = 0;
@@ -22,12 +26,13 @@ public class SpaceShip {
      * constructor
      * Initializes a new Player GameObjects.SpaceShip
      *
-     * @param x           - Initial X position
-     * @param y           - Initial Y position
+     * @param initialXPosition           - Initial X position
+     * @param initialYPosition           - Initial Y position
      * @param imageSource - GameObjects.SpaceShip image source
      */
-    public SpaceShip(int x, int y, LinkedList<Bullets> friendlyBullets, String imageSource, String bulletImage) {
-        this.img = new Picture(x, y, imageSource);
+    public SpaceShip(int initialXPosition, int initialYPosition, LinkedList<Bullets> friendlyBullets, String imageSource, String bulletImage) {
+        this.img = new Picture(initialXPosition, initialYPosition, imageSource);
+        this.hitbox = new Rectangle(initialXPosition, initialYPosition, this.img.getWidth(), this.img.getHeight());
         this.speed = 5;
         this.friendlyBullets = friendlyBullets;
         this.bulletImage = bulletImage;
@@ -54,6 +59,7 @@ public class SpaceShip {
 
         img.setX(img.getX() + velocityX);
         img.setY(img.getY() + velocityY);
+        hitbox.setLocation(img.getX(), img.getY());
 
         if (img.getX() <= 10)
             img.setX(10);
@@ -73,6 +79,9 @@ public class SpaceShip {
         if (cooldown > 0) {
             cooldown--;
         }
+    }
+    public Rectangle getHitbox() {
+        return hitbox;
     }
 
     public void setVelocityX(int velocityX) {
@@ -101,6 +110,12 @@ public class SpaceShip {
                 friendlyBullets.add(new Bullets(img.getX() + 15, img.getY() - 15, bulletType ,bulletImage));
                 break;
         }
+    }
+
+    public void render() {
+
+
+        img.draw();
     }
 }
 

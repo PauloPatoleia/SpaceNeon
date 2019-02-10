@@ -1,5 +1,7 @@
 import GameObjects.Bullets;
 import GameObjects.Enemies.Enemy;
+import GameObjects.Enemies.EnemyFactory;
+import GameObjects.Enemies.EnemyShooter;
 import GameObjects.SpaceShip;
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
@@ -40,12 +42,6 @@ public class Game {
      */
     public void init() {
 
-
-        for (int i = 0; i < 5; i++) {
-
-            enemies.add(GameObjects.Enemies.EnemyFactory.getNewEnemy(enemyBullets, "./Resources/bulletred.png"));
-        }
-
         Rectangle rect = new Rectangle(10, 10, 800, 800);
         rect.setColor(Color.BLACK);
         rect.fill();
@@ -82,6 +78,14 @@ public class Game {
                 initialTime = now;
 
                 if (delta >= 1) {
+
+                    int chance = (int) Math.floor(Math.random() * 100);
+
+                    if(chance == 1) {
+                        EnemyFactory.getNewEnemy(enemyBullets, "./Resources/bulletred.png", enemies);
+                    }
+
+
                     tick();
                     render();
                     updates++;
@@ -115,6 +119,8 @@ public class Game {
 
             enemies.get(i).tick();
 
+
+            // Out of bounds
             if (enemies.get(i).getEnemyImage().getY() >= 780) {
                 enemies.get(i).getEnemyImage().delete();
                 enemies.remove(enemies.get(i));
@@ -122,20 +128,66 @@ public class Game {
                 continue;
             }
 
+
+
+            // Collision with ships
+            if (ship1.getHitbox().intersects(enemies.get(i).getHitbox()) || ship2.getHitbox().intersects(enemies.get(i).getHitbox()) ) {
+
+                if (enemies.get(i) instanceof EnemyShooter) {
+
+                    enemies.get(i).getEnemyImage().delete();
+                    enemies.remove(enemies.get(i));
+                    i = enemies.size();
+                    continue;
+                }
+            }
+
+
+
+            // Collision with friendlyBullets
             for (int j = 0; j < friendlyBullets.size(); j++) {
 
                 if (enemies.get(i).getHitbox().intersects(friendlyBullets.get(j).getHitbox())) {
-                    enemies.get(i).getEnemyImage().delete();
-                    enemies.remove(enemies.get(i));
-                    i--;
+
+                    if (enemies.get(i) instanceof EnemyShooter) {
+                        enemies.get(i).getEnemyImage().delete();
+                        enemies.remove(enemies.get(i));
+                        i--;
+                    }
 
                     friendlyBullets.get(j).bulletImage.delete();
                     friendlyBullets.remove(friendlyBullets.get(j));
                     j = friendlyBullets.size();
                 }
             }
+
         }
 
+        // check Collision with enemyBullets
+        for (int i = 0; i < enemyBullets.size(); i++) {
+
+            if (ship1.getHitbox().intersects(enemyBullets.get(i).getHitbox()) || ship2.getHitbox().intersects(enemyBullets.get(i).getHitbox()) ) {
+
+                enemyBullets.get(i).bulletImage.delete();
+                enemyBullets.remove(enemyBullets.get(i));
+                i = enemyBullets.size();
+            }
+        }
+/*
+
+        for (int i = 0; i < enemies.size(); i++) {
+
+            if (ship1.getHitbox().intersects(enemies.get(i).getHitbox()) || ship2.getHitbox().intersects(enemies.get(i).getHitbox()) ) {
+
+                if (enemies.get(i) instanceof EnemyShooter) {
+
+                    enemies.get(i).getEnemyImage().delete();
+                    enemies.remove(enemies.get(i));
+                    i = enemies.size();
+                }
+            }
+        }
+*/
 
 
         for (int i = 0; i < friendlyBullets.size(); i++) {
@@ -148,6 +200,8 @@ public class Game {
             }
             friendlyBullets.get(i).tick();
         }
+
+
 
         for (int i = 0; i < enemyBullets.size(); i++) {
 
@@ -165,9 +219,9 @@ public class Game {
      * Responsable for rendering everything to the screen
      */
     private void render() {
-        // TODO: 10/02/2019 add render to spaceShip
-        ship1.getImg().draw();
-        ship2.getImg().draw();
+
+        ship1.render();
+        ship2.render();
 
 
         for (Enemy enemy: enemies){
