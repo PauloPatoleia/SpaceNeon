@@ -7,7 +7,6 @@ import java.util.LinkedList;
 
 public class EnemyShooter extends Enemy {
 
-    private Picture enemy;
     private int velocity;
     private int hp;
     private LinkedList<Bullets> enemyBullets;
@@ -19,7 +18,7 @@ public class EnemyShooter extends Enemy {
 
     public EnemyShooter(int x, int y, EnemyType enemyType, LinkedList<Bullets> enemyBullets, String bulletImage) {
 
-        this.enemy = new Picture(x, y, enemyType.getImage());
+        super(x, y, enemyType.getImage());
         this.hp = enemyType.getHp();
         this.velocity = enemyType.getVelocityY();
         this.enemyBullets = enemyBullets;
@@ -29,10 +28,11 @@ public class EnemyShooter extends Enemy {
     @Override
     public void tick() {
 
-        enemy.setY(enemy.getY() + velocity);
+        getEnemyImage().setY(getEnemyImage().getY() + velocity);
+
         if (cooldown == 0) {
 
-            enemyBullets.add(new Bullets(enemy.getX() + 3, enemy.getY() + 8, Bullets.BulletType.ENEMYBULLET,bulletImage));
+            enemyBullets.add(new Bullets(getEnemyImage().getX() + 3, getEnemyImage().getY() + 8, Bullets.BulletType.ENEMYBULLET,bulletImage));
              cooldown = bulletType.getCooldown();
         }
 
@@ -44,7 +44,7 @@ public class EnemyShooter extends Enemy {
 
     @Override
     public void render() {
-        enemy.draw();
+        getEnemyImage().draw();
     }
 
 

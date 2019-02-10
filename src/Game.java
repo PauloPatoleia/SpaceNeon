@@ -105,7 +105,10 @@ public class Game {
         ship2.tick();
 
         for (Enemy enemy: enemies){
+
             enemy.tick();
+
+
         }
 
         for (int i = 0; i < friendlyBullets.size(); i++) {
