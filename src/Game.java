@@ -29,8 +29,6 @@ public class Game {
     public Game() {
 
 
-
-
         playerOne = new Player(KeyboardEvent.KEY_UP, KeyboardEvent.KEY_DOWN, KeyboardEvent.KEY_LEFT, KeyboardEvent.KEY_RIGHT, KeyboardEvent.KEY_SPACE, ship1);
         playerTwo = new Player(KeyboardEvent.KEY_W, KeyboardEvent.KEY_S, KeyboardEvent.KEY_A, KeyboardEvent.KEY_D, KeyboardEvent.KEY_T, ship2);
 
@@ -46,8 +44,8 @@ public class Game {
         rect.setColor(Color.BLACK);
         rect.fill();
 
-        ship1.getImg().draw();
-        ship2.getImg().draw();
+        ship1.render();
+        ship2.render();
 
     }
 
@@ -81,7 +79,7 @@ public class Game {
 
                     int chance = (int) Math.floor(Math.random() * 100);
 
-                    if(chance == 1) {
+                    if (chance == 1) {
                         EnemyFactory.getNewEnemy(enemyBullets, "./Resources/bulletred.png", enemies);
                     }
 
@@ -119,7 +117,6 @@ public class Game {
 
             enemies.get(i).tick();
 
-
             // Out of bounds
             if (enemies.get(i).getEnemyImage().getY() >= 780) {
                 enemies.get(i).getEnemyImage().delete();
@@ -128,21 +125,30 @@ public class Game {
                 continue;
             }
 
-
-
             // Collision with ships
-            if (ship1.getHitbox().intersects(enemies.get(i).getHitbox()) || ship2.getHitbox().intersects(enemies.get(i).getHitbox()) ) {
+            if (ship1.getHitbox().intersects(enemies.get(i).getHitbox())) {
 
+                ship1.hit();
                 if (enemies.get(i) instanceof EnemyShooter) {
 
                     enemies.get(i).getEnemyImage().delete();
                     enemies.remove(enemies.get(i));
                     i = enemies.size();
-                    ship1.hit();
                     continue;
                 }
             }
 
+            if (ship2.getHitbox().intersects(enemies.get(i).getHitbox())) {
+
+                ship2.hit();
+                if (enemies.get(i) instanceof EnemyShooter) {
+
+                    enemies.get(i).getEnemyImage().delete();
+                    enemies.remove(enemies.get(i));
+                    i = enemies.size();
+                    continue;
+                }
+            }
 
 
             // Collision with friendlyBullets
@@ -161,36 +167,9 @@ public class Game {
                     j = friendlyBullets.size();
                 }
             }
-
         }
 
-        // check Collision with enemyBullets
-        for (int i = 0; i < enemyBullets.size(); i++) {
-
-            if (ship1.getHitbox().intersects(enemyBullets.get(i).getHitbox()) || ship2.getHitbox().intersects(enemyBullets.get(i).getHitbox()) ) {
-
-                enemyBullets.get(i).bulletImage.delete();
-                enemyBullets.remove(enemyBullets.get(i));
-                i = enemyBullets.size();
-            }
-        }
-/*
-
-        for (int i = 0; i < enemies.size(); i++) {
-
-            if (ship1.getHitbox().intersects(enemies.get(i).getHitbox()) || ship2.getHitbox().intersects(enemies.get(i).getHitbox()) ) {
-
-                if (enemies.get(i) instanceof EnemyShooter) {
-
-                    enemies.get(i).getEnemyImage().delete();
-                    enemies.remove(enemies.get(i));
-                    i = enemies.size();
-                }
-            }
-        }
-*/
-
-
+        //friendlyBullets out of bounds
         for (int i = 0; i < friendlyBullets.size(); i++) {
 
             if (friendlyBullets.get(i).getImgY() <= 40) {
@@ -202,19 +181,39 @@ public class Game {
             friendlyBullets.get(i).tick();
         }
 
-
-
+        //enemyBullets out of bounds and collision with spaceships
         for (int i = 0; i < enemyBullets.size(); i++) {
 
+            enemyBullets.get(i).tick();
+
             if (enemyBullets.get(i).getImgY() >= 745) {
+
                 enemyBullets.get(i).bulletImage.delete();
                 enemyBullets.remove(enemyBullets.get(i));
+                i = enemyBullets.size();
                 i--;
                 continue;
             }
-            enemyBullets.get(i).tick();
+
+            if (enemyBullets.get(i).getHitbox().intersects(ship1.getHitbox())) {
+
+                enemyBullets.get(i).bulletImage.delete();
+                enemyBullets.remove(enemyBullets.get(i));
+                i = enemyBullets.size();
+                ship1.hit();
+                continue;
+            }
+
+            if (enemyBullets.get(i).getHitbox().intersects(ship2.getHitbox())) {
+
+                enemyBullets.get(i).bulletImage.delete();
+                enemyBullets.remove(enemyBullets.get(i));
+                i = enemyBullets.size();
+                ship2.hit();
+            }
         }
     }
+
 
     /**
      * Responsable for rendering everything to the screen
@@ -225,7 +224,7 @@ public class Game {
         ship2.render();
 
 
-        for (Enemy enemy: enemies){
+        for (Enemy enemy : enemies) {
             enemy.render();
         }
 
@@ -238,8 +237,9 @@ public class Game {
 
             friendlyBullets.get(i).render();
         }
-
+        topBar.delete();
         topBar.draw();
+        bottomBar.delete();
         bottomBar.draw();
     }
 }

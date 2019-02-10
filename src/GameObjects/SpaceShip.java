@@ -121,7 +121,7 @@ public class SpaceShip {
                 break;
             case DOUBLE:
                 friendlyBullets.add(new Bullets(img.getX() - 4, img.getY() - 15, bulletType, bulletImage));
-                friendlyBullets.add(new Bullets(img.getX() + 15, img.getY() - 15, bulletType ,bulletImage));
+                friendlyBullets.add(new Bullets(img.getX() + 15, img.getY() - 15, bulletType, bulletImage));
                 break;
         }
     }

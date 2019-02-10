@@ -41,10 +41,10 @@ public class Bullets {
 
     public enum BulletType {
 
-        NORMAL(15, 5),
+        NORMAL(15, 6),
         FAST(10, 8),
-        DOUBLE(15, 5),
-        ENEMYBULLET(40, -5);
+        DOUBLE(15, 6),
+        ENEMYBULLET(80, -3);
 
 
         BulletType(int cooldown, int speed) {
