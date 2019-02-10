@@ -3,7 +3,10 @@ import GameObjects.Enemies.Enemy;
 import GameObjects.SpaceShip;
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
+import org.academiadecodigo.simplegraphics.graphics.Text;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
+import org.academiadecodigo.simplegraphics.pictures.Picture;
+
 
 import java.util.LinkedList;
 
@@ -18,8 +21,6 @@ public class Game {
     private SpaceShip ship1 = new SpaceShip(400, 380, friendlyBullets, "./Resources/spaceshipblue.png", "./Resources/bulletblue.png");
     private SpaceShip ship2 = new SpaceShip(200, 380, friendlyBullets, "./Resources/spaceshipgreen.png", "./Resources/bulletgreen.png");
     private LinkedList<Enemy> enemies = new LinkedList<>();
-
-
 
     public Game() {
 
@@ -104,15 +105,12 @@ public class Game {
         ship1.tick();
         ship2.tick();
 
-        for (Enemy enemy: enemies){
-
-
-        }
 
         for (int i = 0; i < enemies.size(); i++) {
             enemies.get(i).tick();
 
             if (enemies.get(i).getEnemyImage().getY() >= 780) {
+                enemies.get(i).getEnemyImage().delete();
                 enemies.remove(enemies.get(i));
                 i--;
             }
@@ -121,6 +119,7 @@ public class Game {
         for (int i = 0; i < friendlyBullets.size(); i++) {
 
             if (friendlyBullets.get(i).getImgY() <= 5) {
+                friendlyBullets.get(i).imgBullet.delete();
                 friendlyBullets.remove(friendlyBullets.get(i));
                 i--;
                 continue;
@@ -131,6 +130,7 @@ public class Game {
         for (int i = 0; i < enemyBullets.size(); i++) {
 
             if (enemyBullets.get(i).getImgY() >= 775) {
+                enemyBullets.get(i).imgBullet.delete();
                 enemyBullets.remove(enemyBullets.get(i));
                 i--;
                 continue;
@@ -143,6 +143,7 @@ public class Game {
      * Responsable for rendering everything to the screen
      */
     private void render() {
+        // TODO: 10/02/2019 add render to spaceShip
         ship1.getImg().draw();
         ship2.getImg().draw();
 
@@ -155,10 +156,10 @@ public class Game {
 
             enemyBullets.get(i).render();
         }
+
         for (int i = 0; i < friendlyBullets.size(); i++) {
 
             friendlyBullets.get(i).render();
         }
-
     }
 }

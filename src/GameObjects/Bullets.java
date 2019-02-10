@@ -5,7 +5,7 @@ import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 public class Bullets {
 
-    private Picture imgBullet;
+    public Picture imgBullet;
     private int speed;
 
     public Bullets(int x, int y, BulletType bulletType, String bulletImage) {
