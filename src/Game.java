@@ -106,9 +106,16 @@ public class Game {
 
         for (Enemy enemy: enemies){
 
-            enemy.tick();
 
+        }
 
+        for (int i = 0; i < enemies.size(); i++) {
+            enemies.get(i).tick();
+
+            if (enemies.get(i).getEnemyImage().getY() >= 780) {
+                enemies.remove(enemies.get(i));
+                i--;
+            }
         }
 
         for (int i = 0; i < friendlyBullets.size(); i++) {

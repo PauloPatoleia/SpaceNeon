@@ -5,15 +5,15 @@ import org.academiadecodigo.simplegraphics.pictures.Picture;
 public abstract class Enemy {
 
     private Picture enemyImage;
-    private int velocity;
+    private int speed;
 
-    public Enemy(int x, int y, String enemyImage, int velocity) {
+    public Enemy(int x, int y, String enemyImage, int speed) {
         this.enemyImage = new Picture(x, y, enemyImage);
-        this.velocity = velocity;
+        this.speed = speed;
     }
 
     public void tick() {
-        enemyImage.setY(enemyImage.getY() + velocity);
+        enemyImage.setY(enemyImage.getY() + speed);
     }
 
     public abstract void render();
