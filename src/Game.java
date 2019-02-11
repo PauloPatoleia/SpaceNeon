@@ -5,6 +5,7 @@ import GameObjects.Enemies.EnemyShooter;
 import GameObjects.SpaceShip;
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
+import org.academiadecodigo.simplegraphics.graphics.Text;
 import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
@@ -31,7 +32,8 @@ public class Game implements KeyboardHandler {
     private STATE state = STATE.MENU;
     private Rectangle rect = new Rectangle(10, 10, 800, 800);
     private Picture menu = new Picture(10,10, "menu_spaceneon_400x400.png");
-
+    // TODO: 11/02/2019 change simple graphics to take more fonts and possibly more input keys
+    private FramesPerSecond fps = new FramesPerSecond();
 
     enum STATE {
         MENU,
@@ -42,7 +44,7 @@ public class Game implements KeyboardHandler {
     public Game() {
 
 
-        // TODO: 11/02/2019 MOVE THIS
+        // TODO: 11/02/2019 MOVE THIS - dont create players before the ships
         playerOne = new Player(KeyboardEvent.KEY_UP, KeyboardEvent.KEY_DOWN, KeyboardEvent.KEY_LEFT, KeyboardEvent.KEY_RIGHT, KeyboardEvent.KEY_SPACE, ship1);
         playerTwo = new Player(KeyboardEvent.KEY_W, KeyboardEvent.KEY_S, KeyboardEvent.KEY_A, KeyboardEvent.KEY_D, KeyboardEvent.KEY_T, ship2);
 
@@ -84,10 +86,8 @@ public class Game implements KeyboardHandler {
         double numberOfSeconds = 1000000000 / amountOfTicks;
         double delta = 0;
 
-        // Check FPS
-        int updates = 0;
-        //int frames = 0;
         long timer = System.currentTimeMillis();
+        int frames= 0;
 
         while (playing) {
 
@@ -103,17 +103,16 @@ public class Game implements KeyboardHandler {
                         tick();
                         render();
                     }
-                    updates++;
+                    frames++;
                     delta--;
                 }
 
-                //frames++;
 
                 if (System.currentTimeMillis() - timer > 1000) {
                     timer += 1000;
-                    System.out.println(updates + " FPS");
-                    updates = 0;
-                    // frames = 0;
+                    //System.out.println(updates + " FPS");
+                    fps.setFps(frames);
+                    frames = 0;
                 }
             }
         }
@@ -261,7 +260,6 @@ public class Game implements KeyboardHandler {
 
         if(state == STATE.MENU) {
 
-
             menu.draw();
             return;
 
@@ -285,10 +283,15 @@ public class Game implements KeyboardHandler {
 
             friendlyBullets.get(i).render();
         }
+
         topBar.delete();
         topBar.draw();
         bottomBar.delete();
         bottomBar.draw();
+
+        fps.render();
+
+
     }
 
     @Override
