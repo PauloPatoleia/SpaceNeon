@@ -9,6 +9,7 @@
         <property name="build.dir" value="build" />
         <property name="classes.dir" value="${build.dir}/classes" />
         <property name="lib.dir" value="lib" />
+        <property name="resources.dir" value="resources" />
         <path id="classpath">
             <fileset dir="lib" includes="**/*.jar" />
         </path>
@@ -39,6 +40,7 @@
                 <attribute name="Class-Path" value="${lib.dir}" />
             </manifest>
             <zipgroupfileset dir="lib" includes="*.jar"/>
+            <fileset dir="${resources.dir}" />
         </jar>
     </target>
 

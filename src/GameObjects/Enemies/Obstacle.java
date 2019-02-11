@@ -1,7 +1,5 @@
 package GameObjects.Enemies;
 
-import org.academiadecodigo.simplegraphics.pictures.Picture;
-
 public class Obstacle extends Enemy {
 
     private int hp;
@@ -24,8 +22,8 @@ public class Obstacle extends Enemy {
 
     public enum ObstacleType {
 
-        OBSTACLE_ONE(1,2, "./Resources/obstaclesmall.png"),
-        OBSTACLE_TWO(1,2, "./Resources/obstaclebig.png");
+        OBSTACLE_ONE(1,2, "obstaclesmall.png"),
+        OBSTACLE_TWO(1,2, "obstaclebig.png");
 
         private int velocity;
         private String image;

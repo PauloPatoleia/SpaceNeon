@@ -22,14 +22,15 @@ public class Game implements KeyboardHandler {
     private boolean paused = false;
     private LinkedList<Bullets> friendlyBullets = new LinkedList<>();
     private LinkedList<Bullets> enemyBullets = new LinkedList<>();
-    private SpaceShip ship1 = new SpaceShip(400, 380, friendlyBullets, "./Resources/spaceshipblue.png", "./Resources/bulletblue.png");
-    private SpaceShip ship2 = new SpaceShip(200, 380, friendlyBullets, "./Resources/spaceshipgreen.png", "./Resources/bulletgreen.png");
+    // TODO: 11/02/2019 MAKE A SHIP ARRAY
+    private SpaceShip ship1 = new SpaceShip(400, 380, friendlyBullets, "spaceshipblue.png", "bulletblue.png");
+    private SpaceShip ship2 = new SpaceShip(200, 380, friendlyBullets, "spaceshipgreen.png", "bulletgreen.png");
     private LinkedList<Enemy> enemies = new LinkedList<>();
-    private Picture topBar = new Picture(10, 10, "./Resources/upbar.png");
-    private Picture bottomBar = new Picture(10, 770, "./Resources/bottombar.png");
+    private Picture topBar = new Picture(10, 10, "upbar.png");
+    private Picture bottomBar = new Picture(10, 770, "bottombar.png");
     private STATE state = STATE.MENU;
     private Rectangle rect = new Rectangle(10, 10, 800, 800);
-    private Picture menu = new Picture(10,10, "./Resources/menu_spaceneon.png");
+    private Picture menu = new Picture(10,10, "menu_spaceneon.png");
 
 
     enum STATE {
@@ -41,6 +42,7 @@ public class Game implements KeyboardHandler {
     public Game() {
 
 
+        // TODO: 11/02/2019 MOVE THIS
         playerOne = new Player(KeyboardEvent.KEY_UP, KeyboardEvent.KEY_DOWN, KeyboardEvent.KEY_LEFT, KeyboardEvent.KEY_RIGHT, KeyboardEvent.KEY_SPACE, ship1);
         playerTwo = new Player(KeyboardEvent.KEY_W, KeyboardEvent.KEY_S, KeyboardEvent.KEY_A, KeyboardEvent.KEY_D, KeyboardEvent.KEY_T, ship2);
 
@@ -52,7 +54,7 @@ public class Game implements KeyboardHandler {
      */
     public void init() {
 
-
+        // TODO: 11/02/2019 Add mouse events and other game essentials for menu etc
 
         // Keyboard
         Keyboard k = new Keyboard(this);
@@ -127,14 +129,14 @@ public class Game implements KeyboardHandler {
             return;
         }
 
-
+        // TODO: 11/02/2019 Organize tic into different classes
         int chance = (int) Math.floor(Math.random() * 100);
 
         if (chance == 1) {
-            EnemyFactory.getNewEnemy(enemyBullets, "./Resources/bulletred.png", enemies);
+            EnemyFactory.getNewEnemy(enemyBullets, "bulletred.png", enemies);
         }
 
-
+        // TODO: 11/02/2019 This will be an array
         ship1.tick();
         ship2.tick();
 
@@ -151,6 +153,8 @@ public class Game implements KeyboardHandler {
                 continue;
             }
 
+
+            // TODO: 11/02/2019 use the ship array for this
             // Collision with ships
             if(ship1.getHp() > 0) {
                 if (ship1.getHitbox().intersects(enemies.get(i).getHitbox())) {
@@ -225,6 +229,7 @@ public class Game implements KeyboardHandler {
                 continue;
             }
 
+            // TODO: 11/02/2019 use the ship array for this
             if (ship1.getHp() > 0) {
                 if (enemyBullets.get(i).getHitbox().intersects(ship1.getHitbox())) {
 
@@ -262,6 +267,7 @@ public class Game implements KeyboardHandler {
 
         }
 
+        // TODO: 11/02/2019 use the ship array / controller
         ship1.render();
         ship2.render();
 
@@ -288,13 +294,17 @@ public class Game implements KeyboardHandler {
     @Override
     public void keyPressed(KeyboardEvent keyboardEvent) {
 
-        System.out.println(keyboardEvent.getKey());
+        // TODO: 11/02/2019 specify in what game state this controls exist
 
+
+
+        // IF STATE = GAME
         if(keyboardEvent.getKey() == 80) {
             System.out.println(paused);
             paused = !paused;
         }
 
+        //IF STATE = MENU
         if(keyboardEvent.getKey() == 76)
             state = STATE.GAME;
             menu.delete();

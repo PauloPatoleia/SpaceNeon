@@ -1,7 +1,6 @@
 package GameObjects.Enemies;
 
 import GameObjects.Bullets;
-import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 import java.util.LinkedList;
 
@@ -48,8 +47,8 @@ public class EnemyShooter extends Enemy {
 
     public enum EnemyType {
 
-        ENEMY_ONE( 1,4, "./Resources/enemy25.png"),
-        ENEMY_TWO( 2,6, "./Resources/enemy25.png");
+        ENEMY_ONE( 1,4, "enemy25.png"),
+        ENEMY_TWO( 2,6, "enemy25.png");
 
         private int velocity;
         private String image;
