@@ -5,7 +5,6 @@ import GameObjects.Enemies.EnemyShooter;
 import GameObjects.SpaceShip;
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
-import org.academiadecodigo.simplegraphics.graphics.Text;
 import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
@@ -27,8 +26,8 @@ public class Game implements KeyboardHandler {
     private SpaceShip ship1 = new SpaceShip(400, 380, friendlyBullets, "spaceship_blue_30x30.png", "bullet_blue_20x30.png");
     private SpaceShip ship2 = new SpaceShip(200, 380, friendlyBullets, "green_spaceship_30x30.png", "bullet_green_20x30.png");
     private LinkedList<Enemy> enemies = new LinkedList<>();
-    private Picture topBar = new Picture(10, 10, "top_bar_800x40.png");
-    private Picture bottomBar = new Picture(10, 770, "bottombar_800x40.png");
+    private TopBar topBar = new TopBar("top_bar_800x40.png");
+    private BottomBar bottomBar = new BottomBar("bottom_bar_800x40.png");
     private STATE state = STATE.MENU;
     private Rectangle rect = new Rectangle(10, 10, 800, 800);
     private Picture menu = new Picture(10,10, "menu_spaceneon_400x400.png");
@@ -120,7 +119,7 @@ public class Game implements KeyboardHandler {
 
 
     /**
-     * Responsable for calling every GameObjects.GameObject to action
+     * Responsable for calling every GameObject to action
      */
     private void tick() {
 
@@ -284,12 +283,10 @@ public class Game implements KeyboardHandler {
             friendlyBullets.get(i).render();
         }
 
-        topBar.delete();
-        topBar.draw();
-        bottomBar.delete();
-        bottomBar.draw();
-
-        fps.render();
+        // TODO: 11/02/2019 fix this bug
+        //topBar.render();
+        //bottomBar.render();
+        //fps.render();
 
 
     }
