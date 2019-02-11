@@ -23,14 +23,14 @@ public class Game implements KeyboardHandler {
     private LinkedList<Bullets> friendlyBullets = new LinkedList<>();
     private LinkedList<Bullets> enemyBullets = new LinkedList<>();
     // TODO: 11/02/2019 MAKE A SHIP ARRAY
-    private SpaceShip ship1 = new SpaceShip(400, 380, friendlyBullets, "spaceshipblue.png", "bulletblue.png");
-    private SpaceShip ship2 = new SpaceShip(200, 380, friendlyBullets, "spaceshipgreen.png", "bulletgreen.png");
+    private SpaceShip ship1 = new SpaceShip(400, 380, friendlyBullets, "spaceship_blue_30x30.png", "bullet_blue_20x30.png");
+    private SpaceShip ship2 = new SpaceShip(200, 380, friendlyBullets, "green_spaceship_30x30.png", "bullet_green_20x30.png");
     private LinkedList<Enemy> enemies = new LinkedList<>();
-    private Picture topBar = new Picture(10, 10, "upbar.png");
-    private Picture bottomBar = new Picture(10, 770, "bottombar.png");
+    private Picture topBar = new Picture(10, 10, "top_bar_800x40.png");
+    private Picture bottomBar = new Picture(10, 770, "bottombar_800x40.png");
     private STATE state = STATE.MENU;
     private Rectangle rect = new Rectangle(10, 10, 800, 800);
-    private Picture menu = new Picture(10,10, "menu_spaceneon.png");
+    private Picture menu = new Picture(10,10, "menu_spaceneon_400x400.png");
 
 
     enum STATE {
@@ -133,7 +133,7 @@ public class Game implements KeyboardHandler {
         int chance = (int) Math.floor(Math.random() * 100);
 
         if (chance == 1) {
-            EnemyFactory.getNewEnemy(enemyBullets, "bulletred.png", enemies);
+            EnemyFactory.getNewEnemy(enemyBullets, "bullet_red_20x30.png", enemies);
         }
 
         // TODO: 11/02/2019 This will be an array
