@@ -75,8 +75,8 @@ public class SpaceShip {
             img.setX(775);
         if (img.getY() <= 10)
             img.setY(10);
-        if (img.getY() >= 780)
-            img.setY(780);
+        if (img.getY() >= 740)
+            img.setY(740);
 
         if (isShooting && cooldown == 0) {
 

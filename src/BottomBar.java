@@ -14,7 +14,9 @@ public class BottomBar {
     }
 
     public void render() {
+
         //bottomBarImage.delete();
         bottomBarImage.draw();
+
     }
 }

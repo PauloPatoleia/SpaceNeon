@@ -13,16 +13,16 @@ public class EnemyFactory {
 
         if (randomEnemy == 0) {
 
-            int upperBoundary = 776;
+            int upperBoundary = 766;
             int randomEnemyNumber = (int) (Math.random() * (EnemyShooter.EnemyType.values()).length);
 
             switch (EnemyShooter.EnemyType.values()[randomEnemyNumber]) {
                 case ENEMY_ONE:
-                    int randomOne = (int) (Math.random() * upperBoundary);
+                    int randomOne = (int) (Math.random() * upperBoundary + 10);
                     enemyLinkedList.add(new EnemyShooter(randomOne, 0, EnemyShooter.EnemyType.ENEMY_ONE, enemyBullets, bulletImage));
                     break;
                 case ENEMY_TWO:
-                    int randomTwo = (int) (Math.random() * upperBoundary);
+                    int randomTwo = (int) (Math.random() * upperBoundary + 10);
                     enemyLinkedList.add(new EnemyShooter(randomTwo, 0, EnemyShooter.EnemyType.ENEMY_TWO, enemyBullets, bulletImage));
                     break;
 
@@ -35,13 +35,13 @@ public class EnemyFactory {
 
             switch (Obstacle.ObstacleType.values()[randomObstacleNumber]) {
                 case OBSTACLE_ONE:
-                    int upperBoundaryOne = 681;
-                    int randomOne = (int) (Math.random() * upperBoundaryOne);
+                    int upperBoundaryOne = 671;
+                    int randomOne = (int) (Math.random() * upperBoundaryOne+10);
                     enemyLinkedList.add(new Obstacle(randomOne, 0, Obstacle.ObstacleType.OBSTACLE_ONE));
                     break;
                 case OBSTACLE_TWO:
-                    int upperBoundaryTwo = 661;
-                    int randomTwo = (int) (Math.random() * upperBoundaryTwo);
+                    int upperBoundaryTwo = 651;
+                    int randomTwo = (int) (Math.random() * upperBoundaryTwo+10);
                     enemyLinkedList.add(new Obstacle(randomTwo, 0, Obstacle.ObstacleType.OBSTACLE_TWO));
                     break;
 

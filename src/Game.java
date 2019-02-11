@@ -144,7 +144,7 @@ public class Game implements KeyboardHandler {
             enemies.get(i).tick();
 
             // Out of bounds
-            if (enemies.get(i).getEnemyImage().getY() >= 780) {
+            if (enemies.get(i).getEnemyImage().getY() >= 750) {
                 enemies.get(i).getEnemyImage().delete();
                 enemies.remove(enemies.get(i));
                 i--;
@@ -284,8 +284,8 @@ public class Game implements KeyboardHandler {
         }
 
         // TODO: 11/02/2019 fix this bug
-        //topBar.render();
-        //bottomBar.render();
+        topBar.render();
+        bottomBar.render();
         //fps.render();
 
 
