@@ -39,6 +39,13 @@ public class Bullets {
         bulletImage.draw();
     }
 
+    public void hit () {
+
+        bulletImage.delete();
+        hitbox = null;
+
+    }
+
     public enum BulletType {
 
         NORMAL(15, 6),

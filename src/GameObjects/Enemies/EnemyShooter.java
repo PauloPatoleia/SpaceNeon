@@ -6,7 +6,6 @@ import java.util.LinkedList;
 
 public class EnemyShooter extends Enemy {
 
-    private int hp;
     private LinkedList<Bullets> enemyBullets;
     private String bulletImage;
     private Bullets.BulletType bulletType = Bullets.BulletType.ENEMYBULLET;
@@ -16,8 +15,7 @@ public class EnemyShooter extends Enemy {
 
     public EnemyShooter(int x, int y, EnemyType enemyType, LinkedList<Bullets> enemyBullets, String bulletImage) {
 
-        super(x, y, enemyType.getImage(), enemyType.getVelocityY());
-        this.hp = enemyType.getHp();
+        super(x, y, enemyType.getImage(), enemyType.getVelocityY(), enemyType.getHp());
         this.enemyBullets = enemyBullets;
         this.bulletImage = bulletImage;
     }
@@ -38,6 +36,7 @@ public class EnemyShooter extends Enemy {
         }
 
     }
+
 
     @Override
     public void render() {

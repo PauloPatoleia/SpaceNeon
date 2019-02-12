@@ -18,7 +18,7 @@ public class EnemyGenerator {
 
     public void tick() {
 
-        int chance = (int) Math.floor(Math.random() * 100);
+        int chance = (int) Math.floor(Math.random() * 50);
 
         if (chance == 1) {
             EnemyFactory.getNewEnemy(enemyBullets, "bullet_red_20x30.png", enemyList);

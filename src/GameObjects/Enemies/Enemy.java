@@ -9,12 +9,14 @@ public abstract class Enemy {
     private Picture enemyImage;
     private int speed;
     private Rectangle hitbox;
+    private int hp;
 
-    public Enemy(int initialXPosition, int initialYPosition, String enemyImage, int speed) {
+    public Enemy(int initialXPosition, int initialYPosition, String enemyImage, int speed, int hp) {
 
         this.enemyImage = new Picture(initialXPosition, initialYPosition, enemyImage);
         this.hitbox = new Rectangle(initialXPosition, initialYPosition, this.enemyImage.getWidth(), this.enemyImage.getHeight());
         this.speed = speed;
+        this.hp = hp;
     }
 
     public void tick() {
@@ -23,6 +25,26 @@ public abstract class Enemy {
     }
 
     public abstract void render();
+
+    public void hit() {
+        hp--;
+
+        if(hp <= 0) {
+            enemyImage.delete();
+            hitbox = null;
+            return;
+        }
+    }
+
+    public void hit(int hit) {
+        hp-=hit;
+
+        if(hp <= 0) {
+            enemyImage.delete();
+            hitbox = null;
+            return;
+        }
+    }
 
 
     public Picture getEnemyImage() {
@@ -33,4 +55,15 @@ public abstract class Enemy {
         return hitbox;
     }
 
+    public void setHitbox(Rectangle hitbox) {
+        this.hitbox = hitbox;
+    }
+
+    public int getHp() {
+        return hp;
+    }
+
+    public void setHp(int hp) {
+        this.hp = hp;
+    }
 }
