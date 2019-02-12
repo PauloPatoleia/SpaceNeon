@@ -13,7 +13,7 @@ public class SpaceShip {
     private int hp = 3;
 
 
-
+    private Lifes hpDisplay;
     private int velocityX = 0;
     private int velocityY = 0;
     private boolean isShooting = false;
@@ -32,12 +32,13 @@ public class SpaceShip {
      * @param initialYPosition           - Initial Y position
      * @param imageSource - GameObjects.SpaceShip image source
      */
-    public SpaceShip(int initialXPosition, int initialYPosition, LinkedList<Bullets> friendlyBullets, String imageSource, String bulletImage) {
+    public SpaceShip(int initialXPosition, int initialYPosition, LinkedList<Bullets> friendlyBullets, String imageSource, String bulletImage, int hpDisplayXposition) {
         this.img = new Picture(initialXPosition, initialYPosition, imageSource);
         this.hitbox = new Rectangle(initialXPosition, initialYPosition, this.img.getWidth(), this.img.getHeight());
         this.speed = 5;
         this.friendlyBullets = friendlyBullets;
         this.bulletImage = bulletImage;
+        this.hpDisplay = new Lifes(this, hpDisplayXposition);
     }
 
     /**
@@ -110,6 +111,7 @@ public class SpaceShip {
             return;
 
         hp--;
+        hpDisplay.hit();
 
         if(hp <= 0) {
             img.delete();
@@ -181,6 +183,7 @@ public class SpaceShip {
 
 
         img.draw();
+         hpDisplay.render();
 
     }
 

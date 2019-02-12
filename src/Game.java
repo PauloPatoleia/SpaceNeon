@@ -1,8 +1,7 @@
 import GameObjects.Bullets;
 import GameObjects.Enemies.Enemy;
-import GameObjects.Enemies.EnemyFactory;
 import GameObjects.Enemies.EnemyGenerator;
-import GameObjects.Enemies.EnemyShooter;
+import GameObjects.Lifes;
 import GameObjects.Score;
 import GameObjects.SpaceShip;
 import org.academiadecodigo.simplegraphics.graphics.Color;
@@ -50,8 +49,8 @@ public class Game implements KeyboardHandler {
 
     public Game() {
 
-        spaceShips.add(new SpaceShip(400, 380, friendlyBullets, "spaceship_blue_30x30.png", "bullet_blue_20x30.png"));
-        spaceShips.add(new SpaceShip(200, 380, friendlyBullets, "green_spaceship_30x30.png", "bullet_green_20x30.png"));
+        spaceShips.add(new SpaceShip(250, 700, friendlyBullets, "spaceship_blue_30x30.png", "bullet_blue_20x30.png", 50));
+        spaceShips.add(new SpaceShip(500, 700, friendlyBullets, "green_spaceship_30x30.png", "bullet_green_20x30.png", 730));
 
 
         // TODO: 11/02/2019 MOVE THIS - dont create players before the ships
