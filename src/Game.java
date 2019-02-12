@@ -270,7 +270,7 @@ public class Game implements KeyboardHandler {
 
         }
 
-        // TODO: 11/02/2019 use the ship array / controllers
+
         for (int i = 0; i < spaceShips.size(); i++) {
             spaceShips.get(i).render();
         }
@@ -293,7 +293,7 @@ public class Game implements KeyboardHandler {
         // TODO: 11/02/2019 fix this bug
         topBar.render();
         bottomBar.render();
-        //fps.render();
+        fps.render();
 
 
     }

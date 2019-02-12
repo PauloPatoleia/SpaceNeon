@@ -51,7 +51,7 @@ public class Bullets {
         NORMAL(15, 6),
         FAST(10, 8),
         DOUBLE(15, 6),
-        ENEMYBULLET(80, -3);
+        ENEMYBULLET(120, -3);
 
 
         BulletType(int cooldown, int speed) {

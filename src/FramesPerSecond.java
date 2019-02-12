@@ -16,7 +16,7 @@ public class FramesPerSecond {
 
     public void render() {
         display.setText(fps + " fps");
-        display.delete();
+        //display.delete();
         display.draw();
     }
 

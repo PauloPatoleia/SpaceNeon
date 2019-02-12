@@ -74,7 +74,7 @@ public class SpaceShip {
         if (img.getY() >= 740)
             img.setY(740);
 
-        if (true && cooldown == 0) {
+        if (isShooting && cooldown == 0) {
 
             shoot();
             cooldown = bulletType.getCooldown();
