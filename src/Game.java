@@ -3,6 +3,7 @@ import GameObjects.Enemies.Enemy;
 import GameObjects.Enemies.EnemyFactory;
 import GameObjects.Enemies.EnemyGenerator;
 import GameObjects.Enemies.EnemyShooter;
+import GameObjects.Score;
 import GameObjects.SpaceShip;
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
@@ -33,6 +34,7 @@ public class Game implements KeyboardHandler {
     // TODO: 11/02/2019 change simple graphics to take more fonts and possibly more input keys
 
     // REFACTOR
+    private Score score = new Score();
     private STATE state = STATE.MENU;
     private LinkedList<Enemy> enemies = new LinkedList<>();
     private TopBar topBar = new TopBar("top_bar_800x40.png");
@@ -136,6 +138,7 @@ public class Game implements KeyboardHandler {
         }
 
         enemyGenerator.tick();
+        score.tick();
 
 
         //////////////////////////////////////////////////////////////////////////////////////////////
@@ -191,6 +194,7 @@ public class Game implements KeyboardHandler {
 
                     if (enemies.get(j).getHp() <= 0) {
                         enemies.remove(enemies.get(j));
+                        score.setScore(50);
                         j--;
                     }
                     //end this loop
@@ -271,6 +275,8 @@ public class Game implements KeyboardHandler {
         }
 
 
+
+
         for (int i = 0; i < spaceShips.size(); i++) {
             spaceShips.get(i).render();
         }
@@ -294,6 +300,7 @@ public class Game implements KeyboardHandler {
         topBar.render();
         bottomBar.render();
         fps.render();
+        score.render();
 
 
     }
