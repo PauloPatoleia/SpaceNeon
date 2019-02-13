@@ -12,6 +12,7 @@ import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardHandler;
+import org.academiadecodigo.simplegraphics.mouse.MouseHandler;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 import java.util.LinkedList;
@@ -27,20 +28,18 @@ public class Game implements KeyboardHandler {
     private LinkedList<Bullets> enemyBullets = new LinkedList<>();
     private LinkedList<PowerUp> powerUps = new LinkedList<>();
 
-    // TODO: 11/02/2019 MAKE A SHIP linkedlist
     private LinkedList<SpaceShip> spaceShips = new LinkedList<>();
 
 
-    private Rectangle rect = new Rectangle(10, 10, 800, 800);
+    private Rectangle rect;
     private Picture menu = new Picture(10, 10, "menu800.png");
-    // TODO: 11/02/2019 change simple graphics to take more fonts and possibly more input keys
 
     // REFACTOR
     private Score score = new Score();
     private STATE state = STATE.MENU;
     private LinkedList<Enemy> enemies = new LinkedList<>();
-    private TopBar topBar = new TopBar("top_bar_800x40.png");
-    private BottomBar bottomBar = new BottomBar("bottom_bar_800x40.png");
+    private TopBar topBar;
+    private BottomBar bottomBar;
     private EnemyGenerator enemyGenerator = new EnemyGenerator(enemies, enemyBullets);
     private PowerUpGenerator powerUpGenerator = new PowerUpGenerator(powerUps);
     private FramesPerSecond fps = new FramesPerSecond();
@@ -53,24 +52,6 @@ public class Game implements KeyboardHandler {
 
 
     public Game() {
-
-        spaceShips.add(new SpaceShip(250, 700, friendlyBullets, "spaceship_blue_30x30.png", "bullet_blue_20x30.png", 50));
-        spaceShips.add(new SpaceShip(500, 700, friendlyBullets, "green_spaceship_30x30.png", "bullet_green_20x30.png", 730));
-
-
-        // TODO: 11/02/2019 MOVE THIS - dont create players before the ships
-        playerOne = new Player(KeyboardEvent.KEY_UP, KeyboardEvent.KEY_DOWN, KeyboardEvent.KEY_LEFT, KeyboardEvent.KEY_RIGHT, KeyboardEvent.KEY_SPACE, spaceShips.get(0));
-        playerTwo = new Player(KeyboardEvent.KEY_W, KeyboardEvent.KEY_S, KeyboardEvent.KEY_A, KeyboardEvent.KEY_D, KeyboardEvent.KEY_T, spaceShips.get(1));
-
-
-    }
-
-    /**
-     * Initializes window
-     */
-    public void init() {
-
-        // TODO: 11/02/2019 Add mouse events and other game essentials for menu etc
 
         // Keyboard
         Keyboard k = new Keyboard(this);
@@ -85,6 +66,28 @@ public class Game implements KeyboardHandler {
         START.setKey(KeyboardEvent.KEY_L);
         START.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
         k.addEventListener(START);
+
+        KeyboardEvent START2 = new KeyboardEvent();
+        START2.setKey(KeyboardEvent.KEY_K);
+        START2.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
+        k.addEventListener(START2);
+
+    }
+
+    /**
+     * Initializes window
+     */
+    public void init() {
+
+        rect = new Rectangle(10, 10, 800, 800);
+        rect.setColor(Color.BLACK);
+        rect.fill();
+        topBar = new TopBar("top_bar_800x40.png");
+        bottomBar = new BottomBar("bottom_bar_800x40.png");
+        fps = new FramesPerSecond();
+        score = new Score();
+        state = STATE.GAME;
+        menu.delete();
     }
 
 
@@ -92,8 +95,6 @@ public class Game implements KeyboardHandler {
      * Starts the game
      */
     public void start() {
-
-        init();
 
         long initialTime = System.nanoTime();
         final double amountOfTicks = 60.0;
@@ -137,7 +138,15 @@ public class Game implements KeyboardHandler {
      */
     private void tick() {
 
+
+
         if (state == STATE.MENU) {
+            return;
+        }
+
+        if (spaceShips.size() == 0) {
+            reset();
+            state = STATE.MENU;
             return;
         }
 
@@ -149,7 +158,6 @@ public class Game implements KeyboardHandler {
         //////////////////////////////////////////////////////////////////////////////////////////////
 
         // SPACESHIPS WITH ENEMIES AND ENEMY BULLETS
-        // TODO: 11/02/2019 This will be an array
         for (int i = 0; i < spaceShips.size(); i++) {
             spaceShips.get(i).tick();
 
@@ -194,7 +202,6 @@ public class Game implements KeyboardHandler {
                     friendlyBullets.remove(friendlyBullets.get(i));
                     i--;
 
-                    // TODO: 12/02/2019 adicionar dano as balas?
                     enemies.get(j).hit();
 
                     if (enemies.get(j).getHp() <= 0) {
@@ -222,7 +229,6 @@ public class Game implements KeyboardHandler {
                 enemies.get(i).getEnemyImage().delete();
                 enemies.remove(enemies.get(i));
 
-                // TODO: 11/02/2019 just added
                 if (enemies.size() > 1) {
                     i--;
                 }
@@ -241,7 +247,6 @@ public class Game implements KeyboardHandler {
 
                 enemyBullets.get(i).bulletImage.delete();
                 enemyBullets.remove(enemyBullets.get(i));
-                // TODO: 11/02/2019 ver isto!!!!
                 i--;
                 continue;
             }
@@ -276,7 +281,7 @@ public class Game implements KeyboardHandler {
 
                 powerUps.get(i).powerUpImage.delete();
                 powerUps.remove(powerUps.get(i));
-                // TODO: 11/02/2019 ver isto!!!!
+
                 i--;
                 continue;
             }
@@ -339,7 +344,6 @@ public class Game implements KeyboardHandler {
             friendlyBullets.get(i).render();
         }
 
-        // TODO: 11/02/2019 fix this bug
         topBar.render();
         bottomBar.render();
         fps.render();
@@ -348,24 +352,56 @@ public class Game implements KeyboardHandler {
 
     }
 
+    private void reset() {
+
+        // TODO: 13/02/2019 iterate all linkedlist and .delete each item, then clear()
+        spaceShips.clear();
+        playerOne = null;
+        playerTwo = null;
+        friendlyBullets.clear();
+        enemyBullets.clear();
+        powerUps.clear();
+        enemies.clear();
+    }
+
     @Override
     public void keyPressed(KeyboardEvent keyboardEvent) {
 
         // TODO: 11/02/2019 specify in what game state this controls exist
 
-
-        // IF STATE = GAME
-        if (keyboardEvent.getKey() == 80) {
-            System.out.println(paused);
-            paused = !paused;
+        if (state == STATE.GAME) {
+            if (keyboardEvent.getKey() == 80) {
+                System.out.println(paused);
+                paused = !paused;
+            }
         }
 
-        //IF STATE = MENU
-        if (keyboardEvent.getKey() == 76)
-            state = STATE.GAME;
-        menu.delete();
-        rect.setColor(Color.BLACK);
-        rect.fill();
+        if (state == STATE.MENU) {
+
+            // TODO: 13/02/2019 make this mouse input
+
+            if (keyboardEvent.getKey() == 76) {
+
+
+                // Start with 2 players
+                spaceShips.add(new SpaceShip(250, 700, friendlyBullets, "spaceship_blue_30x30.png", "bullet_blue_20x30.png", 50));
+                spaceShips.add(new SpaceShip(500, 700, friendlyBullets, "green_spaceship_30x30.png", "bullet_green_20x30.png", 730));
+
+                playerOne = new Player(KeyboardEvent.KEY_UP, KeyboardEvent.KEY_DOWN, KeyboardEvent.KEY_LEFT, KeyboardEvent.KEY_RIGHT, KeyboardEvent.KEY_SPACE, spaceShips.get(0));
+                playerTwo = new Player(KeyboardEvent.KEY_W, KeyboardEvent.KEY_S, KeyboardEvent.KEY_A, KeyboardEvent.KEY_D, KeyboardEvent.KEY_T, spaceShips.get(1));
+
+                init(); // TODO: 13/02/2019 passar nr de player
+            }
+
+            if (keyboardEvent.getKey() == 75) {
+
+
+                spaceShips.add(new SpaceShip(370, 700, friendlyBullets, "spaceship_blue_30x30.png", "bullet_blue_20x30.png", 50));
+                playerOne = new Player(KeyboardEvent.KEY_UP, KeyboardEvent.KEY_DOWN, KeyboardEvent.KEY_LEFT, KeyboardEvent.KEY_RIGHT, KeyboardEvent.KEY_SPACE, spaceShips.get(0));
+
+                init(); // TODO: 13/02/2019 same
+            }
+        }
     }
 
 
@@ -373,5 +409,4 @@ public class Game implements KeyboardHandler {
     public void keyReleased(KeyboardEvent keyboardEvent) {
 
     }
-
 }
