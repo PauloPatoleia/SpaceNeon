@@ -13,7 +13,6 @@ public class TopBar {
     }
 
     public void render() {
-        //topBarImage.delete();
         topBarImage.draw();
     }
 }

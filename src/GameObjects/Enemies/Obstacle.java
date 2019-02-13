@@ -40,8 +40,8 @@ public class Obstacle extends Enemy {
         }
 
         public static void resetSpeed() {
-            OBSTACLE_ONE.speed = 4;
-            OBSTACLE_TWO.speed = 4;
+            OBSTACLE_ONE.speed = 2;
+            OBSTACLE_TWO.speed = 3;
         }
 
         public int getSpeed(){

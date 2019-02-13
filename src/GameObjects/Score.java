@@ -27,7 +27,6 @@ public class Score {
 
     public void render() {
         display.setText("Score: " + score);
-        //display.delete();
         display.draw();
     }
 
