@@ -406,31 +406,35 @@ public class Game implements KeyboardHandler, MouseHandler {
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {
 
-        if ((mouseEvent.getX() > 264 && mouseEvent.getX() < 558) &&
-            mouseEvent.getY() > 419 && mouseEvent.getY() < 464) {
+        if(state == STATE.MENU) {
 
-            spaceShips.add(new SpaceShip(370, 700, friendlyBullets, "spaceship_blue_30x30.png", "bullet_blue_20x30.png", 50));
-            playerOne = new Player(KeyboardEvent.KEY_UP, KeyboardEvent.KEY_DOWN, KeyboardEvent.KEY_LEFT, KeyboardEvent.KEY_RIGHT, KeyboardEvent.KEY_SPACE, spaceShips.get(0));
+            if ((mouseEvent.getX() > 264 && mouseEvent.getX() < 558) &&
+                    mouseEvent.getY() > 419 && mouseEvent.getY() < 464) {
 
-            init(); // TODO: 13/02/2019 same
+                spaceShips.add(new SpaceShip(370, 700, friendlyBullets, "spaceship_blue_30x30.png", "bullet_blue_20x30.png", 50));
+                playerOne = new Player(KeyboardEvent.KEY_UP, KeyboardEvent.KEY_DOWN, KeyboardEvent.KEY_LEFT, KeyboardEvent.KEY_RIGHT, KeyboardEvent.KEY_SPACE, spaceShips.get(0));
+
+                init(); // TODO: 13/02/2019 same
+            }
+
+            if ((mouseEvent.getX() > 264 && mouseEvent.getX() < 558) &&
+                    mouseEvent.getY() > 509 && mouseEvent.getY() < 554) {
+
+                // Start with 2 players
+                spaceShips.add(new SpaceShip(250, 700, friendlyBullets, "spaceship_blue_30x30.png", "bullet_blue_20x30.png", 50));
+                spaceShips.add(new SpaceShip(500, 700, friendlyBullets, "green_spaceship_30x30.png", "bullet_green_20x30.png", 730));
+
+                playerOne = new Player(KeyboardEvent.KEY_UP, KeyboardEvent.KEY_DOWN, KeyboardEvent.KEY_LEFT, KeyboardEvent.KEY_RIGHT, KeyboardEvent.KEY_SPACE, spaceShips.get(0));
+                playerTwo = new Player(KeyboardEvent.KEY_W, KeyboardEvent.KEY_S, KeyboardEvent.KEY_A, KeyboardEvent.KEY_D, KeyboardEvent.KEY_T, spaceShips.get(1));
+
+                init(); // TODO: 13/02/2019 passar nr de player
+
+            }
+
+            System.out.println(mouseEvent.getX());
+            System.out.println(mouseEvent.getY());
+
         }
-
-        if ((mouseEvent.getX() > 264 && mouseEvent.getX() < 558) &&
-                mouseEvent.getY() > 509 && mouseEvent.getY() < 554) {
-
-            // Start with 2 players
-            spaceShips.add(new SpaceShip(250, 700, friendlyBullets, "spaceship_blue_30x30.png", "bullet_blue_20x30.png", 50));
-            spaceShips.add(new SpaceShip(500, 700, friendlyBullets, "green_spaceship_30x30.png", "bullet_green_20x30.png", 730));
-
-            playerOne = new Player(KeyboardEvent.KEY_UP, KeyboardEvent.KEY_DOWN, KeyboardEvent.KEY_LEFT, KeyboardEvent.KEY_RIGHT, KeyboardEvent.KEY_SPACE, spaceShips.get(0));
-            playerTwo = new Player(KeyboardEvent.KEY_W, KeyboardEvent.KEY_S, KeyboardEvent.KEY_A, KeyboardEvent.KEY_D, KeyboardEvent.KEY_T, spaceShips.get(1));
-
-            init(); // TODO: 13/02/2019 passar nr de player
-
-        }
-
-        System.out.println(mouseEvent.getX());
-        System.out.println(mouseEvent.getY());
     }
 
     @Override
