@@ -12,7 +12,7 @@ public class Arrow {
     private int optionsPosition = 690;
 
     private int yToMove = 95;
-    private String arrowPicSource = "arrowTest_40x20.jpg";
+    private String arrowPicSource = "arrow.png";
 
 
     public Arrow(){
