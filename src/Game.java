@@ -3,7 +3,6 @@ import GameObjects.Collectibles.PowerUp;
 import GameObjects.Collectibles.PowerUpGenerator;
 import GameObjects.Enemies.Enemy;
 import GameObjects.Enemies.EnemyGenerator;
-import GameObjects.Lifes;
 import GameObjects.Score;
 import GameObjects.SpaceShip;
 import org.academiadecodigo.simplegraphics.graphics.Color;
@@ -12,12 +11,14 @@ import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardHandler;
+import org.academiadecodigo.simplegraphics.mouse.Mouse;
+import org.academiadecodigo.simplegraphics.mouse.MouseEvent;
 import org.academiadecodigo.simplegraphics.mouse.MouseHandler;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 import java.util.LinkedList;
 
-public class Game implements KeyboardHandler {
+public class Game implements KeyboardHandler, MouseHandler {
 
 
     private Player playerOne;
@@ -52,6 +53,9 @@ public class Game implements KeyboardHandler {
 
 
     public Game() {
+
+        //nouse
+        Mouse m = new Mouse(this);
 
         // Keyboard
         Keyboard k = new Keyboard(this);
@@ -355,12 +359,18 @@ public class Game implements KeyboardHandler {
     private void reset() {
 
         // TODO: 13/02/2019 iterate all linkedlist and .delete each item, then clear()
+
+
         spaceShips.clear();
         playerOne = null;
         playerTwo = null;
         friendlyBullets.clear();
         enemyBullets.clear();
         powerUps.clear();
+
+        for (int i = 0; i < enemies.size(); i++) {
+            enemies.get(i).getEnemyImage().delete();
+        }
         enemies.clear();
     }
 
@@ -378,35 +388,48 @@ public class Game implements KeyboardHandler {
 
         if (state == STATE.MENU) {
 
-            // TODO: 13/02/2019 make this mouse input
 
-            if (keyboardEvent.getKey() == 76) {
-
-
-                // Start with 2 players
-                spaceShips.add(new SpaceShip(250, 700, friendlyBullets, "spaceship_blue_30x30.png", "bullet_blue_20x30.png", 50));
-                spaceShips.add(new SpaceShip(500, 700, friendlyBullets, "green_spaceship_30x30.png", "bullet_green_20x30.png", 730));
-
-                playerOne = new Player(KeyboardEvent.KEY_UP, KeyboardEvent.KEY_DOWN, KeyboardEvent.KEY_LEFT, KeyboardEvent.KEY_RIGHT, KeyboardEvent.KEY_SPACE, spaceShips.get(0));
-                playerTwo = new Player(KeyboardEvent.KEY_W, KeyboardEvent.KEY_S, KeyboardEvent.KEY_A, KeyboardEvent.KEY_D, KeyboardEvent.KEY_T, spaceShips.get(1));
-
-                init(); // TODO: 13/02/2019 passar nr de player
-            }
-
-            if (keyboardEvent.getKey() == 75) {
-
-
-                spaceShips.add(new SpaceShip(370, 700, friendlyBullets, "spaceship_blue_30x30.png", "bullet_blue_20x30.png", 50));
-                playerOne = new Player(KeyboardEvent.KEY_UP, KeyboardEvent.KEY_DOWN, KeyboardEvent.KEY_LEFT, KeyboardEvent.KEY_RIGHT, KeyboardEvent.KEY_SPACE, spaceShips.get(0));
-
-                init(); // TODO: 13/02/2019 same
-            }
         }
     }
 
 
     @Override
     public void keyReleased(KeyboardEvent keyboardEvent) {
+
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent mouseEvent) {
+
+        if ((mouseEvent.getX() > 264 && mouseEvent.getX() < 558) &&
+            mouseEvent.getY() > 419 && mouseEvent.getY() < 464) {
+
+            spaceShips.add(new SpaceShip(370, 700, friendlyBullets, "spaceship_blue_30x30.png", "bullet_blue_20x30.png", 50));
+            playerOne = new Player(KeyboardEvent.KEY_UP, KeyboardEvent.KEY_DOWN, KeyboardEvent.KEY_LEFT, KeyboardEvent.KEY_RIGHT, KeyboardEvent.KEY_SPACE, spaceShips.get(0));
+
+            init(); // TODO: 13/02/2019 same
+        }
+
+        if ((mouseEvent.getX() > 264 && mouseEvent.getX() < 558) &&
+                mouseEvent.getY() > 509 && mouseEvent.getY() < 554) {
+
+            // Start with 2 players
+            spaceShips.add(new SpaceShip(250, 700, friendlyBullets, "spaceship_blue_30x30.png", "bullet_blue_20x30.png", 50));
+            spaceShips.add(new SpaceShip(500, 700, friendlyBullets, "green_spaceship_30x30.png", "bullet_green_20x30.png", 730));
+
+            playerOne = new Player(KeyboardEvent.KEY_UP, KeyboardEvent.KEY_DOWN, KeyboardEvent.KEY_LEFT, KeyboardEvent.KEY_RIGHT, KeyboardEvent.KEY_SPACE, spaceShips.get(0));
+            playerTwo = new Player(KeyboardEvent.KEY_W, KeyboardEvent.KEY_S, KeyboardEvent.KEY_A, KeyboardEvent.KEY_D, KeyboardEvent.KEY_T, spaceShips.get(1));
+
+            init(); // TODO: 13/02/2019 passar nr de player
+
+        }
+
+        System.out.println(mouseEvent.getX());
+        System.out.println(mouseEvent.getY());
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent mouseEvent) {
 
     }
 }
