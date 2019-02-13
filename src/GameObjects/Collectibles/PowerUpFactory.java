@@ -17,15 +17,15 @@ public class PowerUpFactory {
             switch (PowerUp.PowerUpType.values()[randomPowerUpNumber]) {
                 case LIFEUP:
                     int randomOne = (int) (Math.random() * upperBoundary + 10);
-                    powerUpList.add(new PowerUp(randomOne, 0, PowerUp.PowerUpType.LIFEUP, "power_up_20x30.png"));
+                    powerUpList.add(new PowerUp(randomOne, 0, PowerUp.PowerUpType.LIFEUP, "powerup_heart.png"));
                     break;
                 case BULLETFAST:
                     int randomTwo = (int) (Math.random() * upperBoundary + 10);
-                    powerUpList.add(new PowerUp(randomTwo, 0, PowerUp.PowerUpType.BULLETFAST, "power_up_20x30.png"));
+                    powerUpList.add(new PowerUp(randomTwo, 0, PowerUp.PowerUpType.BULLETFAST, "powerup.png"));
                     break;
                 case BULLETDOUBLE:
                     int randomThree = (int) (Math.random() * upperBoundary + 10);
-                    powerUpList.add(new PowerUp(randomThree, 0, PowerUp.PowerUpType.BULLETDOUBLE, "power_up_20x30.png"));
+                    powerUpList.add(new PowerUp(randomThree, 0, PowerUp.PowerUpType.BULLETDOUBLE, "powerup.png"));
                     break;
 
             }
