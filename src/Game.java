@@ -29,7 +29,7 @@ public class Game implements KeyboardHandler {
 
 
     private Rectangle rect = new Rectangle(10, 10, 800, 800);
-    private Picture menu = new Picture(10, 10, "menu_spaceneon_400x400.png");
+    private Picture menu = new Picture(10, 10, "menu800.png");
     // TODO: 11/02/2019 change simple graphics to take more fonts and possibly more input keys
 
     // REFACTOR
@@ -40,6 +40,7 @@ public class Game implements KeyboardHandler {
     private BottomBar bottomBar = new BottomBar("bottom_bar_800x40.png");
     private EnemyGenerator enemyGenerator = new EnemyGenerator(enemies, enemyBullets);
     private FramesPerSecond fps = new FramesPerSecond();
+
 
     enum STATE {
         MENU,
@@ -329,4 +330,5 @@ public class Game implements KeyboardHandler {
     public void keyReleased(KeyboardEvent keyboardEvent) {
 
     }
+
 }

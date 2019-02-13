@@ -18,9 +18,9 @@ public class Lifes {
         this.ship = player;
         this.inicialXposition = inicialXposition;
 
-        lifeIcon.add(new Picture(inicialXposition, 785, "rsz_21spaceship_blue_30x30.png"));
-        lifeIcon.add(new Picture(inicialXposition + 20, 785, "rsz_21spaceship_blue_30x30.png"));
-        lifeIcon.add(new Picture(inicialXposition + 40, 785, "rsz_21spaceship_blue_30x30.png"));
+        lifeIcon.add(new Picture(inicialXposition, 785, "rsz_heart.png"));
+        lifeIcon.add(new Picture(inicialXposition + 20, 785, "rsz_heart.png"));
+        lifeIcon.add(new Picture(inicialXposition + 40, 785,"rsz_heart.png"));
     }
 
     public void tick() {
