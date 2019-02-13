@@ -1,5 +1,6 @@
 package GameObjects;
 
+import GameObjects.Collectibles.PowerUp;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 import java.awt.*;
@@ -28,9 +29,9 @@ public class SpaceShip {
      * constructor
      * Initializes a new Player GameObjects.SpaceShip
      *
-     * @param initialXPosition           - Initial X position
-     * @param initialYPosition           - Initial Y position
-     * @param imageSource - GameObjects.SpaceShip image source
+     * @param initialXPosition - Initial X position
+     * @param initialYPosition - Initial Y position
+     * @param imageSource      - GameObjects.SpaceShip image source
      */
     public SpaceShip(int initialXPosition, int initialYPosition, LinkedList<Bullets> friendlyBullets, String imageSource, String bulletImage, int hpDisplayXposition) {
         this.img = new Picture(initialXPosition, initialYPosition, imageSource);
@@ -61,7 +62,6 @@ public class SpaceShip {
     public void tick() {
 
 
-
         img.setX(img.getX() + velocityX);
         img.setY(img.getY() + velocityY);
         hitbox.setLocation(img.getX(), img.getY());
@@ -85,10 +85,11 @@ public class SpaceShip {
             cooldown--;
         }
 
-        if(invincibilityCooldown > 0) {
+        if (invincibilityCooldown > 0) {
             invincibilityCooldown--;
         }
     }
+
     public Rectangle getHitbox() {
         return hitbox;
     }
@@ -107,13 +108,13 @@ public class SpaceShip {
 
     public void hit() {
 
-        if(invincible)
+        if (invincible)
             return;
 
         hp--;
         hpDisplay.hit();
 
-        if(hp <= 0) {
+        if (hp <= 0) {
             img.delete();
             hitbox = null;
             return;
@@ -143,52 +144,71 @@ public class SpaceShip {
 
     public void render() {
 
-        if(hp <= 0) {
+        if (hp <= 0) {
             return;
         }
 
-         if (invincible) {
+        if (invincible) {
 
-             if(invincibilityCooldown >= 100) {
-                 img.delete();
-                 return;
-             }
+            if (invincibilityCooldown >= 100) {
+                img.delete();
+                return;
+            }
 
-             if(invincibilityCooldown >= 80) {
-                 img.draw();
-                 return;
-             }
+            if (invincibilityCooldown >= 80) {
+                img.draw();
+                return;
+            }
 
-             if(invincibilityCooldown >= 60) {
-                 img.delete();
-                 return;
-             }
+            if (invincibilityCooldown >= 60) {
+                img.delete();
+                return;
+            }
 
-             if(invincibilityCooldown >= 40) {
-                 img.draw();
-                 return;
-             }
+            if (invincibilityCooldown >= 40) {
+                img.draw();
+                return;
+            }
 
-             if(invincibilityCooldown >= 20) {
-                 img.delete();
-                 return;
-             }
+            if (invincibilityCooldown >= 20) {
+                img.delete();
+                return;
+            }
 
-             if(invincibilityCooldown >= 0) {
-                 img.draw();
-                 invincible = false;
-                 return;
-             }
-         }
+            if (invincibilityCooldown >= 0) {
+                img.draw();
+                invincible = false;
+                return;
+            }
+        }
 
 
         img.draw();
-         hpDisplay.render();
+        hpDisplay.render();
 
     }
 
     public int getHp() {
         return hp;
+    }
+
+    public void powerUp(PowerUp.PowerUpType powerUpType) {
+
+        switch (powerUpType) {
+
+            case LIFEUP:
+                if (hp < 3) {
+                    hp++;
+                    hpDisplay.lifeUp();
+                }
+                break;
+            case BULLETFAST:
+                bulletType = Bullets.BulletType.FAST;
+                break;
+            case BULLETDOUBLE:
+                bulletType = Bullets.BulletType.DOUBLE;
+                break;
+        }
     }
 }
 

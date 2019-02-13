@@ -1,4 +1,6 @@
 import GameObjects.Bullets;
+import GameObjects.Collectibles.PowerUp;
+import GameObjects.Collectibles.PowerUpGenerator;
 import GameObjects.Enemies.Enemy;
 import GameObjects.Enemies.EnemyGenerator;
 import GameObjects.Lifes;
@@ -23,6 +25,7 @@ public class Game implements KeyboardHandler {
     private boolean paused = false;
     private LinkedList<Bullets> friendlyBullets = new LinkedList<>();
     private LinkedList<Bullets> enemyBullets = new LinkedList<>();
+    private LinkedList<PowerUp> powerUps = new LinkedList<>();
 
     // TODO: 11/02/2019 MAKE A SHIP linkedlist
     private LinkedList<SpaceShip> spaceShips = new LinkedList<>();
@@ -39,6 +42,7 @@ public class Game implements KeyboardHandler {
     private TopBar topBar = new TopBar("top_bar_800x40.png");
     private BottomBar bottomBar = new BottomBar("bottom_bar_800x40.png");
     private EnemyGenerator enemyGenerator = new EnemyGenerator(enemies, enemyBullets);
+    private PowerUpGenerator powerUpGenerator = new PowerUpGenerator(powerUps);
     private FramesPerSecond fps = new FramesPerSecond();
 
     enum STATE {
@@ -137,6 +141,7 @@ public class Game implements KeyboardHandler {
         }
 
         enemyGenerator.tick();
+        powerUpGenerator.tick();
         score.tick();
 
 
@@ -258,6 +263,39 @@ public class Game implements KeyboardHandler {
                 }
             }
         }
+
+        //////////////////////////////////////////////////////////////////////////
+
+        //powerUps out of bounds and collision with spaceships
+        for (int i = 0; i < powerUps.size(); i++) {
+
+            powerUps.get(i).tick();
+
+            if (powerUps.get(i).getImgY() >= 745) {
+
+                powerUps.get(i).powerUpImage.delete();
+                powerUps.remove(powerUps.get(i));
+                // TODO: 11/02/2019 ver isto!!!!
+                i--;
+                continue;
+            }
+
+            for (int j = 0; j < spaceShips.size(); j++) {
+
+                if (spaceShips.get(j).getHitbox().intersects(powerUps.get(i).getHitbox())) {
+
+
+                    spaceShips.get(j).powerUp(powerUps.get(i).getPowerUpType());
+                    powerUps.get(i).hit();
+                    powerUps.remove(powerUps.get(i));
+
+                    //if it collides with one leave the for loop
+                    i--;
+                    j = spaceShips.size();
+                }
+            }
+
+        }
     }
 
 
@@ -283,6 +321,11 @@ public class Game implements KeyboardHandler {
 
         for (Enemy enemy : enemies) {
             enemy.render();
+        }
+
+        for (int i = 0; i < powerUps.size(); i++) {
+
+            powerUps.get(i).render();
         }
 
         for (int i = 0; i < enemyBullets.size(); i++) {

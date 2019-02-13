@@ -46,7 +46,7 @@ public class Bullets {
 
     }
 
-    public enum BulletType {
+    public static enum BulletType {
 
         NORMAL(15, 6),
         FAST(10, 8),
