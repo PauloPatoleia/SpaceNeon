@@ -8,7 +8,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-       /* new Thread(new Runnable() {
+        new Thread(new Runnable() {
 
             public void run() {
                 try {
@@ -21,7 +21,7 @@ public class Main {
                     System.err.println(e.getMessage());
                 }
             }
-        }).start();*/
+        }).start();
 
         Game game = new Game();
         game.start();

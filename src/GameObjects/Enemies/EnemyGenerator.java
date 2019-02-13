@@ -15,7 +15,7 @@ public class EnemyGenerator {
     public EnemyGenerator(LinkedList<Enemy> enemyList, LinkedList<Bullets> enemyBullets) {
         this.enemyList = enemyList;
         this.enemyBullets = enemyBullets;
-        chanceMultiplier = 50;
+        chanceMultiplier = 40;
     }
 
     public void tick() {
@@ -34,7 +34,7 @@ public class EnemyGenerator {
 
     public void resetProbability() {
 
-        chanceMultiplier = 50;
+        chanceMultiplier = 40;
     }
 
     public int getChanceMultiplier() {
