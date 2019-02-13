@@ -33,8 +33,23 @@ public class Lifes {
         }
     }
 
+    public void lifeUp() {
+
+        switch (lifeIcon.size()) {
+            case 1:
+                lifeIcon.add(new Picture(inicialXposition + 20, 785, "rsz_21spaceship_blue_30x30.png"));
+                break;
+            case 2:
+                lifeIcon.add(new Picture(inicialXposition + 40, 785, "rsz_21spaceship_blue_30x30.png"));
+                break;
+
+        }
+    }
+
     public void hit() {
-        lifeIcon.get(lifeIcon.size()-1).delete();
-        lifeIcon.remove(lifeIcon.get(lifeIcon.size()-1));
+
+        lifeIcon.get(lifeIcon.size() - 1).delete();
+        lifeIcon.remove(lifeIcon.get(lifeIcon.size() - 1));
     }
 }
+
