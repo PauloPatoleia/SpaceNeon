@@ -15,7 +15,7 @@ public class EnemyShooter extends Enemy {
 
     public EnemyShooter(int x, int y, EnemyType enemyType, LinkedList<Bullets> enemyBullets, String bulletImage) {
 
-        super(x, y, enemyType.getImage(), enemyType.getVelocityY(), enemyType.getHp());
+        super(x, y, enemyType.getImage(), enemyType.getSpeed(), enemyType.getHp());
         this.enemyBullets = enemyBullets;
         this.bulletImage = bulletImage;
     }
@@ -37,7 +37,6 @@ public class EnemyShooter extends Enemy {
 
     }
 
-
     @Override
     public void render() {
         getEnemyImage().draw();
@@ -46,21 +45,31 @@ public class EnemyShooter extends Enemy {
 
     public enum EnemyType {
 
-        ENEMY_ONE( 1,3, "shooter_enemy_25x25.png"),
-        ENEMY_TWO( 2,3, "shooter_enemy_25x25.png");
+        ENEMY_ONE(1, 3, "shooter_enemy_25x25.png"),
+        ENEMY_TWO(2, 3, "shooter_enemy_25x25.png");
 
-        private int velocity;
+        private int speed;
         private String image;
         private int hp;
 
-        EnemyType(int velocity, int hp, String image){
-            this.velocity = velocity;
+        EnemyType(int speed, int hp, String image){
+            this.speed = speed;
             this.hp = hp;
             this.image = image;
         }
 
-        public int getVelocityY(){
-            return velocity;
+        public static void increaseSpeed(int speed) {
+            ENEMY_ONE.speed += speed;
+            ENEMY_TWO.speed += speed;
+        }
+
+        public static void resetSpeed() {
+            ENEMY_ONE.speed = 1;
+            ENEMY_TWO.speed = 2;
+        }
+
+        public int getSpeed(){
+            return speed;
         }
 
         public String getImage() {

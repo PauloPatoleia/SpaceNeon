@@ -44,6 +44,7 @@ public class Game implements KeyboardHandler, MouseHandler {
     private EnemyGenerator enemyGenerator = new EnemyGenerator(enemies, enemyBullets);
     private PowerUpGenerator powerUpGenerator = new PowerUpGenerator(powerUps);
     private FramesPerSecond fps = new FramesPerSecond();
+    private Difficulty difficulty = new Difficulty(score, enemyGenerator, powerUpGenerator, enemies);
 
 
     enum STATE {
@@ -54,7 +55,7 @@ public class Game implements KeyboardHandler, MouseHandler {
 
     public Game() {
 
-        //nouse
+        //mouse
         Mouse m = new Mouse(this);
 
         // Keyboard
@@ -157,6 +158,9 @@ public class Game implements KeyboardHandler, MouseHandler {
         enemyGenerator.tick();
         powerUpGenerator.tick();
         score.tick();
+        //System.out.println(score.getScore());
+        difficulty.tick();
+
 
 
         //////////////////////////////////////////////////////////////////////////////////////////////
@@ -367,6 +371,7 @@ public class Game implements KeyboardHandler, MouseHandler {
         friendlyBullets.clear();
         enemyBullets.clear();
         powerUps.clear();
+        difficulty.reset();
 
         for (int i = 0; i < enemies.size(); i++) {
             enemies.get(i).getEnemyImage().delete();

@@ -46,7 +46,6 @@ public abstract class Enemy {
         }
     }
 
-
     public Picture getEnemyImage() {
         return enemyImage;
     }

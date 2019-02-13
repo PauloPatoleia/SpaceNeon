@@ -6,7 +6,7 @@ public class Obstacle extends Enemy {
 
     public Obstacle(int x, int y, ObstacleType obstacleType) {
 
-        super(x, y, obstacleType.getImage(), obstacleType.getVelocityY(), obstacleType.getHp());
+        super(x, y, obstacleType.getImage(), obstacleType.getSpeed(), obstacleType.getHp());
     }
 
     @Override
@@ -21,21 +21,31 @@ public class Obstacle extends Enemy {
 
     public enum ObstacleType {
 
-        OBSTACLE_ONE(4,10, "enemy_obstacle_80x20.png"),
-        OBSTACLE_TWO(4,10, "enemy_obstacle_100x20.png");
+        OBSTACLE_ONE(4, 10, "enemy_obstacle_80x20.png"),
+        OBSTACLE_TWO(4, 10, "enemy_obstacle_100x20.png");
 
-        private int velocity;
+        private int speed;
         private String image;
         private int hp;
 
-        ObstacleType(int velocity, int hp, String image){
-            this.velocity = velocity;
+        ObstacleType(int speed, int hp, String image){
+            this.speed = speed;
             this.hp = hp;
             this.image = image;
         }
 
-        public int getVelocityY(){
-            return velocity;
+        public static void increaseSpeed(int speed) {
+            OBSTACLE_ONE.speed += speed;
+            OBSTACLE_TWO.speed += speed;
+        }
+
+        public static void resetSpeed() {
+            OBSTACLE_ONE.speed = 4;
+            OBSTACLE_TWO.speed = 4;
+        }
+
+        public int getSpeed(){
+            return speed;
         }
 
         public String getImage() {

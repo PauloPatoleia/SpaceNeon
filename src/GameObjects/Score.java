@@ -5,13 +5,15 @@ import org.academiadecodigo.simplegraphics.graphics.Text;
 
 public class Score {
 
-    private int score = 0;
+    // TODO: 13/02/2019 make score non-static and accessible by Difficulty
+    public static int score;
     private Text display = new Text(380, 20, "score");
     private int cooldown = 60;
 
     public Score() {
         display.setColor(Color.WHITE);
         display.grow(20,10);
+        score = 0;
     }
 
     public void tick() {
@@ -24,12 +26,16 @@ public class Score {
     }
 
     public void render() {
-        display.setText("Score: "+ score);
+        display.setText("Score: " + score);
         //display.delete();
         display.draw();
     }
 
     public void setScore(int score) {
         this.score += score;
+    }
+
+    public int getScore() {
+        return score;
     }
 }

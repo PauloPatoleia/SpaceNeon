@@ -46,25 +46,33 @@ public class Bullets {
 
     }
 
-    public static enum BulletType {
+    public enum BulletType {
 
         NORMAL(15, 6),
         FAST(10, 8),
         DOUBLE(15, 6),
         ENEMYBULLET(120, -3);
 
+        private int cooldown;
+        private int speed;
 
         BulletType(int cooldown, int speed) {
            this.speed = speed;
            this.cooldown = cooldown;
         }
 
-        private int cooldown;
-        private int speed;
-
         public int getCooldown() {
             return cooldown;
         }
+
+        public static void increaseSpeed(int speed) {
+            ENEMYBULLET.speed -= speed;
+        }
+
+        public static void resetSpeed() {
+            ENEMYBULLET.speed = -3;
+        }
+
     }
 
     public Rectangle getHitbox() {
