@@ -25,6 +25,7 @@ public class Game implements KeyboardHandler, MouseHandler {
     private Player playerTwo;
     private boolean playing = true;
     private boolean paused = false;
+    private boolean versus = false;
     private LinkedList<Bullets> friendlyBullets = new LinkedList<>();
     private LinkedList<Bullets> enemyBullets = new LinkedList<>();
     private LinkedList<PowerUp> powerUps = new LinkedList<>();
@@ -144,7 +145,6 @@ public class Game implements KeyboardHandler, MouseHandler {
     private void tick() {
 
 
-
         if (state == STATE.MENU) {
             return;
         }
@@ -155,94 +155,113 @@ public class Game implements KeyboardHandler, MouseHandler {
             return;
         }
 
-        enemyGenerator.tick();
-        powerUpGenerator.tick();
-        score.tick();
-        //System.out.println(score.getScore());
-        difficulty.tick();
-
-
-
-        //////////////////////////////////////////////////////////////////////////////////////////////
-
-        // SPACESHIPS WITH ENEMIES AND ENEMY BULLETS
-        for (int i = 0; i < spaceShips.size(); i++) {
-            spaceShips.get(i).tick();
-
-            // WITH ENEMIES
-            for (int j = 0; j < enemies.size(); j++) {
-                if (spaceShips.get(i).getHitbox().intersects(enemies.get(j).getHitbox())) {
-
-                    spaceShips.get(i).hit();
-                    enemies.get(j).hit(20);
-                    enemies.remove(enemies.get(j));
-
-                    if (spaceShips.get(i).getHp() <= 0) {
-                        spaceShips.remove(spaceShips.get(i));
-                    }
-
-                    //if it collides with one leave the for loop
-                    j = enemies.size();
-                }
-            }
+        if (versus && spaceShips.size() == 1) {
+            reset();
+            state = STATE.MENU;
+            versus = false;
+            return;
         }
 
+        if (!versus) {
+            enemyGenerator.tick();
+            powerUpGenerator.tick();
+            score.tick();
+            //System.out.println(score.getScore());
+            difficulty.tick();
 
-        //////////////////////////////////////////////////////////////////////////////////////////////
 
-        // Friendly bullets out of bounds and collision with enemies
-        for (int i = 0; i < friendlyBullets.size(); i++) {
 
-            friendlyBullets.get(i).tick();
 
-            if (friendlyBullets.get(i).getImgY() <= 40) {
-                friendlyBullets.get(i).bulletImage.delete();
-                friendlyBullets.remove(friendlyBullets.get(i));
-                i--;
-                continue;
-            }
 
-            for (int j = 0; j < enemies.size(); j++) {
+            //////////////////////////////////////////////////////////////////////////////////////////////
 
-                if (friendlyBullets.get(i).getHitbox().intersects(enemies.get(j).getHitbox())) {
+            // Friendly bullets out of bounds and collision with enemies
+            for (int i = 0; i < friendlyBullets.size(); i++) {
 
-                    friendlyBullets.get(i).hit();
+                friendlyBullets.get(i).tick();
+
+                if (friendlyBullets.get(i).getImgY() <= 40) {
+                    friendlyBullets.get(i).bulletImage.delete();
                     friendlyBullets.remove(friendlyBullets.get(i));
                     i--;
+                    continue;
+                }
 
-                    enemies.get(j).hit();
+                for (int j = 0; j < enemies.size(); j++) {
 
-                    if (enemies.get(j).getHp() <= 0) {
-                        enemies.remove(enemies.get(j));
-                        score.setScore(50);
-                        j--;
+                    if (friendlyBullets.get(i).getHitbox().intersects(enemies.get(j).getHitbox())) {
+
+                        friendlyBullets.get(i).hit();
+                        friendlyBullets.remove(friendlyBullets.get(i));
+                        i--;
+
+                        enemies.get(j).hit();
+
+                        if (enemies.get(j).getHp() <= 0) {
+                            enemies.remove(enemies.get(j));
+                            score.setScore(50);
+                            j--;
+                        }
+                        //end this loop
+                        j = enemies.size();
                     }
-                    //end this loop
-                    j = enemies.size();
+                }
+
+            }
+
+            ///////////////////////////////////////////////////////////////////////////////////////
+
+
+            // Enemy out of bounds
+            for (int i = 0; i < enemies.size(); i++) {
+
+                enemies.get(i).tick();
+
+                // Out of bounds
+                if (enemies.get(i).getEnemyImage().getY() >= 750) {
+                    enemies.get(i).getEnemyImage().delete();
+                    enemies.remove(enemies.get(i));
+
+                    if (enemies.size() > 1) {
+                        i--;
+                    }
                 }
             }
 
-        }
 
-        ///////////////////////////////////////////////////////////////////////////////////////
+            //////////////////////////////////////////////////////////////////////////
 
+            //powerUps out of bounds and collision with spaceships
+            for (int i = 0; i < powerUps.size(); i++) {
 
-        // Enemy out of bounds
-        for (int i = 0; i < enemies.size(); i++) {
+                powerUps.get(i).tick();
 
-            enemies.get(i).tick();
+                if (powerUps.get(i).getImgY() >= 745) {
 
-            // Out of bounds
-            if (enemies.get(i).getEnemyImage().getY() >= 750) {
-                enemies.get(i).getEnemyImage().delete();
-                enemies.remove(enemies.get(i));
+                    powerUps.get(i).powerUpImage.delete();
+                    powerUps.remove(powerUps.get(i));
 
-                if (enemies.size() > 1) {
                     i--;
+                    continue;
                 }
+
+                for (int j = 0; j < spaceShips.size(); j++) {
+
+                    if (spaceShips.get(j).getHitbox().intersects(powerUps.get(i).getHitbox())) {
+
+
+                        spaceShips.get(j).powerUp(powerUps.get(i).getPowerUpType());
+                        powerUps.get(i).hit();
+                        powerUps.remove(powerUps.get(i));
+
+                        //if it collides with one leave the for loop
+                        i--;
+                        j = spaceShips.size();
+                    }
+                }
+
             }
         }
-
         //////////////////////////////////////////////////////////////////////////
 
 
@@ -251,7 +270,7 @@ public class Game implements KeyboardHandler, MouseHandler {
 
             enemyBullets.get(i).tick();
 
-            if (enemyBullets.get(i).getImgY() >= 745) {
+            if (enemyBullets.get(i).getImgY() >= 750 || enemyBullets.get(i).getImgY() <= 40) {
 
                 enemyBullets.get(i).bulletImage.delete();
                 enemyBullets.remove(enemyBullets.get(i));
@@ -278,37 +297,28 @@ public class Game implements KeyboardHandler, MouseHandler {
             }
         }
 
-        //////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////
 
-        //powerUps out of bounds and collision with spaceships
-        for (int i = 0; i < powerUps.size(); i++) {
+        // SPACESHIPS WITH ENEMIES AND ENEMY BULLETS
+        for (int i = 0; i < spaceShips.size(); i++) {
+            spaceShips.get(i).tick();
 
-            powerUps.get(i).tick();
+            // WITH ENEMIES
+            for (int j = 0; j < enemies.size(); j++) {
+                if (spaceShips.get(i).getHitbox().intersects(enemies.get(j).getHitbox())) {
 
-            if (powerUps.get(i).getImgY() >= 745) {
+                    spaceShips.get(i).hit();
+                    enemies.get(j).hit(20);
+                    enemies.remove(enemies.get(j));
 
-                powerUps.get(i).powerUpImage.delete();
-                powerUps.remove(powerUps.get(i));
-
-                i--;
-                continue;
-            }
-
-            for (int j = 0; j < spaceShips.size(); j++) {
-
-                if (spaceShips.get(j).getHitbox().intersects(powerUps.get(i).getHitbox())) {
-
-
-                    spaceShips.get(j).powerUp(powerUps.get(i).getPowerUpType());
-                    powerUps.get(i).hit();
-                    powerUps.remove(powerUps.get(i));
+                    if (spaceShips.get(i).getHp() <= 0) {
+                        spaceShips.remove(spaceShips.get(i));
+                    }
 
                     //if it collides with one leave the for loop
-                    i--;
-                    j = spaceShips.size();
+                    j = enemies.size();
                 }
             }
-
         }
     }
 
@@ -324,8 +334,6 @@ public class Game implements KeyboardHandler, MouseHandler {
             return;
 
         }
-
-
 
 
         for (int i = 0; i < spaceShips.size(); i++) {
@@ -406,14 +414,15 @@ public class Game implements KeyboardHandler, MouseHandler {
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {
 
-        if(state == STATE.MENU) {
+        if (state == STATE.MENU) {
 
             if ((mouseEvent.getX() > 264 && mouseEvent.getX() < 558) &&
                     mouseEvent.getY() > 419 && mouseEvent.getY() < 464) {
 
-                spaceShips.add(new SpaceShip(370, 700, friendlyBullets, "spaceship_blue_30x30.png", "bullet_blue_20x30.png", 50));
+                spaceShips.add(new SpaceShip(370, 700, friendlyBullets, "spaceship_blue_30x30.png", "bullet_blue_20x30.png", 50, Bullets.BulletType.NORMAL, 0));
                 playerOne = new Player(KeyboardEvent.KEY_UP, KeyboardEvent.KEY_DOWN, KeyboardEvent.KEY_LEFT, KeyboardEvent.KEY_RIGHT, KeyboardEvent.KEY_SPACE, spaceShips.get(0));
 
+                versus = false;
                 init(); // TODO: 13/02/2019 same
             }
 
@@ -421,12 +430,28 @@ public class Game implements KeyboardHandler, MouseHandler {
                     mouseEvent.getY() > 509 && mouseEvent.getY() < 554) {
 
                 // Start with 2 players
-                spaceShips.add(new SpaceShip(250, 700, friendlyBullets, "spaceship_blue_30x30.png", "bullet_blue_20x30.png", 50));
-                spaceShips.add(new SpaceShip(500, 700, friendlyBullets, "green_spaceship_30x30.png", "bullet_green_20x30.png", 730));
+                spaceShips.add(new SpaceShip(250, 700, friendlyBullets, "spaceship_blue_30x30.png", "bullet_blue_20x30.png", 50, Bullets.BulletType.NORMAL, 0));
+                spaceShips.add(new SpaceShip(500, 700, friendlyBullets, "green_spaceship_30x30.png", "bullet_green_20x30.png", 730, Bullets.BulletType.NORMAL, 0));
 
                 playerOne = new Player(KeyboardEvent.KEY_UP, KeyboardEvent.KEY_DOWN, KeyboardEvent.KEY_LEFT, KeyboardEvent.KEY_RIGHT, KeyboardEvent.KEY_SPACE, spaceShips.get(0));
                 playerTwo = new Player(KeyboardEvent.KEY_W, KeyboardEvent.KEY_S, KeyboardEvent.KEY_A, KeyboardEvent.KEY_D, KeyboardEvent.KEY_T, spaceShips.get(1));
 
+                versus = false;
+                init(); // TODO: 13/02/2019 passar nr de player
+
+            }
+
+            if ((mouseEvent.getX() > 264 && mouseEvent.getX() < 558) &&
+                    mouseEvent.getY() > 599 && mouseEvent.getY() < 644) {
+
+                // Start with 2 players
+                spaceShips.add(new SpaceShip(250, 40, enemyBullets, "spaceship_blue_upside_30x30.png", "bullet_blue_20x30.png", 50, Bullets.BulletType.VSTOP, 1));
+                spaceShips.add(new SpaceShip(500, 700, enemyBullets, "green_spaceship_30x30.png", "bullet_green_20x30.png", 730, Bullets.BulletType.VSBOTTOM, 2));
+
+                playerOne = new Player(KeyboardEvent.KEY_UP, KeyboardEvent.KEY_DOWN, KeyboardEvent.KEY_LEFT, KeyboardEvent.KEY_RIGHT, KeyboardEvent.KEY_SPACE, spaceShips.get(0));
+                playerTwo = new Player(KeyboardEvent.KEY_W, KeyboardEvent.KEY_S, KeyboardEvent.KEY_A, KeyboardEvent.KEY_D, KeyboardEvent.KEY_T, spaceShips.get(1));
+
+                versus = true;
                 init(); // TODO: 13/02/2019 passar nr de player
 
             }

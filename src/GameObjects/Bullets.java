@@ -51,7 +51,9 @@ public class Bullets {
         NORMAL(15, 6),
         FAST(10, 8),
         DOUBLE(15, 6),
-        ENEMYBULLET(120, -3);
+        ENEMYBULLET(120, -3),
+        VSBOTTOM(15, 15),
+        VSTOP(15, -15);
 
         private int cooldown;
         private int speed;
