@@ -23,6 +23,7 @@ public class Lifes {
         lifeIcon.add(new Picture(inicialXposition, 787, hpImage));
         lifeIcon.add(new Picture(inicialXposition + 20, 787, hpImage));
         lifeIcon.add(new Picture(inicialXposition + 40, 787, hpImage));
+        lifeIcon.add(new Picture(inicialXposition + 60, 787, hpImage));
     }
 
     public void tick() {
@@ -43,6 +44,9 @@ public class Lifes {
                 break;
             case 2:
                 lifeIcon.add(new Picture(inicialXposition + 40, 787 , hpImage));
+                break;
+            case 3:
+                lifeIcon.add(new Picture(inicialXposition + 60, 787 , hpImage));
                 break;
 
         }

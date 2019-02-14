@@ -74,8 +74,8 @@ public class EnemyDiamond extends Enemy {
 
     public enum EnemyType {
 
-        ENEMY_ONE(3, 3, "enemy_diamond_25x25.png"),
-        ENEMY_TWO(4, 3, "enemy_diamond_25x25.png");
+        ENEMY_ONE(3, 2, "enemy_diamond_25x25.png"),
+        ENEMY_TWO(4, 2, "enemy_diamond_25x25.png");
 
         private int speed;
         private String image;

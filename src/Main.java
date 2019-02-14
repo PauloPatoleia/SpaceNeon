@@ -22,9 +22,18 @@ public class Main {
                 }
             }
         }).start();
+
+
+
 */
-        Game game = new Game();
-        game.start();
+
+        try {
+            Game game = new Game();
+            game.start();
+        } catch (Exception e) {
+            System.out.println("O SIMPLE GRAPHICS É UM TUMOR DO MUNDO TECNOLOGICO");
+        }
+
 
 
     }

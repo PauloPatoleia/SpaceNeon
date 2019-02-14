@@ -412,7 +412,7 @@ public class Game implements KeyboardHandler {
         friendlyBullets.clear();
         enemyBullets.clear();
         powerUps.clear();
-        difficulty.reset();
+        enemyGenerator.reset();
 
         for (int i = 0; i < enemies.size(); i++) {
             enemies.get(i).getEnemyImage().delete();

@@ -218,7 +218,7 @@ public class SpaceShip {
         switch (powerUpType) {
 
             case LIFEUP:
-                if (hp < 3) {
+                if (hp < 4) {
                     hp++;
                     hpDisplay.lifeUp();
                 }

@@ -23,6 +23,7 @@ public class Difficulty {
 
     public void tick() {
 
+        /*
         // TODO: 13/02/2019 Make score non static and accessible by getScore()
         int level = (int) Math.floor(Score.score / levelIncrease);
         if (currentDifficulty != level) {
@@ -48,5 +49,7 @@ public class Difficulty {
         EnemyShooter.EnemyType.resetSpeed();
         Obstacle.ObstacleType.resetSpeed();
     }
+    */
 
+    }
 }

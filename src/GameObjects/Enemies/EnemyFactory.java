@@ -8,10 +8,10 @@ public class EnemyFactory {
 
     public static Enemy getNewEnemy(LinkedList<Bullets> enemyBullets, String bulletImage, LinkedList<Enemy> enemyLinkedList) {
 
-        int randomEnemy = (int) (Math.random() * 2);
+        int randomEnemy = (int) (Math.random() * 3);
 
 
-        if (randomEnemy == 0) {
+        if (randomEnemy <= 0) {
 
             int upperBoundary = 766;
             int randomEnemyShooterNumber = (int) (Math.random() * (EnemyShooter.EnemyType.values()).length);
@@ -48,7 +48,7 @@ public class EnemyFactory {
             }
         }
 
-        if (randomEnemy == 1) {
+        if (randomEnemy >= 2) {
 
             int randomEnemyDiamondNumber = (int) (Math.random() * (EnemyDiamond.EnemyType.values().length));
 
