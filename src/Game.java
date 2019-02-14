@@ -260,6 +260,7 @@ public class Game implements KeyboardHandler {
                         spaceShips.get(j).powerUp(powerUps.get(i).getPowerUpType());
                         powerUps.get(i).hit();
                         powerUps.remove(powerUps.get(i));
+                        System.out.println(spaceShips.get(i).getSpeed());
 
                         //if it collides with one leave the for loop
                         i--;

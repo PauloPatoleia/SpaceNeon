@@ -22,7 +22,7 @@ public class EnemyGenerator {
 
         int chance = (int) Math.floor(Math.random() * chanceMultiplier);
 
-        if (chance == 1) {
+        if (chance > 1 && chance < 5 && enemyList.size() < 10) {
             EnemyFactory.getNewEnemy(enemyBullets, "bullet_red_20x30.png", enemyList);
         }
     }
