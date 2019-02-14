@@ -222,6 +222,7 @@ public class SpaceShip {
                     hp++;
                     hpDisplay.lifeUp();
                 }
+
                 break;
             case BULLETFAST:
                 bulletType = Bullets.BulletType.FAST;
