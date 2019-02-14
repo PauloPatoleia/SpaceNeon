@@ -11,16 +11,18 @@ public class Lifes {
     private LinkedList<Picture> lifeIcon = new LinkedList<>();
     private SpaceShip ship;
     private int inicialXposition;
+    private String hpImage;
 
 
-    public Lifes(SpaceShip player, int inicialXposition) {
+    public Lifes(SpaceShip player, String hpImage, int inicialXposition) {
 
         this.ship = player;
         this.inicialXposition = inicialXposition;
+        this.hpImage = hpImage;
 
-        lifeIcon.add(new Picture(inicialXposition, 785, "rsz_heart.png"));
-        lifeIcon.add(new Picture(inicialXposition + 20, 785, "rsz_heart.png"));
-        lifeIcon.add(new Picture(inicialXposition + 40, 785,"rsz_heart.png"));
+        lifeIcon.add(new Picture(inicialXposition, 787, hpImage));
+        lifeIcon.add(new Picture(inicialXposition + 20, 787, hpImage));
+        lifeIcon.add(new Picture(inicialXposition + 40, 787, hpImage));
     }
 
     public void tick() {
@@ -37,10 +39,10 @@ public class Lifes {
 
         switch (lifeIcon.size()) {
             case 1:
-                lifeIcon.add(new Picture(inicialXposition + 20, 785, "rsz_heart.png"));
+                lifeIcon.add(new Picture(inicialXposition + 20, 787, hpImage));
                 break;
             case 2:
-                lifeIcon.add(new Picture(inicialXposition + 40, 785, "rsz_heart.png"));
+                lifeIcon.add(new Picture(inicialXposition + 40, 787, hpImage));
                 break;
 
         }

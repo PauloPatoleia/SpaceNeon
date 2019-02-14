@@ -35,13 +35,13 @@ public class SpaceShip {
      * @param imageSource      - GameObjects.SpaceShip image source
      */
     public SpaceShip(int initialXPosition, int initialYPosition, LinkedList<Bullets> friendlyBullets, String imageSource,
-                     String bulletImage, int hpDisplayXposition, Bullets.BulletType bulletType, int versus) {
+                     String bulletImage, String hpImage, int hpDisplayXposition, Bullets.BulletType bulletType, int versus) {
         this.img = new Picture(initialXPosition, initialYPosition, imageSource);
         this.hitbox = new Rectangle(initialXPosition, initialYPosition, this.img.getWidth(), this.img.getHeight());
         this.speed = 5;
         this.friendlyBullets = friendlyBullets;
         this.bulletImage = bulletImage;
-        this.hpDisplay = new Lifes(this, hpDisplayXposition);
+        this.hpDisplay = new Lifes(this, hpImage, hpDisplayXposition);
         this.bulletType = bulletType;
         this.cooldown = bulletType.getCooldown();
         this.versus = versus;

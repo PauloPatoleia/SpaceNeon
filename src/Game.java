@@ -30,7 +30,7 @@ public class Game implements KeyboardHandler {
 
     private LinkedList<SpaceShip> spaceShips = new LinkedList<>();
 
-    private Rectangle rect;
+    private Picture background;
     private Picture menu = new Picture(10, 10, "menu800.png");
     private Picture instructions = new Picture(10, 10, "instructions_800x800.jpg");
     private Arrow arrow = new Arrow();
@@ -94,9 +94,8 @@ public class Game implements KeyboardHandler {
      */
     public void init() {
 
-        rect = new Rectangle(10, 10, 800, 800);
-        rect.setColor(Color.BLACK);
-        rect.fill();
+        background = new Picture(10, 10, "background_800x800.png");
+        background.draw();
         topBar = new TopBar("top_bar_800x40.png");
         bottomBar = new BottomBar("bottom_bar_800x40.png");
         fps = new FramesPerSecond();
@@ -260,7 +259,6 @@ public class Game implements KeyboardHandler {
                         spaceShips.get(j).powerUp(powerUps.get(i).getPowerUpType());
                         powerUps.get(i).hit();
                         powerUps.remove(powerUps.get(i));
-                        System.out.println(spaceShips.get(i).getSpeed());
 
                         //if it collides with one leave the for loop
                         i--;
@@ -461,7 +459,7 @@ public class Game implements KeyboardHandler {
 
     public void initiateOnePlayer() {
 
-        spaceShips.add(new SpaceShip(370, 700, friendlyBullets, "spaceship_blue_30x30.png", "bullet_blue_20x30.png", 50, Bullets.BulletType.NORMAL, 0));
+        spaceShips.add(new SpaceShip(370, 700, friendlyBullets, "spaceship_blue_30x30.png", "bullet_blue_20x30.png", "heart_blue_13x13.png", 50, Bullets.BulletType.NORMAL, 0));
         playerOne = new Player(KeyboardEvent.KEY_UP, KeyboardEvent.KEY_DOWN, KeyboardEvent.KEY_LEFT, KeyboardEvent.KEY_RIGHT, KeyboardEvent.KEY_SPACE, spaceShips.get(0));
 
         versus = false;
@@ -471,8 +469,8 @@ public class Game implements KeyboardHandler {
     public void initiateTwoPlayers() {
 
         // Start with 2 players
-        spaceShips.add(new SpaceShip(250, 700, friendlyBullets, "spaceship_blue_30x30.png", "bullet_blue_20x30.png", 50, Bullets.BulletType.NORMAL, 0));
-        spaceShips.add(new SpaceShip(500, 700, friendlyBullets, "green_spaceship_30x30.png", "bullet_green_20x30.png", 730, Bullets.BulletType.NORMAL, 0));
+        spaceShips.add(new SpaceShip(250, 700, friendlyBullets, "spaceship_blue_30x30.png", "bullet_blue_20x30.png", "heart_blue_13x13.png", 50, Bullets.BulletType.NORMAL, 0));
+        spaceShips.add(new SpaceShip(500, 700, friendlyBullets, "green_spaceship_30x30.png", "bullet_green_20x30.png", "heart_green_13x13.png", 730, Bullets.BulletType.NORMAL, 0));
 
         playerOne = new Player(KeyboardEvent.KEY_UP, KeyboardEvent.KEY_DOWN, KeyboardEvent.KEY_LEFT, KeyboardEvent.KEY_RIGHT, KeyboardEvent.KEY_SPACE, spaceShips.get(0));
         playerTwo = new Player(KeyboardEvent.KEY_W, KeyboardEvent.KEY_S, KeyboardEvent.KEY_A, KeyboardEvent.KEY_D, KeyboardEvent.KEY_T, spaceShips.get(1));
@@ -486,8 +484,8 @@ public class Game implements KeyboardHandler {
     public void initiateVersusPlayer() {
 
         //initiate versus mode
-        spaceShips.add(new SpaceShip(300, 100, enemyBullets, "spaceship_blue_upside_30x30.png", "bullet_blue_20x30.png", 50, Bullets.BulletType.VSTOP, 1));
-        spaceShips.add(new SpaceShip(500, 700, enemyBullets, "green_spaceship_30x30.png", "bullet_green_20x30.png", 730, Bullets.BulletType.VSBOTTOM, 2));
+        spaceShips.add(new SpaceShip(300, 100, enemyBullets, "spaceship_blue_upside_30x30.png", "bullet_blue_20x30.png", "heart_blue_13x13.png", 50, Bullets.BulletType.VSTOP, 1));
+        spaceShips.add(new SpaceShip(500, 700, enemyBullets, "green_spaceship_30x30.png", "bullet_green_20x30.png","heart_green_13x13.png", 730, Bullets.BulletType.VSBOTTOM, 2));
 
         playerOne = new Player(KeyboardEvent.KEY_UP, KeyboardEvent.KEY_DOWN, KeyboardEvent.KEY_LEFT, KeyboardEvent.KEY_RIGHT, KeyboardEvent.KEY_SPACE, spaceShips.get(0));
         playerTwo = new Player(KeyboardEvent.KEY_W, KeyboardEvent.KEY_S, KeyboardEvent.KEY_A, KeyboardEvent.KEY_D, KeyboardEvent.KEY_T, spaceShips.get(1));
