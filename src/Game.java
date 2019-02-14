@@ -185,7 +185,7 @@ public class Game implements KeyboardHandler {
         }
 
         if (!versus) {
-            //enemyGenerator.tick();
+            enemyGenerator.tick();
             powerUpGenerator.tick();
             score.tick();
             difficulty.tick();

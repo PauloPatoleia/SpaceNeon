@@ -10,7 +10,7 @@ public class PowerUpGenerator {
     public PowerUpGenerator(LinkedList<PowerUp> powerUpList) {
 
         this.powerUpList = powerUpList;
-        chanceMultiplier = 20;
+        chanceMultiplier = 300;
     }
 
     public void tick() {
