@@ -208,6 +208,8 @@ public class SpaceShip {
             case BULLETDOUBLE:
                 bulletType = Bullets.BulletType.DOUBLE;
                 break;
+            case SPEEDUP:
+                speed += 1;
         }
     }
 }

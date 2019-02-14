@@ -58,7 +58,8 @@ public class PowerUp {
 
         BULLETFAST,
         BULLETDOUBLE,
-        LIFEUP;
+        LIFEUP,
+        SPEEDUP;
 
     }
 

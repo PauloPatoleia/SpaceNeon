@@ -27,6 +27,10 @@ public class PowerUpFactory {
                     int randomThree = (int) (Math.random() * upperBoundary + 10);
                     powerUpList.add(new PowerUp(randomThree, 30, PowerUp.PowerUpType.BULLETDOUBLE, "powerup.png"));
                     break;
+                case SPEEDUP:
+                    int randomFour = (int) (Math.random() * upperBoundary + 10);
+                    powerUpList.add(new PowerUp(randomFour, 30, PowerUp.PowerUpType.SPEEDUP, "powerup.png")); //change pic
+                    break;
 
             }
         }
