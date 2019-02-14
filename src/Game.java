@@ -32,7 +32,7 @@ public class Game implements KeyboardHandler {
 
     private Picture background;
     private Picture menu = new Picture(10, 10, "menu800.png");
-    private Picture instructions = new Picture(10, 10, "instructions_800x800.jpg");
+    private Picture instructions = new Picture(10, 10, "instructions_800x800.png");
     private Picture pauseScreen = new Picture(10, 50, "pause_screen_800x720.png");
     private Arrow arrow = new Arrow();
 
@@ -173,10 +173,9 @@ public class Game implements KeyboardHandler {
         }
 
         if (!versus) {
-            enemyGenerator.tick();
+            //enemyGenerator.tick();
             powerUpGenerator.tick();
             score.tick();
-            //System.out.println(score.getScore());
             difficulty.tick();
 
 
