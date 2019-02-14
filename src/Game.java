@@ -32,7 +32,9 @@ public class Game implements KeyboardHandler {
 
     private Rectangle rect;
     private Picture menu = new Picture(10, 10, "menu800.png");
+    private Picture instructions = new Picture(10, 10, "instructions_800x800.jpg");
     private Arrow arrow = new Arrow();
+
 
     // REFACTOR
     private Score score = new Score();
@@ -48,7 +50,8 @@ public class Game implements KeyboardHandler {
 
     enum STATE {
         MENU,
-        GAME
+        GAME,
+        INSTRUCTIONS
     }
 
 
@@ -63,16 +66,6 @@ public class Game implements KeyboardHandler {
         PAUSE.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
         k.addEventListener(PAUSE);
 
-        KeyboardEvent START = new KeyboardEvent();
-        START.setKey(KeyboardEvent.KEY_L);
-        START.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
-        k.addEventListener(START);
-
-        KeyboardEvent START2 = new KeyboardEvent();
-        START2.setKey(KeyboardEvent.KEY_K);
-        START2.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
-        k.addEventListener(START2);
-
         KeyboardEvent UP = new KeyboardEvent();
         UP.setKey(KeyboardEvent.KEY_UP);
         UP.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
@@ -84,9 +77,14 @@ public class Game implements KeyboardHandler {
         k.addEventListener(DOWN);
 
         KeyboardEvent ENTER = new KeyboardEvent();
-        ENTER.setKey(KeyboardEvent.KEY_SPACE);
+        ENTER.setKey(KeyboardEvent.KEY_ENTER);
         ENTER.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
         k.addEventListener(ENTER);
+
+        KeyboardEvent ESC = new KeyboardEvent();
+        ESC.setKey(KeyboardEvent.KEY_ESC);
+        ESC.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
+        k.addEventListener(ESC);
 
 
     }
@@ -157,7 +155,7 @@ public class Game implements KeyboardHandler {
     private void tick() {
 
 
-        if (state == STATE.MENU) {
+        if (state == STATE.MENU || state == STATE.INSTRUCTIONS) {
             return;
         }
 
@@ -345,6 +343,11 @@ public class Game implements KeyboardHandler {
 
         }
 
+        if (state == STATE.INSTRUCTIONS) {
+            instructions.draw();
+            return;
+        }
+
 
         for (int i = 0; i < spaceShips.size(); i++) {
             spaceShips.get(i).render();
@@ -418,7 +421,7 @@ public class Game implements KeyboardHandler {
                 arrow.moveDown();
                 return;
             }
-            if (keyboardEvent.getKey() == 32) {
+            if (keyboardEvent.getKey() == KeyboardEvent.KEY_ENTER) {
                 if (arrow.getY() == arrow.getSinglePlayerPosition()) {
                     initiateOnePlayer();
                     return;
@@ -432,9 +435,18 @@ public class Game implements KeyboardHandler {
                     return;
                 }
                 if (arrow.getY() == arrow.getInstructionsPosition()) {
-                    //Method to initiate instructions.
+                    state = STATE.INSTRUCTIONS;
                     return;
                 }
+            }
+
+        }
+
+        if (state == STATE.INSTRUCTIONS) {
+            if (keyboardEvent.getKey() == KeyboardEvent.KEY_ESC){
+                instructions.delete();
+                state = STATE.MENU;
+                return;
             }
         }
     }
@@ -476,9 +488,6 @@ public class Game implements KeyboardHandler {
         init(); // TODO: 13/02/2019 passar nr de player
     }
 
-    public void initiateInstructions() {
-        //initiate instructions
-    }
 
     @Override
     public void keyReleased(KeyboardEvent keyboardEvent) {
