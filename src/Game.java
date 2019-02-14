@@ -2,7 +2,9 @@ import GameObjects.Arrow;
 import GameObjects.Bullets;
 import GameObjects.Collectibles.PowerUp;
 import GameObjects.Collectibles.PowerUpGenerator;
+import GameObjects.Enemies.Boss;
 import GameObjects.Enemies.Enemy;
+import GameObjects.Enemies.EnemyDiamond;
 import GameObjects.Enemies.EnemyGenerator;
 import GameObjects.Score;
 import GameObjects.SpaceShip;
@@ -30,6 +32,7 @@ public class Game implements KeyboardHandler {
 
     private LinkedList<SpaceShip> spaceShips = new LinkedList<>();
 
+    private Boss boss;
     private Rectangle rect;
     private Picture menu = new Picture(10, 10, "menu800.png");
     private Picture instructions = new Picture(10, 10, "instructions_800x800.jpg");
@@ -39,6 +42,7 @@ public class Game implements KeyboardHandler {
     // REFACTOR
     private Score score = new Score();
     private STATE state = STATE.MENU;
+    private LinkedList<Boss> bosses = new LinkedList<>();
     private LinkedList<Enemy> enemies = new LinkedList<>();
     private TopBar topBar;
     private BottomBar bottomBar;
@@ -56,6 +60,10 @@ public class Game implements KeyboardHandler {
 
 
     public Game() {
+
+        //int random = (int) (Math.random() * 766 + 10);
+        boss = new Boss(30, 65, Boss.BossType.BOSS_ONE, enemyBullets, "bullet_red_20x30.png");
+
 
         // Keyboard
         Keyboard k = new Keyboard(this);
@@ -104,6 +112,8 @@ public class Game implements KeyboardHandler {
         menu.delete();
         arrow.delete();
         state = STATE.GAME;
+
+
     }
 
 
@@ -173,13 +183,14 @@ public class Game implements KeyboardHandler {
         }
 
         if (!versus) {
-            enemyGenerator.tick();
+            //enemyGenerator.tick();
             powerUpGenerator.tick();
             score.tick();
             //System.out.println(score.getScore());
             difficulty.tick();
 
 
+            boss.tick();
             //////////////////////////////////////////////////////////////////////////////////////////////
 
             // Friendly bullets out of bounds and collision with enemies
@@ -235,7 +246,19 @@ public class Game implements KeyboardHandler {
                 }
             }
 
+            for (int i = 0; i < bosses.size(); i++) {
 
+                bosses.get(i).tick();
+
+                if( bosses.get(i).getEnemyImage().getY() >= 745) {
+                    bosses.get(i).getEnemyImage().delete();
+                    bosses.remove(bosses.get(i));
+
+                    i--;
+                    continue;
+                }
+
+            }
             //////////////////////////////////////////////////////////////////////////
 
             //powerUps out of bounds and collision with spaceships
@@ -328,6 +351,7 @@ public class Game implements KeyboardHandler {
                 }
             }
         }
+
     }
 
 
@@ -358,6 +382,7 @@ public class Game implements KeyboardHandler {
             enemy.render();
         }
 
+
         for (int i = 0; i < powerUps.size(); i++) {
 
             powerUps.get(i).render();
@@ -373,6 +398,15 @@ public class Game implements KeyboardHandler {
             friendlyBullets.get(i).render();
         }
 
+        /* if(level == 100)
+             enemies.hide();
+             boss.show()
+           continue;
+
+         */
+
+
+        boss.render();
         topBar.render();
         bottomBar.render();
         fps.render();

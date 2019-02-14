@@ -37,6 +37,7 @@ public class Difficulty {
             Obstacle.ObstacleType.increaseSpeed(1);
         }
 
+
     }
 
     public void reset() {
