@@ -33,6 +33,7 @@ public class Game implements KeyboardHandler {
     private Picture background;
     private Picture menu = new Picture(10, 10, "menu800.png");
     private Picture instructions = new Picture(10, 10, "instructions_800x800.jpg");
+    private Picture pauseScreen = new Picture(10, 50, "pause_screen_800x720.png");
     private Arrow arrow = new Arrow();
 
 
@@ -342,6 +343,8 @@ public class Game implements KeyboardHandler {
 
         }
 
+        if (paused)
+
         if (state == STATE.INSTRUCTIONS) {
             instructions.draw();
             return;
@@ -407,6 +410,12 @@ public class Game implements KeyboardHandler {
             if (keyboardEvent.getKey() == 80) {
                 System.out.println(paused);
                 paused = !paused;
+
+                // TODO: 14/02/2019 move this to render with STATE == PAUSED
+                if (paused)
+                    pauseScreen.draw();
+                if (!paused)
+                    pauseScreen.delete();
                 return;
 
             }
