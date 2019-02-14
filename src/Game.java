@@ -68,7 +68,7 @@ public class Game implements KeyboardHandler {
 
         //int random = (int) (Math.random() * 766 + 10);
         boss = new Boss(30, 65, Boss.BossType.BOSS_ONE, enemyBullets, "bullet_red_20x30.png");
-
+        bosses.add(boss);
 
         // Keyboard
         Keyboard k = new Keyboard(this);
@@ -262,19 +262,34 @@ public class Game implements KeyboardHandler {
                 }
             }
 
+
+            // boss out of bounds
+
             for (int i = 0; i < bosses.size(); i++) {
 
                 bosses.get(i).tick();
 
-                if( bosses.get(i).getEnemyImage().getY() >= 745) {
-                    bosses.get(i).getEnemyImage().delete();
-                    bosses.remove(bosses.get(i));
+                // friendly bullets intersects boss
+                for (int j = 0; j < friendlyBullets.size(); j++) {
 
-                    i--;
-                    continue;
+                    if (friendlyBullets.get(j).getHitbox().intersects(bosses.get(i).getHitbox())) {
+
+                        friendlyBullets.get(j).hit();
+                        friendlyBullets.remove(friendlyBullets.get(j));
+                        j--;
+
+                        bosses.get(i).hit();
+
+                        if (bosses.get(i).getHp() <= 0) {
+                            bosses.remove(bosses.get(i));
+                            score.setScore(100);
+                        }
+                        //end this loop
+                    }
                 }
-
             }
+
+
             //////////////////////////////////////////////////////////////////////////
 
             //powerUps out of bounds and collision with spaceships
@@ -379,7 +394,6 @@ public class Game implements KeyboardHandler {
 
             return;
         }
-
 
 
         if (state == STATE.MENU) {
@@ -507,7 +521,7 @@ public class Game implements KeyboardHandler {
         }
 
         if (state == STATE.INSTRUCTIONS) {
-            if (keyboardEvent.getKey() == KeyboardEvent.KEY_ESC){
+            if (keyboardEvent.getKey() == KeyboardEvent.KEY_ESC) {
                 instructions.delete();
                 state = STATE.MENU;
                 return;
@@ -561,7 +575,7 @@ public class Game implements KeyboardHandler {
 
         //initiate versus mode
         spaceShips.add(new SpaceShip(300, 100, enemyBullets, "spaceship_blue_upside_30x30.png", "bullet_blue_20x30.png", "heart_blue_13x13.png", 50, Bullets.BulletType.VSTOP, 1));
-        spaceShips.add(new SpaceShip(500, 700, enemyBullets, "green_spaceship_30x30.png", "bullet_green_20x30.png","heart_green_13x13.png", 730, Bullets.BulletType.VSBOTTOM, 2));
+        spaceShips.add(new SpaceShip(500, 700, enemyBullets, "green_spaceship_30x30.png", "bullet_green_20x30.png", "heart_green_13x13.png", 730, Bullets.BulletType.VSBOTTOM, 2));
 
         playerOne = new Player(KeyboardEvent.KEY_UP, KeyboardEvent.KEY_DOWN, KeyboardEvent.KEY_LEFT, KeyboardEvent.KEY_RIGHT, KeyboardEvent.KEY_SPACE, spaceShips.get(0));
         playerTwo = new Player(KeyboardEvent.KEY_W, KeyboardEvent.KEY_S, KeyboardEvent.KEY_A, KeyboardEvent.KEY_D, KeyboardEvent.KEY_T, spaceShips.get(1));

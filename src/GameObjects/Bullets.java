@@ -14,7 +14,8 @@ public class Bullets {
     public Bullets(int initialXPosition, int initialYPosition, BulletType bulletType, String bulletImage) {
 
         this.bulletImage = new Picture(initialXPosition, initialYPosition, bulletImage);
-        this.hitbox = new Rectangle(initialXPosition, initialYPosition, this.bulletImage.getWidth(), this.bulletImage.getHeight());
+        this.hitbox = new Rectangle(initialXPosition, initialYPosition, this.bulletImage.getWidth(),
+                this.bulletImage.getHeight());
         this.speed = bulletType.speed;
     }
 
@@ -54,7 +55,8 @@ public class Bullets {
         ENEMYBULLET(120, -3),
         VSBOTTOM(15, 15),
         VSTOP(15, -15),
-        BOSSBULLETS(100, 6);
+        RAINBULLETS(100, 6),
+        MANIAC(100,4);
 
         private int cooldown;
         private int speed;

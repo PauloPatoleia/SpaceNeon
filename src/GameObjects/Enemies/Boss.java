@@ -2,25 +2,23 @@ package GameObjects.Enemies;
 
 import GameObjects.Bullets;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
-
-import java.awt.*;
 import java.util.LinkedList;
 
 public class Boss extends Enemy {
 
-
-
     private LinkedList<Bullets> enemyBullets;
     private String bulletImage;
-    private Bullets.BulletType bulletType = Bullets.BulletType.BOSSBULLETS;
+    private Bullets.BulletType bulletType = Bullets.BulletType.MANIAC;
     private int cooldown;
     private boolean touchedRight;
     private boolean touchedLeft;
+    private BossType bossType;
 
-    public Boss(int x, int y, BossType bossType, LinkedList<Bullets> enemyBullets, String bulletImage) {
+    public Boss (int x, int y, BossType bossType, LinkedList<Bullets> enemyBullets, String bulletImage) {
         super(x, y, bossType.getImage(), bossType.getSpeed(), bossType.getHp());
         this.enemyBullets = enemyBullets;
         this.bulletImage = bulletImage;
+
         int randomStartDirection = (int) (Math.random() * 2);
         switch (randomStartDirection) {
             case 0:
@@ -31,17 +29,6 @@ public class Boss extends Enemy {
                 break;
         }
 
-/*
-        int randomBossDirection = (int) (Math.random() * 2);
-        switch (randomBossDirection) {
-            case 0:
-                touchedLeftEdge = true;
-                break;
-            case 1:
-                touchedRightEdge = true;
-                break;
-        }
-        */
     }
 
     @Override
@@ -57,22 +44,24 @@ public class Boss extends Enemy {
 
         super.getHitbox().setLocation(super.getEnemyImage().getX(), super.getEnemyImage().getY());
 
+
         if (super.getEnemyImage().getX() <= 10) {
             super.getEnemyImage().setX(10);
             touchedLeft = true;
             touchedRight = false;
         }
 
-        if (super.getEnemyImage().getX() >= 380) {
-            super.getEnemyImage().setX(380);
+        if (super.getEnemyImage().getX() >= 390) {
+            super.getEnemyImage().setX(390);
             touchedLeft = false;
             touchedRight = true;
         }
 
-
+        //rainAttack();
         if (cooldown == 0) {
 
-            rainAttack();
+
+            maniacAttack();
             cooldown = bulletType.getCooldown();
         }
 
@@ -88,36 +77,58 @@ public class Boss extends Enemy {
     }
 
     public void rainAttack() {
+        if (super.getEnemyImage().getX() <= 10 || super.getEnemyImage().getX() >= 390) {
 
-        enemyBullets.add(new Bullets(getBossImage().getX() + 3, getBossImage().getY() + 80, Bullets.BulletType.ENEMYBULLET, bulletImage));
-        enemyBullets.add(new Bullets(getBossImage().getX() + 50, getBossImage().getY() + 80, Bullets.BulletType.ENEMYBULLET, bulletImage));
-        enemyBullets.add(new Bullets(getBossImage().getX() + 100, getBossImage().getY() + 80, Bullets.BulletType.ENEMYBULLET, bulletImage));
-        enemyBullets.add(new Bullets(getBossImage().getX() + 150, getBossImage().getY() + 80, Bullets.BulletType.ENEMYBULLET, bulletImage));
-        enemyBullets.add(new Bullets(getBossImage().getX() + 200, getBossImage().getY() + 80, Bullets.BulletType.ENEMYBULLET, bulletImage));
-        enemyBullets.add(new Bullets(getBossImage().getX() + 250, getBossImage().getY() + 80, Bullets.BulletType.ENEMYBULLET, bulletImage));
-        enemyBullets.add(new Bullets(getBossImage().getX() + 300, getBossImage().getY() + 80, Bullets.BulletType.ENEMYBULLET, bulletImage));
-        enemyBullets.add(new Bullets(getBossImage().getX() + 350, getBossImage().getY() + 80, Bullets.BulletType.ENEMYBULLET, bulletImage));
-        enemyBullets.add(new Bullets(getBossImage().getX() + 400, getBossImage().getY() + 80, Bullets.BulletType.ENEMYBULLET, bulletImage));
+
+            enemyBullets.add(new Bullets(getBossImage().getX() + 01, getBossImage().getY() + 80,
+                    Bullets.BulletType.ENEMYBULLET, bulletImage));
+            enemyBullets.add(new Bullets(getBossImage().getX() + 50, getBossImage().getY() + 80,
+                    Bullets.BulletType.ENEMYBULLET, bulletImage));
+            enemyBullets.add(new Bullets(getBossImage().getX() + 100, getBossImage().getY() + 80,
+                    Bullets.BulletType.ENEMYBULLET, bulletImage));
+            enemyBullets.add(new Bullets(getBossImage().getX() + 150, getBossImage().getY() + 80,
+                    Bullets.BulletType.ENEMYBULLET, bulletImage));
+            enemyBullets.add(new Bullets(getBossImage().getX() + 200, getBossImage().getY() + 80,
+                    Bullets.BulletType.ENEMYBULLET, bulletImage));
+            enemyBullets.add(new Bullets(getBossImage().getX() + 250, getBossImage().getY() + 80,
+                    Bullets.BulletType.ENEMYBULLET, bulletImage));
+            enemyBullets.add(new Bullets(getBossImage().getX() + 300, getBossImage().getY() + 80,
+                    Bullets.BulletType.ENEMYBULLET, bulletImage));
+            enemyBullets.add(new Bullets(getBossImage().getX() + 350, getBossImage().getY() + 80,
+                    Bullets.BulletType.ENEMYBULLET, bulletImage));
+            enemyBullets.add(new Bullets(getBossImage().getX() + 400, getBossImage().getY() + 80,
+                    Bullets.BulletType.ENEMYBULLET, bulletImage));
+        }
 
     }
-    /*
-    @Override
-    public void hit(int hit) {
-        super.setHp(super.getHp() - hit);
+    public void maniacAttack() {
 
-        if (super.getHp() <= 0)
-            getEnemyImage().delete();
-        hitbox = null;
-        return;
+        enemyBullets.add(new Bullets(getBossImage().getX() + 10, getBossImage().getY() + 40,
+                Bullets.BulletType.ENEMYBULLET, bulletImage));
+        enemyBullets.add(new Bullets(getBossImage().getX() + 50, getBossImage().getY() + 60,
+                Bullets.BulletType.ENEMYBULLET, bulletImage));
+        enemyBullets.add(new Bullets(getBossImage().getX() + 100, getBossImage().getY() + 80,
+                Bullets.BulletType.ENEMYBULLET, bulletImage));
+        enemyBullets.add(new Bullets(getBossImage().getX() + 250, getBossImage().getY() + 140,
+                Bullets.BulletType.ENEMYBULLET, bulletImage));
+        enemyBullets.add(new Bullets(getBossImage().getX() + 300, getBossImage().getY() + 140,
+                Bullets.BulletType.ENEMYBULLET, bulletImage));
+        enemyBullets.add(new Bullets(getBossImage().getX() + 350, getBossImage().getY() + 160,
+                Bullets.BulletType.ENEMYBULLET, bulletImage));
+        enemyBullets.add(new Bullets(getBossImage().getX() + 400, getBossImage().getY() + 180,
+                Bullets.BulletType.ENEMYBULLET, bulletImage));
     }
-*/
+
     public Picture getBossImage() {
         return getEnemyImage();
     }
+    public BossType getBossType(){
+        return bossType;
 
+    }
     public enum BossType {
 
-        BOSS_ONE(5, 24, "rsz_boss.png");
+        BOSS_ONE(2, 24, "rsz_boss.png");
 
         private int speed;
         private String image;
@@ -146,7 +157,6 @@ public class Boss extends Enemy {
             return hp;
         }
 
-
-
     }
+
 }
