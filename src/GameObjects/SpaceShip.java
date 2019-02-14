@@ -20,10 +20,11 @@ public class SpaceShip {
     private boolean isShooting = false;
     private LinkedList<Bullets> friendlyBullets;
     private String bulletImage;
-    private Bullets.BulletType bulletType = Bullets.BulletType.NORMAL;
-    private int cooldown = bulletType.getCooldown();
+    private Bullets.BulletType bulletType;
+    private int cooldown;
     private boolean invincible = true;
     private int invincibilityCooldown = 0;
+    private int versus;
 
     /**
      * constructor
@@ -33,13 +34,17 @@ public class SpaceShip {
      * @param initialYPosition - Initial Y position
      * @param imageSource      - GameObjects.SpaceShip image source
      */
-    public SpaceShip(int initialXPosition, int initialYPosition, LinkedList<Bullets> friendlyBullets, String imageSource, String bulletImage, int hpDisplayXposition) {
+    public SpaceShip(int initialXPosition, int initialYPosition, LinkedList<Bullets> friendlyBullets, String imageSource,
+                     String bulletImage, int hpDisplayXposition, Bullets.BulletType bulletType, int versus) {
         this.img = new Picture(initialXPosition, initialYPosition, imageSource);
         this.hitbox = new Rectangle(initialXPosition, initialYPosition, this.img.getWidth(), this.img.getHeight());
         this.speed = 5;
         this.friendlyBullets = friendlyBullets;
         this.bulletImage = bulletImage;
         this.hpDisplay = new Lifes(this, hpDisplayXposition);
+        this.bulletType = bulletType;
+        this.cooldown = bulletType.getCooldown();
+        this.versus = versus;
     }
 
     /**
@@ -74,6 +79,17 @@ public class SpaceShip {
             img.setY(50);
         if (img.getY() >= 740)
             img.setY(740);
+
+        if (versus == 1) {
+
+            if (img.getY() >= 200)
+                img.setY(200);
+        }
+
+        if (versus == 2) {
+            if (img.getY() <= 600)
+                img.setY(600);
+        }
 
         if (isShooting && cooldown == 0) {
 
@@ -139,6 +155,11 @@ public class SpaceShip {
                 friendlyBullets.add(new Bullets(img.getX() - 4, img.getY() - 15, bulletType, bulletImage));
                 friendlyBullets.add(new Bullets(img.getX() + 15, img.getY() - 15, bulletType, bulletImage));
                 break;
+            case VSBOTTOM:
+                friendlyBullets.add(new Bullets(img.getX() + 5, img.getY() - 20, bulletType, bulletImage));
+                break;
+            case VSTOP:
+                friendlyBullets.add(new Bullets(img.getX() + 5, img.getY() + 20, bulletType, bulletImage));
         }
     }
 
@@ -201,6 +222,7 @@ public class SpaceShip {
                     hp++;
                     hpDisplay.lifeUp();
                 }
+
                 break;
             case BULLETFAST:
                 bulletType = Bullets.BulletType.FAST;

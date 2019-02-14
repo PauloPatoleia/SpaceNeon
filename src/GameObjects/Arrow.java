@@ -8,7 +8,7 @@ public class Arrow {
 
     private int singlePlayerPosition = 400;
     private int multiPlayerPosition = 495;
-    private int versusPlayerPosition = 585;
+    private int versusPlayerPosition = 590;
     private int instructionsPosition = 675;
 
     private int yToMove = 95;

@@ -27,7 +27,7 @@ public class EnemyShooter extends Enemy {
 
         if (cooldown == 0) {
 
-            enemyBullets.add(new Bullets(getEnemyImage().getX() + 3, getEnemyImage().getY() + 8, Bullets.BulletType.ENEMYBULLET,bulletImage));
+            enemyBullets.add(new Bullets(getEnemyImage().getX() + 3, getEnemyImage().getY() + 10, Bullets.BulletType.ENEMYBULLET,bulletImage));
              cooldown = bulletType.getCooldown();
         }
 
