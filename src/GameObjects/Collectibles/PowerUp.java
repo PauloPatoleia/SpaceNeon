@@ -15,7 +15,7 @@ public class PowerUp {
 
         this.powerUpImage = new Picture(initialXPosition, initialYPosition, powerUpImage);
         this.hitbox = new Rectangle(initialXPosition, initialYPosition, this.powerUpImage.getWidth(), this.powerUpImage.getHeight());
-        this.speed = 5;
+        this.speed = 3;
         this.powerUpType = powerUpType;
     }
 
@@ -59,7 +59,8 @@ public class PowerUp {
         BULLETFAST,
         BULLETDOUBLE,
         LIFEUP,
-        SPEEDUP;
+        SPEEDUP,
+        BULLETSPEED;
 
     }
 

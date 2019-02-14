@@ -16,6 +16,7 @@ import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardHandler;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
+import java.awt.*;
 import java.util.LinkedList;
 
 public class Game implements KeyboardHandler {
@@ -32,10 +33,13 @@ public class Game implements KeyboardHandler {
 
     private LinkedList<SpaceShip> spaceShips = new LinkedList<>();
 
+
     private Boss boss;
-    private Rectangle rect;
+    private Picture background;
+
     private Picture menu = new Picture(10, 10, "menu800.png");
-    private Picture instructions = new Picture(10, 10, "instructions_800x800.jpg");
+    private Picture instructions = new Picture(10, 10, "instructions_800x800.png");
+    private Picture pauseScreen = new Picture(10, 50, "pause_screen_800x720.png");
     private Arrow arrow = new Arrow();
 
 
@@ -55,7 +59,8 @@ public class Game implements KeyboardHandler {
     enum STATE {
         MENU,
         GAME,
-        INSTRUCTIONS
+        INSTRUCTIONS,
+        PAUSE
     }
 
 
@@ -94,6 +99,16 @@ public class Game implements KeyboardHandler {
         ESC.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
         k.addEventListener(ESC);
 
+        KeyboardEvent MENU = new KeyboardEvent();
+        MENU.setKey(KeyboardEvent.KEY_M);
+        MENU.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
+        k.addEventListener(MENU);
+
+        KeyboardEvent QUIT = new KeyboardEvent();
+        QUIT.setKey(KeyboardEvent.KEY_Q);
+        QUIT.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
+        k.addEventListener(QUIT);
+
 
     }
 
@@ -102,9 +117,8 @@ public class Game implements KeyboardHandler {
      */
     public void init() {
 
-        rect = new Rectangle(10, 10, 800, 800);
-        rect.setColor(Color.BLACK);
-        rect.fill();
+        background = new Picture(10, 10, "background_800x800.png");
+        background.draw();
         topBar = new TopBar("top_bar_800x40.png");
         bottomBar = new BottomBar("bottom_bar_800x40.png");
         fps = new FramesPerSecond();
@@ -139,7 +153,7 @@ public class Game implements KeyboardHandler {
 
             if (delta >= 1) {
 
-                if (!paused) {
+                if (state != STATE.PAUSE) {
 
                     tick();
                     render();
@@ -164,6 +178,9 @@ public class Game implements KeyboardHandler {
      */
     private void tick() {
 
+        if (state == STATE.PAUSE) {
+            return;
+        }
 
         if (state == STATE.MENU || state == STATE.INSTRUCTIONS) {
             return;
@@ -186,7 +203,6 @@ public class Game implements KeyboardHandler {
             //enemyGenerator.tick();
             powerUpGenerator.tick();
             score.tick();
-            //System.out.println(score.getScore());
             difficulty.tick();
 
 
@@ -283,7 +299,6 @@ public class Game implements KeyboardHandler {
                         spaceShips.get(j).powerUp(powerUps.get(i).getPowerUpType());
                         powerUps.get(i).hit();
                         powerUps.remove(powerUps.get(i));
-                        System.out.println(spaceShips.get(i).getSpeed());
 
                         //if it collides with one leave the for loop
                         i--;
@@ -359,6 +374,13 @@ public class Game implements KeyboardHandler {
      * Responsable for rendering everything to the screen
      */
     private void render() {
+
+        if (state == STATE.PAUSE) {
+
+            return;
+        }
+
+
 
         if (state == STATE.MENU) {
 
@@ -440,20 +462,21 @@ public class Game implements KeyboardHandler {
         // TODO: 11/02/2019 specify in what game state this controls exist
 
         if (state == STATE.GAME) {
-            if (keyboardEvent.getKey() == 80) {
-                System.out.println(paused);
-                paused = !paused;
-                return;
 
-            }
             if (keyboardEvent.getKey() == KeyboardEvent.KEY_ESC) {
-                reset();
-                state = STATE.MENU;
+                pauseScreen.draw();
+                state = STATE.PAUSE;
                 return;
             }
+
         }
 
         if (state == STATE.MENU) {
+
+            if (keyboardEvent.getKey() == KeyboardEvent.KEY_Q) {
+                System.exit(0);
+            }
+
             if (keyboardEvent.getKey() == 38) {
                 arrow.moveUp();
                 return;
@@ -483,7 +506,6 @@ public class Game implements KeyboardHandler {
 
         }
 
-
         if (state == STATE.INSTRUCTIONS) {
             if (keyboardEvent.getKey() == KeyboardEvent.KEY_ESC){
                 instructions.delete();
@@ -491,11 +513,29 @@ public class Game implements KeyboardHandler {
                 return;
             }
         }
+
+        if (state == STATE.PAUSE) {
+
+            if (keyboardEvent.getKey() == KeyboardEvent.KEY_M) {
+                reset();
+                pauseScreen.delete();
+                state = STATE.MENU;
+                return;
+
+
+            }
+
+            if (keyboardEvent.getKey() == KeyboardEvent.KEY_ESC) {
+                pauseScreen.delete();
+                state = STATE.GAME;
+            }
+
+        }
     }
 
     public void initiateOnePlayer() {
 
-        spaceShips.add(new SpaceShip(370, 700, friendlyBullets, "spaceship_blue_30x30.png", "bullet_blue_20x30.png", 50, Bullets.BulletType.NORMAL, 0));
+        spaceShips.add(new SpaceShip(370, 700, friendlyBullets, "spaceship_blue_30x30.png", "bullet_blue_20x30.png", "heart_blue_13x13.png", 50, Bullets.BulletType.NORMAL, 0));
         playerOne = new Player(KeyboardEvent.KEY_UP, KeyboardEvent.KEY_DOWN, KeyboardEvent.KEY_LEFT, KeyboardEvent.KEY_RIGHT, KeyboardEvent.KEY_SPACE, spaceShips.get(0));
 
         versus = false;
@@ -505,8 +545,8 @@ public class Game implements KeyboardHandler {
     public void initiateTwoPlayers() {
 
         // Start with 2 players
-        spaceShips.add(new SpaceShip(250, 700, friendlyBullets, "spaceship_blue_30x30.png", "bullet_blue_20x30.png", 50, Bullets.BulletType.NORMAL, 0));
-        spaceShips.add(new SpaceShip(500, 700, friendlyBullets, "green_spaceship_30x30.png", "bullet_green_20x30.png", 730, Bullets.BulletType.NORMAL, 0));
+        spaceShips.add(new SpaceShip(250, 700, friendlyBullets, "spaceship_blue_30x30.png", "bullet_blue_20x30.png", "heart_blue_13x13.png", 50, Bullets.BulletType.NORMAL, 0));
+        spaceShips.add(new SpaceShip(500, 700, friendlyBullets, "green_spaceship_30x30.png", "bullet_green_20x30.png", "heart_green_13x13.png", 730, Bullets.BulletType.NORMAL, 0));
 
         playerOne = new Player(KeyboardEvent.KEY_UP, KeyboardEvent.KEY_DOWN, KeyboardEvent.KEY_LEFT, KeyboardEvent.KEY_RIGHT, KeyboardEvent.KEY_SPACE, spaceShips.get(0));
         playerTwo = new Player(KeyboardEvent.KEY_W, KeyboardEvent.KEY_S, KeyboardEvent.KEY_A, KeyboardEvent.KEY_D, KeyboardEvent.KEY_T, spaceShips.get(1));
@@ -520,8 +560,8 @@ public class Game implements KeyboardHandler {
     public void initiateVersusPlayer() {
 
         //initiate versus mode
-        spaceShips.add(new SpaceShip(300, 100, enemyBullets, "spaceship_blue_upside_30x30.png", "bullet_blue_20x30.png", 50, Bullets.BulletType.VSTOP, 1));
-        spaceShips.add(new SpaceShip(500, 700, enemyBullets, "green_spaceship_30x30.png", "bullet_green_20x30.png", 730, Bullets.BulletType.VSBOTTOM, 2));
+        spaceShips.add(new SpaceShip(300, 100, enemyBullets, "spaceship_blue_upside_30x30.png", "bullet_blue_20x30.png", "heart_blue_13x13.png", 50, Bullets.BulletType.VSTOP, 1));
+        spaceShips.add(new SpaceShip(500, 700, enemyBullets, "green_spaceship_30x30.png", "bullet_green_20x30.png","heart_green_13x13.png", 730, Bullets.BulletType.VSBOTTOM, 2));
 
         playerOne = new Player(KeyboardEvent.KEY_UP, KeyboardEvent.KEY_DOWN, KeyboardEvent.KEY_LEFT, KeyboardEvent.KEY_RIGHT, KeyboardEvent.KEY_SPACE, spaceShips.get(0));
         playerTwo = new Player(KeyboardEvent.KEY_W, KeyboardEvent.KEY_S, KeyboardEvent.KEY_A, KeyboardEvent.KEY_D, KeyboardEvent.KEY_T, spaceShips.get(1));
