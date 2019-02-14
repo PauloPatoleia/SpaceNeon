@@ -42,7 +42,7 @@ public class Lifes {
                 lifeIcon.add(new Picture(inicialXposition + 20, 787, hpImage));
                 break;
             case 2:
-                lifeIcon.add(new Picture(inicialXposition + 40, 787, hpImage));
+                lifeIcon.add(new Picture(inicialXposition + 40, 787 , hpImage));
                 break;
 
         }

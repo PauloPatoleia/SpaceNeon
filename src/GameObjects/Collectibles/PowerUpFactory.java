@@ -29,11 +29,11 @@ public class PowerUpFactory {
                     break;
                 case SPEEDUP:
                     int randomFour = (int) (Math.random() * upperBoundary + 10);
-                    powerUpList.add(new PowerUp(randomFour, 30, PowerUp.PowerUpType.SPEEDUP, "powerup_speed_25x25.png")); //change pic
+                    powerUpList.add(new PowerUp(randomFour, 30, PowerUp.PowerUpType.SPEEDUP, "powerup_speed_25x25.png"));
                     break;
                 case BULLETSPEED:
                     int randomFive = (int) (Math.random() * upperBoundary + 10);
-                    powerUpList.add(new PowerUp(randomFive, 30, PowerUp.PowerUpType.BULLETSPEED, "powerup.png")); //change pic
+                    powerUpList.add(new PowerUp(randomFive, 30, PowerUp.PowerUpType.BULLETSPEED, "powerup_bullet_speed_25x25.png"));
                     break;
 
             }
