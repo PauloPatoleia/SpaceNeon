@@ -9,7 +9,7 @@ public class Arrow {
     private int singlePlayerPosition = 400;
     private int multiPlayerPosition = 495;
     private int versusPlayerPosition = 590;
-    private int instructionsPosition = 675;
+    private int instructionsPosition = 685;
 
     private int yToMove = 95;
     private String arrowPicSource = "arrow.png";
@@ -31,8 +31,8 @@ public class Arrow {
 
         arrow.setY(arrow.getY() + yToMove);
 
-        if (arrow.getY() >= 675)
-            arrow.setY(675);
+        if (arrow.getY() >= 685)
+            arrow.setY(685);
 
     }
 

@@ -349,7 +349,6 @@ public class Game implements KeyboardHandler {
             return;
         }
 
-
         for (int i = 0; i < spaceShips.size(); i++) {
             spaceShips.get(i).render();
         }
@@ -410,6 +409,13 @@ public class Game implements KeyboardHandler {
             if (keyboardEvent.getKey() == 80) {
                 System.out.println(paused);
                 paused = !paused;
+                return;
+
+            }
+            if (keyboardEvent.getKey() == KeyboardEvent.KEY_ESC) {
+                reset();
+                state = STATE.MENU;
+                return;
             }
         }
 
@@ -442,6 +448,7 @@ public class Game implements KeyboardHandler {
             }
 
         }
+
 
         if (state == STATE.INSTRUCTIONS) {
             if (keyboardEvent.getKey() == KeyboardEvent.KEY_ESC){
