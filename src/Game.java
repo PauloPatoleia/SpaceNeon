@@ -94,7 +94,10 @@ public class Game implements KeyboardHandler {
         MENU.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
         k.addEventListener(MENU);
 
-
+        KeyboardEvent QUIT = new KeyboardEvent();
+        QUIT.setKey(KeyboardEvent.KEY_Q);
+        QUIT.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
+        k.addEventListener(QUIT);
 
 
     }
@@ -433,6 +436,11 @@ public class Game implements KeyboardHandler {
         }
 
         if (state == STATE.MENU) {
+
+            if (keyboardEvent.getKey() == KeyboardEvent.KEY_Q) {
+                System.exit(0);
+            }
+
             if (keyboardEvent.getKey() == 38) {
                 arrow.moveUp();
                 return;
@@ -477,6 +485,7 @@ public class Game implements KeyboardHandler {
                 pauseScreen.delete();
                 state = STATE.MENU;
                 return;
+
 
             }
 
