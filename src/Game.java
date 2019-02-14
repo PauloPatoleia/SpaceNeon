@@ -12,9 +12,6 @@ import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardHandler;
-import org.academiadecodigo.simplegraphics.mouse.Mouse;
-import org.academiadecodigo.simplegraphics.mouse.MouseEvent;
-import org.academiadecodigo.simplegraphics.mouse.MouseHandler;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 import java.util.LinkedList;
@@ -413,12 +410,20 @@ public class Game implements KeyboardHandler {
                 return;
             }
             if (keyboardEvent.getKey() == 32) {
-                if (arrow.getY() == arrow.getOnePlayerPosition()) {
+                if (arrow.getY() == arrow.getSinglePlayerPosition()) {
                     initiateOnePlayer();
                     return;
                 }
-                if (arrow.getY() == arrow.getTwoPlayerPosition()) {
+                if (arrow.getY() == arrow.getMultiPlayerPosition()) {
                     initiateTwoPlayers();
+                    return;
+                }
+                if (arrow.getY() == arrow.getMultiPlayerPosition()) {
+                   //Method to initiate versus mode
+                    return;
+                }
+                if (arrow.getY() == arrow.getInstructionsPosition()) {
+                    //Method to initiate instructions.
                     return;
                 }
             }
@@ -442,6 +447,16 @@ public class Game implements KeyboardHandler {
         playerTwo = new Player(KeyboardEvent.KEY_W, KeyboardEvent.KEY_S, KeyboardEvent.KEY_A, KeyboardEvent.KEY_D, KeyboardEvent.KEY_T, spaceShips.get(1));
 
         init();
+    }
+
+    public void initiateVersusPlayer(){
+        //initiate versus mode
+
+        init();
+    }
+
+    public void initiateInstructions(){
+        //initiate instructions
     }
 
     @Override
