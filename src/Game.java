@@ -14,6 +14,7 @@ import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardHandler;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
+import java.awt.*;
 import java.util.LinkedList;
 
 public class Game implements KeyboardHandler {
@@ -52,7 +53,8 @@ public class Game implements KeyboardHandler {
     enum STATE {
         MENU,
         GAME,
-        INSTRUCTIONS
+        INSTRUCTIONS,
+        PAUSE
     }
 
 
@@ -86,6 +88,13 @@ public class Game implements KeyboardHandler {
         ESC.setKey(KeyboardEvent.KEY_ESC);
         ESC.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
         k.addEventListener(ESC);
+
+        KeyboardEvent MENU = new KeyboardEvent();
+        MENU.setKey(KeyboardEvent.KEY_M);
+        MENU.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
+        k.addEventListener(MENU);
+
+
 
 
     }
@@ -129,7 +138,7 @@ public class Game implements KeyboardHandler {
 
             if (delta >= 1) {
 
-                if (!paused) {
+                if (state != STATE.PAUSE) {
 
                     tick();
                     render();
@@ -154,6 +163,9 @@ public class Game implements KeyboardHandler {
      */
     private void tick() {
 
+        if (state == STATE.PAUSE) {
+            return;
+        }
 
         if (state == STATE.MENU || state == STATE.INSTRUCTIONS) {
             return;
@@ -334,6 +346,13 @@ public class Game implements KeyboardHandler {
      */
     private void render() {
 
+        if (state == STATE.PAUSE) {
+
+            return;
+        }
+
+
+
         if (state == STATE.MENU) {
 
             menu.draw();
@@ -404,23 +423,13 @@ public class Game implements KeyboardHandler {
         // TODO: 11/02/2019 specify in what game state this controls exist
 
         if (state == STATE.GAME) {
-            if (keyboardEvent.getKey() == 80) {
-                System.out.println(paused);
-                paused = !paused;
 
-                // TODO: 14/02/2019 move this to render with STATE == PAUSED
-                if (paused)
-                    pauseScreen.draw();
-                if (!paused)
-                    pauseScreen.delete();
-                return;
-
-            }
             if (keyboardEvent.getKey() == KeyboardEvent.KEY_ESC) {
-                reset();
-                state = STATE.MENU;
+                pauseScreen.draw();
+                state = STATE.PAUSE;
                 return;
             }
+
         }
 
         if (state == STATE.MENU) {
@@ -453,13 +462,29 @@ public class Game implements KeyboardHandler {
 
         }
 
-
         if (state == STATE.INSTRUCTIONS) {
             if (keyboardEvent.getKey() == KeyboardEvent.KEY_ESC){
                 instructions.delete();
                 state = STATE.MENU;
                 return;
             }
+        }
+
+        if (state == STATE.PAUSE) {
+
+            if (keyboardEvent.getKey() == KeyboardEvent.KEY_M) {
+                reset();
+                pauseScreen.delete();
+                state = STATE.MENU;
+                return;
+
+            }
+
+            if (keyboardEvent.getKey() == KeyboardEvent.KEY_ESC) {
+                pauseScreen.delete();
+                state = STATE.GAME;
+            }
+
         }
     }
 
