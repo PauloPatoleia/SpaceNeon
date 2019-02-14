@@ -49,7 +49,7 @@ public class Bullets {
     public enum BulletType {
 
         NORMAL(15, 6),
-        FAST(10, 8),
+        FAST(9, 8),
         DOUBLE(15, 6),
         ENEMYBULLET(120, -3),
         VSBOTTOM(15, 15),
@@ -75,6 +75,13 @@ public class Bullets {
             ENEMYBULLET.speed = -3;
         }
 
+        public int getSpeed() {
+            return speed;
+        }
+
+        public void setSpeed(int speed) {
+            this.speed = speed;
+        }
     }
 
     public Rectangle getHitbox() {

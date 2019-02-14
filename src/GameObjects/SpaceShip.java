@@ -222,7 +222,6 @@ public class SpaceShip {
                     hp++;
                     hpDisplay.lifeUp();
                 }
-
                 break;
             case BULLETFAST:
                 bulletType = Bullets.BulletType.FAST;
@@ -232,6 +231,10 @@ public class SpaceShip {
                 break;
             case SPEEDUP:
                 speed += 1;
+                break;
+            case BULLETSPEED:
+                bulletType.setSpeed(bulletType.getSpeed() + 2);
+                break;
         }
     }
 }
