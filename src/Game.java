@@ -343,8 +343,6 @@ public class Game implements KeyboardHandler {
 
         }
 
-        if (paused)
-
         if (state == STATE.INSTRUCTIONS) {
             instructions.draw();
             return;
