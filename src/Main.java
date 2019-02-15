@@ -7,8 +7,8 @@ import javax.sound.sampled.LineUnavailableException;
 public class Main {
 
     public static void main(String[] args) {
-/*
-        new Thread(new Runnable() {
+
+  /*      new Thread(new Runnable() {
 
             public void run() {
                 try {
@@ -23,9 +23,9 @@ public class Main {
             }
         }).start();
 
-
-
 */
+
+
 
         try {
             Game game = new Game();
