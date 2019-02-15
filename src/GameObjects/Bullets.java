@@ -39,7 +39,7 @@ public class Bullets {
         bulletImage.draw();
     }
 
-    public void hit () {
+    public void hit() {
 
         bulletImage.delete();
         hitbox = null;
@@ -59,8 +59,8 @@ public class Bullets {
         private int speed;
 
         BulletType(int cooldown, int speed) {
-           this.speed = speed;
-           this.cooldown = cooldown;
+            this.speed = speed;
+            this.cooldown = cooldown;
         }
 
         public int getCooldown() {
@@ -72,7 +72,13 @@ public class Bullets {
         }
 
         public static void resetSpeed() {
+
+            NORMAL.speed = 6;
+            FAST.speed = 8;
+            DOUBLE.speed = 6;
             ENEMYBULLET.speed = -3;
+            VSBOTTOM.speed = 15;
+            VSTOP.speed = 15;
         }
 
         public int getSpeed() {
