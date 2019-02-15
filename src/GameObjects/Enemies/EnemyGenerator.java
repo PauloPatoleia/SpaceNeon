@@ -10,14 +10,14 @@ public class EnemyGenerator {
 
     private LinkedList<Enemy> enemyList;
     private LinkedList<Bullets> enemyBullets;
-    //private int chanceMultiplier;
+    private int chanceMultiplier;
     private int timeGoneBy = 0;
     private int difficulty = 60;
 
     public EnemyGenerator(LinkedList<Enemy> enemyList, LinkedList<Bullets> enemyBullets) {
         this.enemyList = enemyList;
         this.enemyBullets = enemyBullets;
-        //chanceMultiplier = 40;
+        chanceMultiplier = 40;
     }
 
     public void tick() {
@@ -35,6 +35,7 @@ public class EnemyGenerator {
         timeGoneBy = 0;
     }
 
-
-
+    public int getChanceMultiplier() {
+        return chanceMultiplier;
+    }
 }
