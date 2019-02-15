@@ -7,12 +7,12 @@ public class Score {
 
     // TODO: 13/02/2019 make score non-static and accessible by Difficulty
     public static int score;
-    private Text display = new Text(380, 20, "score");
+    private Text display = new Text(710, 20, "score");
     private int cooldown = 60;
 
     public Score() {
         display.setColor(Color.WHITE);
-        display.grow(20,10);
+        display.grow(20, 8);
         score = 0;
     }
 

@@ -10,8 +10,7 @@ public class EnemyDiamond extends Enemy {
     private String bulletImage;
     private Bullets.BulletType bulletType = Bullets.BulletType.ENEMYBULLET;
     private int cooldown;
-    private boolean touchedRight;
-    private boolean touchedLeft;
+    private boolean isGoingRight;
 
 
     public EnemyDiamond(int x, int y, EnemyType enemyType, LinkedList<Bullets> enemyBullets, String bulletImage) {
@@ -22,10 +21,10 @@ public class EnemyDiamond extends Enemy {
         int randomStartDirection = (int) (Math.random() * 2);
         switch (randomStartDirection) {
             case 0:
-                touchedLeft = true;
+                isGoingRight = false;
                 break;
             case 1:
-                touchedRight = true;
+                isGoingRight = true;
                 break;
         }
     }
@@ -33,10 +32,10 @@ public class EnemyDiamond extends Enemy {
     @Override
     public void tick() {
 
-        if (touchedLeft)
+        if (isGoingRight)
             super.getEnemyImage().setX(super.getEnemyImage().getX() + Math.floor(super.getSpeed())/2);
 
-        if (touchedRight)
+        if (!isGoingRight)
             super.getEnemyImage().setX(super.getEnemyImage().getX() - Math.floor(super.getSpeed())/2);
 
         super.getEnemyImage().setY(super.getEnemyImage().getY() + super.getSpeed());
@@ -44,14 +43,12 @@ public class EnemyDiamond extends Enemy {
 
         if (super.getEnemyImage().getX() <= 10) {
             super.getEnemyImage().setX(10);
-            touchedLeft = true;
-            touchedRight = false;
+            isGoingRight = true;
         }
 
         if (super.getEnemyImage().getX() >= 775) {
             super.getEnemyImage().setX(775);
-            touchedLeft = false;
-            touchedRight = true;
+            isGoingRight = false;
         }
 
         if (cooldown == 0) {
