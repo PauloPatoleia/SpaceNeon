@@ -8,7 +8,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Sound sound = new Sound("/resources/music.wav");
+        Sound sound = new Sound("music.wav");
         sound.play(true);
         sound.setLoop(5);
 
