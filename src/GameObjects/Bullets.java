@@ -78,7 +78,7 @@ public class Bullets {
             DOUBLE.speed = 6;
             ENEMYBULLET.speed = -3;
             VSBOTTOM.speed = 15;
-            VSTOP.speed = 15;
+            VSTOP.speed = -15;
         }
 
         public int getSpeed() {
