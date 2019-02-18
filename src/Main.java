@@ -8,24 +8,9 @@ public class Main {
 
     public static void main(String[] args) {
 
-  /*      new Thread(new Runnable() {
-
-            public void run() {
-                try {
-                    Clip clip = AudioSystem.getClip();
-                    AudioInputStream inputStream = AudioSystem.getAudioInputStream(
-                            Main.class.getResourceAsStream("sound.wav"));
-                    clip.open(inputStream);
-                    clip.start();
-                } catch (Exception e) {
-                    System.err.println(e.getMessage());
-                }
-            }
-        }).start();
-
-*/
-
-
+        Sound sound = new Sound("/resources/music.wav");
+        sound.play(true);
+        sound.setLoop(5);
 
         try {
             Game game = new Game();
