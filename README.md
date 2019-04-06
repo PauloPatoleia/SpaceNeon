@@ -1,5 +1,6 @@
 # SpaceNeon
 
-Open source java game
+An Open Source Java Game.
+Battle your way through the galaxy alone or with a friend!
 
-![alt text](http://i68.tinypic.com/v5uzom.png)
+![alt text](https://github.com/PauloPatoleia/SpaceNeon/blob/master/resources/menu800.png)
